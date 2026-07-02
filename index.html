@@ -11,6 +11,15 @@
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.ico">
 
+  <!-- Google Analytics 4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RTX609HG4Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RTX609HG4Y');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -750,6 +759,19 @@
         if (!wasOpen) {
           item.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // GA4 — evento begin_checkout ao clicar nos CTAs que levam ao checkout
+    document.querySelectorAll('a[href*="checkout.ticto.app"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'begin_checkout', {
+            currency: 'BRL',
+            value: 29.90,
+            items: [{ item_id: 'redacao-destravada-eae', item_name: 'Redação Destravada — Método EAE', price: 29.90, quantity: 1 }]
+          });
         }
       });
     });
