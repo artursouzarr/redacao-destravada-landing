@@ -10,6 +10,24 @@
     gtag('config', 'G-RTX609HG4Y');
   </script>
 
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '788575884281860');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=788575884281860&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redação Destravada — Método EAE | Redação nota 900+ em 30 minutos</title>
@@ -763,7 +781,7 @@
       });
     });
 
-    // GA4 — evento begin_checkout ao clicar nos CTAs que levam ao checkout
+    // Rastreamento de checkout — GA4 (begin_checkout) + Meta Pixel (InitiateCheckout)
     document.querySelectorAll('a[href*="checkout.ticto.app"]').forEach((btn) => {
       btn.addEventListener('click', () => {
         if (typeof gtag === 'function') {
@@ -771,6 +789,13 @@
             currency: 'BRL',
             value: 29.90,
             items: [{ item_id: 'redacao-destravada-eae', item_name: 'Redação Destravada — Método EAE', price: 29.90, quantity: 1 }]
+          });
+        }
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout', {
+            currency: 'BRL',
+            value: 29.90,
+            content_name: 'Redação Destravada — Método EAE'
           });
         }
       });
