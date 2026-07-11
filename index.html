@@ -802,7 +802,22 @@
       });
     });
 
+    // Rastreamento de CTAs internos (âncora #oferta) — evento NÃO-conversão.
+    // Header e Hero apenas rolam a página; NÃO devem disparar InitiateCheckout.
+    document.querySelectorAll('a[href^="#oferta"]').forEach((btn) => {
+      const location = btn.closest('#header') ? 'header' : 'hero';
+      btn.addEventListener('click', () => {
+        if (typeof fbq === 'function') {
+          fbq('trackCustom', location === 'header' ? 'ClickHeaderCTA' : 'ClickHeroCTA');
+        }
+        if (typeof gtag === 'function') {
+          gtag('event', 'select_content', { content_type: 'cta', item_id: location + '_cta' });
+        }
+      });
+    });
+
     // Rastreamento de checkout — GA4 (begin_checkout) + Meta Pixel (InitiateCheckout)
+    // SOMENTE botões que redirecionam para o checkout real da Ticto.
     document.querySelectorAll('a[href*="checkout.ticto.app"]').forEach((btn) => {
       btn.addEventListener('click', () => {
         if (typeof gtag === 'function') {
