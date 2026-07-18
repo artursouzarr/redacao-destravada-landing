@@ -62,7 +62,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -83,7 +83,7 @@
           },
           fontFamily: {
             display: ['Montserrat', 'sans-serif'],
-            body: ['Inter', 'sans-serif'],
+            body: ['Montserrat', 'sans-serif'],
           },
         },
       },
@@ -93,7 +93,8 @@
   <style>
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
       background: hsl(220, 60%, 8%);
     }
 
@@ -302,63 +303,64 @@
 
   <!-- ============ 2c. BASE CIENTÍFICA ============ -->
   <section class="bg-panel border-y border-white/5 py-12 sm:py-20 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-8 sm:mb-12">
         🧠 Base Científica
       </h2>
 
-      <div class="reveal neon-card p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-8 sm:mb-10">
-        <!-- TODO: adicionar a imagem da universidade neste placeholder (substituir o bloco abaixo pela <img>) -->
-        <div class="w-full sm:w-56 h-36 rounded-xl border-2 border-dashed border-white/15 bg-white/5 flex flex-col items-center justify-center gap-2 flex-shrink-0">
-          <svg class="w-10 h-10 text-white/25" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-          <p class="text-white/30 text-[11px] font-bold uppercase tracking-widest">Imagem da universidade</p>
-        </div>
-        <div class="text-center sm:text-left">
-          <p class="font-display font-extrabold text-xl text-white mb-2">Stanford University</p>
-          <p class="text-gray-400 text-sm sm:text-base mb-2">Pesquisas da Stanford University mostram que:</p>
-          <p class="text-gray-100 font-bold text-base sm:text-lg leading-relaxed">Mapas mentais e resumos são as técnicas mais eficazes pra memorizar conteúdo em menos tempo.</p>
-        </div>
-      </div>
+      <div class="reveal neon-card p-6 sm:p-10">
 
-      <div class="grid sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
-        <div class="reveal card-hover neon-card p-6 text-center">
-          <div class="w-14 h-14 rounded-2xl bg-primary/15 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">📅</div>
-          <h3 class="font-display font-extrabold text-lg text-white mb-2">Cronograma</h3>
-          <p class="text-gray-400 text-sm">Planejamento aumenta a retenção do conteúdo</p>
+        <!-- TODO: adicionar o selo/imagem da universidade (substituir o bloco abaixo pela <img> circular) -->
+        <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full border-2 border-dashed border-white/15 bg-white/5 flex flex-col items-center justify-center gap-1.5 mx-auto mb-7">
+          <svg class="w-9 h-9 text-white/25" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <p class="text-white/30 text-[10px] font-bold uppercase tracking-widest text-center leading-tight">Selo da<br>universidade</p>
         </div>
-        <div class="reveal card-hover neon-card p-6 text-center">
-          <div class="w-14 h-14 rounded-2xl bg-primary/15 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">🧠</div>
-          <h3 class="font-display font-extrabold text-lg text-white mb-2">Mapas Mentais</h3>
-          <p class="text-gray-400 text-sm">Técnica mais eficaz pra fixar o conteúdo</p>
-        </div>
-        <div class="reveal card-hover neon-card p-6 text-center">
-          <div class="w-14 h-14 rounded-2xl bg-primary/15 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">📝</div>
-          <h3 class="font-display font-extrabold text-lg text-white mb-2">Resumos</h3>
-          <p class="text-gray-400 text-sm">Melhora a memorização e compreensão</p>
-        </div>
-      </div>
 
-      <p class="reveal text-center text-gray-100 font-display font-bold text-base sm:text-xl mb-8 sm:mb-12">
-        E foi com esse princípio que criamos o <span class="text-gradient">Redação Destravada</span>.
-      </p>
+        <p class="text-white font-display font-bold text-base sm:text-lg text-center mb-3">
+          Pesquisas da <span class="text-primary-light">Stanford University</span> mostram que:
+        </p>
+        <p class="text-gray-400 text-sm sm:text-base text-center max-w-md mx-auto leading-relaxed mb-8">
+          Mapas mentais e resumos são as técnicas mais eficazes pra memorizar conteúdo em menos tempo.
+        </p>
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div class="reveal card-hover neon-card p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">+110</p>
-          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Alunos aprovados</p>
+        <div class="space-y-4 mb-8">
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <h3 class="font-display font-bold text-primary-light text-base sm:text-lg mb-1.5">Cronograma</h3>
+            <p class="text-gray-400 text-sm">Planejamento aumenta a retenção do conteúdo</p>
+          </div>
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <h3 class="font-display font-bold text-primary-light text-base sm:text-lg mb-1.5">Mapas Mentais</h3>
+            <p class="text-gray-400 text-sm">Técnica mais eficaz pra fixar o conteúdo</p>
+          </div>
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <h3 class="font-display font-bold text-primary-light text-base sm:text-lg mb-1.5">Resumos</h3>
+            <p class="text-gray-400 text-sm">Melhora a memorização e compreensão</p>
+          </div>
         </div>
-        <div class="reveal card-hover neon-card p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">9.1</p>
-          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Nota de satisfação</p>
+
+        <p class="text-white font-display font-bold text-sm sm:text-base text-center mb-8">
+          E foi com esse princípio que criamos o <span class="text-primary-light">REDAÇÃO DESTRAVADA</span>.
+        </p>
+
+        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <p class="font-display font-black text-2xl sm:text-3xl text-primary-light mb-1">+110</p>
+            <p class="text-gray-400 text-xs sm:text-sm leading-snug">Alunos aprovados</p>
+          </div>
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <p class="font-display font-black text-2xl sm:text-3xl text-primary-light mb-1">9.1</p>
+            <p class="text-gray-400 text-xs sm:text-sm leading-snug">Nota de satisfação</p>
+          </div>
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <p class="font-display font-black text-2xl sm:text-3xl text-primary-light mb-1">100%</p>
+            <p class="text-gray-400 text-xs sm:text-sm leading-snug">Digital e atualizado</p>
+          </div>
+          <div class="bg-white/[.04] border border-white/5 rounded-xl p-5 text-center">
+            <p class="font-display font-black text-2xl sm:text-3xl text-primary-light mb-1">24h</p>
+            <p class="text-gray-400 text-xs sm:text-sm leading-snug">Suporte disponível</p>
+          </div>
         </div>
-        <div class="reveal card-hover neon-card p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">100%</p>
-          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Digital e atualizado</p>
-        </div>
-        <div class="reveal card-hover neon-card p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">24h</p>
-          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Suporte disponível</p>
-        </div>
+
       </div>
     </div>
   </section>
