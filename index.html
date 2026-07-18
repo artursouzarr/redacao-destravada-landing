@@ -62,7 +62,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -83,7 +83,7 @@
           },
           fontFamily: {
             display: ['Montserrat', 'sans-serif'],
-            body: ['Montserrat', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
           },
         },
       },
@@ -91,9 +91,12 @@
   </script>
 
   <style>
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 14px; /* reduz todos os textos do site proporcionalmente */
+    }
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-weight: 400;
       background: hsl(220, 60%, 8%);
     }
@@ -264,7 +267,7 @@
       <p class="reveal inline-block badge-gradient text-xs sm:text-sm mb-6 sm:mb-8">
         ENEM · FGV · VUNESP · Cebraspe · FCC
       </p>
-      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 text-white">
+      <h1 class="reveal font-display font-black text-[28px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 text-white">
         O método que deixa você <span class="text-gradient">100% pronto</span> pra qualquer tema de redação
       </h1>
       <p class="reveal text-gray-300 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -427,7 +430,7 @@
         <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow leading-snug mb-5">
           A redação ainda é o seu maior desafio?
         </h2>
-        <div class="space-y-4 text-gray-300 text-[15px] sm:text-lg leading-relaxed">
+        <div class="space-y-4 text-gray-300 text-base sm:text-lg leading-relaxed">
           <p class="reveal">
             Você quer a vaga, mas não sabe se está estudando redação do jeito certo. Tem medo de cair um tema que nunca viu. E o tempo que sobra no dia é pouco.
           </p>
@@ -545,7 +548,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow mb-3">
         Tudo o que você recebe hoje
       </h2>
-      <p class="reveal text-gray-400 text-[15px] sm:text-lg mb-6 sm:mb-10">
+      <p class="reveal text-gray-400 text-base sm:text-lg mb-6 sm:mb-10">
         7 materiais digitais com acesso imediato, atualizados com os temas que mais caem em ENEM e concursos:
       </p>
 
@@ -653,7 +656,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         3 bônus grátis <span class="text-eae-green">neste lote</span>
       </h2>
-      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-base sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Saem de graça enquanto durar o lote de lançamento — depois voltam a ser vendidos separados.
       </p>
 
@@ -701,7 +704,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         O que dizem nossos alunos
       </h2>
-      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-base sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Resultados reais de quem aplicou o Método EAE.
       </p>
 
@@ -763,7 +766,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         Escolha a sua versão
       </h2>
-      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-base sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         As duas têm acesso imediato e 15 dias de garantia incondicional.
       </p>
 
@@ -834,7 +837,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow mb-5">
         15 dias de garantia, sem perguntas
       </h2>
-      <p class="reveal text-gray-300 text-[15px] sm:text-lg leading-relaxed">
+      <p class="reveal text-gray-300 text-base sm:text-lg leading-relaxed">
         Teste o método inteiro por 15 dias. Não gostou, por qualquer motivo? <strong class="text-white">Devolvemos 100% do valor.</strong> Sem burocracia e sem precisar justificar — o pedido é feito direto na plataforma de pagamento.
       </p>
     </div>
@@ -854,7 +857,7 @@
         <div class="text-center sm:text-left">
           <p class="font-display font-extrabold text-xl text-white mb-1">Arthur</p>
           <p class="text-primary-light font-bold text-sm mb-4">Criador do Método EAE · 17 anos · estudante</p>
-          <div class="space-y-3 text-gray-400 text-[15px] sm:text-base leading-relaxed">
+          <div class="space-y-3 text-gray-400 text-base sm:text-base leading-relaxed">
             <p>
               Eu sou estudante, igual a você. O Método EAE nasceu da minha própria preparação: eu travava na redação até perceber que as bancas não pedem talento — pedem uma <strong class="text-gray-200">estrutura específica</strong>, que se repete prova após prova.
             </p>
@@ -880,132 +883,132 @@
       <div class="space-y-3" id="faq">
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Isso não é só copiar redação pronta?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Não — e isso é importante: copiar texto pronto pode zerar sua redação. No Método EAE você aprende a <strong class="text-gray-200">estrutura</strong> (o esqueleto), não decora o texto. Os 120 modelos servem de referência pra você ver a estrutura em ação; quem escreve é você, com as suas palavras. Por isso funciona pra qualquer tema novo, inclusive os que nunca caíram.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Não — e isso é importante: copiar texto pronto pode zerar sua redação. No Método EAE você aprende a <strong class="text-gray-200">estrutura</strong> (o esqueleto), não decora o texto. Os 120 modelos servem de referência pra você ver a estrutura em ação; quem escreve é você, com as suas palavras. Por isso funciona pra qualquer tema novo, inclusive os que nunca caíram.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Serve pra banca do meu concurso?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O material cobre <strong class="text-gray-200">ENEM, FGV, VUNESP, Cebraspe e FCC</strong> — as principais bancas do país. Os esqueletos são adaptáveis justamente porque a lógica de estrutura que essas bancas pontuam é a mesma: introdução com tese, desenvolvimento com argumento e repertório, conclusão fechada.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Sim. O material cobre <strong class="text-gray-200">ENEM, FGV, VUNESP, Cebraspe e FCC</strong> — as principais bancas do país. Os esqueletos são adaptáveis justamente porque a lógica de estrutura que essas bancas pontuam é a mesma: introdução com tese, desenvolvimento com argumento e repertório, conclusão fechada.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Tenho pouco tempo, vou conseguir aplicar?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O método foi desenhado exatamente pra quem trabalha ou estuda o dia todo. Cada redação leva <strong class="text-gray-200">até 30 minutos</strong> usando os esqueletos, e o Cronograma Flexível organiza seu estudo mesmo que você só tenha 30-40 minutos por dia. Você não precisa de 3 horas diárias — precisa de um método que aproveite o tempo que você tem.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">O método foi desenhado exatamente pra quem trabalha ou estuda o dia todo. Cada redação leva <strong class="text-gray-200">até 30 minutos</strong> usando os esqueletos, e o Cronograma Flexível organiza seu estudo mesmo que você só tenha 30-40 minutos por dia. Você não precisa de 3 horas diárias — precisa de um método que aproveite o tempo que você tem.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Já comprei outro material e não funcionou. Por que esse seria diferente?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">A maioria dos materiais te entrega uma pilha de PDF solto e espera que você se vire. A diferença aqui é o <strong class="text-gray-200">método</strong>: o EAE é um passo a passo replicável — recebeu o tema, escolheu o esqueleto, encaixou o argumento, fechou com a conclusão. E se mesmo assim não funcionar pra você, tem 15 dias de garantia incondicional: devolvemos tudo.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">A maioria dos materiais te entrega uma pilha de PDF solto e espera que você se vire. A diferença aqui é o <strong class="text-gray-200">método</strong>: o EAE é um passo a passo replicável — recebeu o tema, escolheu o esqueleto, encaixou o argumento, fechou com a conclusão. E se mesmo assim não funcionar pra você, tem 15 dias de garantia incondicional: devolvemos tudo.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Funciona pra quem escreve muito mal?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim — o método foi feito pra quem está <strong class="text-gray-200">começando do zero</strong>. Ninguém nasce sabendo escrever redação de banca: quem tira 900+ aprendeu uma estrutura e repete. Com os esqueletos você não depende de talento nem de inspiração; depende só de seguir os 3 passos. Os conectivos e o checklist de revisão cuidam da parte que costuma derrubar quem se acha "fraco em português".</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Sim — o método foi feito pra quem está <strong class="text-gray-200">começando do zero</strong>. Ninguém nasce sabendo escrever redação de banca: quem tira 900+ aprendeu uma estrutura e repete. Com os esqueletos você não depende de talento nem de inspiração; depende só de seguir os 3 passos. Os conectivos e o checklist de revisão cuidam da parte que costuma derrubar quem se acha "fraco em português".</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se eu não gostar?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Você tem <strong class="text-gray-200">15 dias de garantia incondicional</strong>. Não gostou por qualquer motivo — ou por motivo nenhum — é só pedir o reembolso dentro do prazo e devolvemos 100% do valor, sem perguntas e sem burocracia. O pedido é feito direto na plataforma de pagamento.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Você tem <strong class="text-gray-200">15 dias de garantia incondicional</strong>. Não gostou por qualquer motivo — ou por motivo nenhum — é só pedir o reembolso dentro do prazo e devolvemos 100% do valor, sem perguntas e sem burocracia. O pedido é feito direto na plataforma de pagamento.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             É seguro comprar? Como funciona o pagamento?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O pagamento é processado pela <strong class="text-gray-200">Ticto</strong>, uma das maiores plataformas de produtos digitais do Brasil — seus dados de pagamento passam por ela, não por nós. Você pode pagar com <strong class="text-gray-200">Pix, cartão ou boleto</strong>. E além da segurança da plataforma, a garantia de 15 dias cobre qualquer arrependimento.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Sim. O pagamento é processado pela <strong class="text-gray-200">Ticto</strong>, uma das maiores plataformas de produtos digitais do Brasil — seus dados de pagamento passam por ela, não por nós. Você pode pagar com <strong class="text-gray-200">Pix, cartão ou boleto</strong>. E além da segurança da plataforma, a garantia de 15 dias cobre qualquer arrependimento.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Como eu recebo o material?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O acesso é <strong class="text-gray-200">imediato</strong>: assim que o pagamento é confirmado (na hora, no caso de Pix e cartão), você recebe um e-mail da Ticto com o link pra baixar os 7 materiais. Dá pra acessar do celular, tablet ou computador — e os arquivos são seus pra sempre, pode baixar e estudar offline.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">O acesso é <strong class="text-gray-200">imediato</strong>: assim que o pagamento é confirmado (na hora, no caso de Pix e cartão), você recebe um e-mail da Ticto com o link pra baixar os 7 materiais. Dá pra acessar do celular, tablet ou computador — e os arquivos são seus pra sempre, pode baixar e estudar offline.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             O conteúdo é atualizado?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. Os modelos e esqueletos seguem os critérios de correção atuais das bancas (as 5 competências do ENEM e os critérios de FGV, VUNESP, Cebraspe e FCC). E como a base do método é <strong class="text-gray-200">estrutura</strong> — não tema decorado — ele não envelhece a cada edital: a estrutura que pontua é a mesma há anos.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Sim. Os modelos e esqueletos seguem os critérios de correção atuais das bancas (as 5 competências do ENEM e os critérios de FGV, VUNESP, Cebraspe e FCC). E como a base do método é <strong class="text-gray-200">estrutura</strong> — não tema decorado — ele não envelhece a cada edital: a estrutura que pontua é a mesma há anos.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Por que tão barato? Qual é o truque?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sem truque: R$29,90 é <strong class="text-gray-200">preço de lançamento</strong>. Estamos abrindo o primeiro lote e queremos alunos aplicando o método e mandando resultados — é isso que vale mais pra nós agora do que a margem. Por isso o preço sobe pra R$47 em breve e os 3 bônus são exclusivos deste lote. Quem entra primeiro paga menos e leva mais.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">Sem truque: R$29,90 é <strong class="text-gray-200">preço de lançamento</strong>. Estamos abrindo o primeiro lote e queremos alunos aplicando o método e mandando resultados — é isso que vale mais pra nós agora do que a margem. Por isso o preço sobe pra R$47 em breve e os 3 bônus são exclusivos deste lote. Quem entra primeiro paga menos e leva mais.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se cair um tema que nunca caiu antes?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">É exatamente pra isso que o método existe. Você não decora temas — aprende <strong class="text-gray-200">100 esqueletos adaptáveis</strong> que cobrem os tipos de tema que as bancas cobram (problema social, tecnologia, saúde, direitos, comportamento...). Tema inédito deixa nervoso quem decorou redação pronta. Quem tem estrutura só escolhe o esqueleto e monta.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">É exatamente pra isso que o método existe. Você não decora temas — aprende <strong class="text-gray-200">100 esqueletos adaptáveis</strong> que cobrem os tipos de tema que as bancas cobram (problema social, tecnologia, saúde, direitos, comportamento...). Tema inédito deixa nervoso quem decorou redação pronta. Quem tem estrutura só escolhe o esqueleto e monta.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Sem professor corrigindo, como vou saber se estou no caminho certo?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Checklist de Revisão Pré-Prova</strong> (bônus 3) existe pra isso: ele lista, item por item, o que o corretor procura em cada competência — você revisa a própria redação como um corretor revisaria. Junte isso aos 120 modelos aprovados pra comparar, e você elimina a dúvida "será que está certo?" sem depender de correção paga.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Checklist de Revisão Pré-Prova</strong> (bônus 3) existe pra isso: ele lista, item por item, o que o corretor procura em cada competência — você revisa a própria redação como um corretor revisaria. Junte isso aos 120 modelos aprovados pra comparar, e você elimina a dúvida "será que está certo?" sem depender de correção paga.</p>
           </div>
         </div>
 
         <div class="faq-item reveal neon-card overflow-hidden">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-base sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Qual a diferença entre o plano Básico e o Completo?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Básico (R$19,90)</strong> traz os dois materiais principais: os 120 Modelos de Redação e os 100 Esqueletos Nota Máxima. O <strong class="text-gray-200">Completo (R$29,90)</strong> inclui tudo do Básico + Mapas Mentais + Cronograma Flexível + os 3 bônus do lote de lançamento (50 Repertórios, Conectivos e Checklist de Revisão). Por R$10 de diferença, o Completo leva o método inteiro — por isso é o mais escolhido. Os dois têm 15 dias de garantia.</p>
+            <p class="text-gray-400 text-base sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Básico (R$19,90)</strong> traz os dois materiais principais: os 120 Modelos de Redação e os 100 Esqueletos Nota Máxima. O <strong class="text-gray-200">Completo (R$29,90)</strong> inclui tudo do Básico + Mapas Mentais + Cronograma Flexível + os 3 bônus do lote de lançamento (50 Repertórios, Conectivos e Checklist de Revisão). Por R$10 de diferença, o Completo leva o método inteiro — por isso é o mais escolhido. Os dois têm 15 dias de garantia.</p>
           </div>
         </div>
 
@@ -1022,7 +1025,7 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow leading-snug mb-5">
         Quer tirar nota máxima na redação e <span class="text-gradient">conquistar sua vaga?</span>
       </h2>
-      <p class="reveal text-gray-400 text-[15px] sm:text-lg leading-relaxed mb-6 sm:mb-8">
+      <p class="reveal text-gray-400 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8">
         Entre agora no lote de lançamento e fique 100% preparado pra qualquer tema — mesmo começando do zero. São 7 materiais, acesso imediato e 15 dias de garantia.
       </p>
 
