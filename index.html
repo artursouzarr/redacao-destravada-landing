@@ -92,7 +92,10 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+    }
 
     /* Fade-in ao scroll */
     .reveal {
@@ -107,43 +110,83 @@
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
-      .mockup-3d { transform: none; }
+      .cta-pulse, .btn-primary::before { animation: none; }
     }
 
-    /* Pulse sutil no CTA principal */
+    /* Pulse sutil no CTA principal (respiração do glow) */
     @keyframes pulse-cta {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, .55); }
-      50% { box-shadow: 0 0 0 14px rgba(124, 58, 237, 0); }
+      0%, 100% { box-shadow: 0 0 30px rgba(124, 58, 237, .5); }
+      50% { box-shadow: 0 0 42px rgba(124, 58, 237, .65); }
     }
     .cta-pulse { animation: pulse-cta 2.2s ease-in-out infinite; }
 
-    /* Botão primário — gradiente roxo com glow */
+    /* Botão CTA principal — gradiente roxo, glow e shimmer */
     .btn-primary {
-      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-      box-shadow: 0 6px 24px rgba(124, 58, 237, .45);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #7c3aed 100%);
+      background-size: 200% 200%;
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.5);
+      border-radius: 16px;
+      padding: 20px 40px;
+      font-weight: 800;
+      transition: all 0.3s ease;
     }
     .btn-primary:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 36px rgba(124, 58, 237, .6);
-      filter: brightness(1.1);
+      animation: none;
+      box-shadow: 0 0 50px rgba(124, 58, 237, 0.7);
+      transform: scale(1.05);
+      background-position: 100% 0;
+    }
+    /* Brilho deslizante (shimmer) a cada 3s */
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .25), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      60%, 100% { left: 150%; }
     }
 
-    /* Título com gradiente de texto */
+    /* Títulos principais — glow/neon roxo */
+    .title-glow {
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Gradiente de texto (palavras-chave e números de destaque) */
     .text-gradient {
-      background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #7c3aed 100%);
+      background: linear-gradient(135deg, #a855f7, #ec4899);
       -webkit-background-clip: text;
       background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: transparent;
     }
 
-    /* Mockups com perspectiva 3D sutil + drop-shadow roxo */
-    .mockup-3d {
-      transform: perspective(900px) rotateX(6deg);
-      filter: drop-shadow(0 24px 48px rgba(124, 58, 237, .35));
-      transition: transform .4s ease;
+    /* Cards com borda glow (neon-border) */
+    .neon-card {
+      background: #1a1a2e;
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+      border-radius: 20px;
     }
-    .mockup-3d:hover { transform: perspective(900px) rotateX(0deg) scale(1.02); }
+
+    /* Badges e tags promocionais */
+    .badge-gradient {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: white;
+      font-weight: 800;
+      padding: 6px 20px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
 
     /* Header escuro que ganha sombra ao scrollar */
     #header {
@@ -167,12 +210,11 @@
     .faq-item.open .faq-chevron { transform: rotate(180deg); }
     .faq-chevron { transition: transform .3s ease; }
 
-    /* Hover nos cards — glow roxo */
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    /* Hover nos cards clicáveis — glow roxo */
+    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
     .card-hover:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(124, 58, 237, .25);
-      border-color: rgba(124, 58, 237, .45);
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+      transform: translateY(-2px);
     }
   </style>
 </head>
@@ -191,7 +233,7 @@
       <a href="#" class="hidden sm:block font-display font-extrabold text-white text-lg sm:text-xl tracking-tight">
         Redação <span class="text-primary-light">Destravada</span>
       </a>
-      <a href="#oferta" class="btn-primary text-white font-display font-bold text-sm px-6 py-2.5 rounded-full whitespace-nowrap">
+      <a href="#oferta" class="btn-primary text-white font-display font-bold text-sm !px-6 !py-2.5 whitespace-nowrap">
         Quero Começar Agora
       </a>
     </div>
@@ -200,10 +242,10 @@
   <!-- ============ 2. HERO ============ -->
   <section class="bg-darker pt-36 sm:pt-48 pb-16 sm:pb-32 px-4 sm:px-6 min-h-[88vh] flex items-center">
     <div class="max-w-4xl mx-auto text-center w-full">
-      <p class="reveal inline-block bg-primary/15 border border-primary/30 text-primary-light font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-6 sm:mb-8">
+      <p class="reveal inline-block badge-gradient text-xs sm:text-sm mb-6 sm:mb-8">
         ENEM · FGV · VUNESP · Cebraspe · FCC
       </p>
-      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 text-white">
+      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 title-glow">
         O método que deixa você <span class="text-gradient">100% pronto</span> pra qualquer tema de redação
       </h1>
       <p class="reveal text-gray-300 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -211,7 +253,7 @@
       </p>
 
       <div class="reveal">
-        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-xl px-6 sm:px-14 py-4 sm:py-6 rounded-full leading-snug">
+        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-xl leading-snug">
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
         <p class="text-gray-500 text-xs mt-4 max-w-md mx-auto leading-relaxed">
@@ -228,50 +270,46 @@
         <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-eae-green font-display font-extrabold">15 dias</strong> de garantia</span>
       </div>
 
-      <!-- Mockup do pacote completo (imagem já existe) -->
-      <div class="reveal mt-12 sm:mt-16">
-        <img src="mockup-pacote.png" alt="Mockup dos 7 materiais digitais do Redação Destravada" class="mockup-3d w-full max-w-lg mx-auto">
-      </div>
     </div>
   </section>
 
   <!-- ============ 2b. SENDO SINCERO... ============ -->
   <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center leading-snug mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center leading-snug mb-8 sm:mb-12">
         Sendo <span class="text-gradient">sincero</span> com você...
       </h2>
 
       <div class="space-y-3 sm:space-y-4">
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+        <div class="reveal neon-card p-5 sm:p-6 flex items-start gap-4">
           <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
             <p class="font-display font-bold text-white">Você até estuda, mas trava na hora de escrever</p>
             <p class="text-gray-400 text-sm sm:text-base mt-1">Sabe o conteúdo, mas a folha em branco paralisa e as ideias não viram texto.</p>
           </div>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+        <div class="reveal neon-card p-5 sm:p-6 flex items-start gap-4">
           <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
             <p class="font-display font-bold text-white">Medo de cair um tema que você nunca viu</p>
             <p class="text-gray-400 text-sm sm:text-base mt-1">Chegar na prova rezando por um tema "fácil" é apostar a sua vaga na sorte.</p>
           </div>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+        <div class="reveal neon-card p-5 sm:p-6 flex items-start gap-4">
           <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
             <p class="font-display font-bold text-white">Horas de videoaula e a nota não sai do lugar</p>
             <p class="text-gray-400 text-sm sm:text-base mt-1">Teoria você já tem de sobra. O que falta é um passo a passo pra aplicar.</p>
           </div>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+        <div class="reveal neon-card p-5 sm:p-6 flex items-start gap-4">
           <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
             <p class="font-display font-bold text-white">O repertório some na hora H</p>
             <p class="text-gray-400 text-sm sm:text-base mt-1">Você leu, anotou, decorou... e na prova não lembra de uma citação sequer.</p>
           </div>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+        <div class="reveal neon-card p-5 sm:p-6 flex items-start gap-4">
           <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
             <p class="font-display font-bold text-white">Ninguém pra dizer se o texto está no caminho certo</p>
@@ -294,7 +332,7 @@
     <div class="max-w-5xl mx-auto">
 
       <div class="max-w-2xl mx-auto text-center mb-10 sm:mb-14">
-        <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white leading-snug mb-5">
+        <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow leading-snug mb-5">
           A redação ainda é o seu maior desafio?
         </h2>
         <div class="space-y-4 text-gray-300 text-[15px] sm:text-lg leading-relaxed">
@@ -326,17 +364,17 @@
       </div>
 
       <div class="grid md:grid-cols-3 gap-4 md:gap-6">
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+        <div class="reveal card-hover neon-card p-6 sm:p-8">
           <div class="w-14 h-14 rounded-2xl bg-eae-blue text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
           <h4 class="font-display font-extrabold text-xl text-white mb-2">Esqueleto</h4>
           <p class="text-gray-400 leading-relaxed">Escolha uma estrutura pronta entre <strong class="text-gray-200">100 esqueletos nota máxima</strong> — tem um pra cada tipo de tema que pode cair na sua prova.</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+        <div class="reveal card-hover neon-card p-6 sm:p-8">
           <div class="w-14 h-14 rounded-2xl bg-eae-orange text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">A</div>
           <h4 class="font-display font-extrabold text-xl text-white mb-2">Argumento</h4>
           <p class="text-gray-400 leading-relaxed">Encaixe repertório do <strong class="text-gray-200">banco de 50 argumentos prontos</strong> — sem depender de "cultura geral" na hora da prova.</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+        <div class="reveal card-hover neon-card p-6 sm:p-8">
           <div class="w-14 h-14 rounded-2xl bg-eae-green text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
           <h4 class="font-display font-extrabold text-xl text-white mb-2">Entrega</h4>
           <p class="text-gray-400 leading-relaxed">Feche com a conclusão validada e revise com o <strong class="text-gray-200">checklist do corretor</strong>. Redação pronta, sem pânico — nem com tema inesperado.</p>
@@ -348,11 +386,11 @@
   <!-- ============ 3b. TABELA COMPARATIVA ============ -->
   <section class="bg-darker pb-12 sm:pb-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center leading-snug mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center leading-snug mb-8 sm:mb-12">
         A diferença de estudar <span class="text-gradient">com método</span>
       </h2>
       <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 items-stretch">
-        <div class="reveal bg-red-500/5 border-2 border-red-500/25 rounded-3xl p-6 sm:p-8">
+        <div class="reveal neon-card p-6 sm:p-8">
           <h3 class="font-display font-extrabold text-lg sm:text-xl text-red-400 mb-5">Sem método ❌</h3>
           <ul class="space-y-3 text-gray-400 text-sm sm:text-base">
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Começa a redação sem saber por onde ir</li>
@@ -362,7 +400,7 @@
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Nota oscila a cada simulado</li>
           </ul>
         </div>
-        <div class="reveal bg-eae-green/5 border-2 border-eae-green/30 rounded-3xl p-6 sm:p-8 shadow-lg">
+        <div class="reveal neon-card p-6 sm:p-8">
           <h3 class="font-display font-extrabold text-lg sm:text-xl text-eae-green mb-5">Com Método EAE ✅</h3>
           <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
             <li class="flex items-start gap-2.5"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Esqueleto pronto pra cada tipo de tema</li>
@@ -379,31 +417,31 @@
   <!-- ============ 3c. NÚMEROS REAIS DO MATERIAL ============ -->
   <section class="bg-panel border-y border-white/5 py-12 sm:py-20 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         O que tem dentro do <span class="text-gradient">Redação Destravada</span>
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Números reais do material — sem promessa inflada.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-primary-light mb-1">120</p>
+        <div class="reveal card-hover neon-card p-5 text-center">
+          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">120</p>
           <p class="text-gray-400 text-xs sm:text-sm leading-snug">Modelos de Redação</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-eae-orange mb-1">100</p>
+        <div class="reveal card-hover neon-card p-5 text-center">
+          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">100</p>
           <p class="text-gray-400 text-xs sm:text-sm leading-snug">Esqueletos Adaptáveis</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-eae-green mb-1">50</p>
+        <div class="reveal card-hover neon-card p-5 text-center">
+          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">50</p>
           <p class="text-gray-400 text-xs sm:text-sm leading-snug">Repertórios Prontos</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-gold mb-1">5</p>
+        <div class="reveal card-hover neon-card p-5 text-center">
+          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">5</p>
           <p class="text-gray-400 text-xs sm:text-sm leading-snug">Bancas Cobertas<br><span class="text-gray-500 text-[11px]">ENEM · FGV · VUNESP · Cebraspe · FCC</span></p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center col-span-2 sm:col-span-1">
-          <p class="font-display font-black text-3xl sm:text-4xl text-white mb-1">15</p>
+        <div class="reveal card-hover neon-card p-5 text-center col-span-2 sm:col-span-1">
+          <p class="font-display font-black text-3xl sm:text-4xl text-gradient mb-1">15</p>
           <p class="text-gray-400 text-xs sm:text-sm leading-snug">Dias de Garantia</p>
         </div>
       </div>
@@ -413,7 +451,7 @@
   <!-- ============ 4. DEPOIMENTOS ============ -->
   <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         O que dizem nossos alunos
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -423,8 +461,10 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
         <!-- Card de depoimento 1 — Ana Luiza -->
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center">
-          <img src="ana-luiza.jpg" alt="Foto da aluna Ana Luiza com UFRGS pintado na testa" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
+            <span class="font-display font-black text-white text-2xl">AL</span>
+          </div>
 
           <p class="font-display font-bold text-white mb-1">Ana Luiza, 20 anos</p>
           <p class="text-gold text-lg tracking-wider mb-3" aria-label="4 de 5 estrelas">★★★★☆</p>
@@ -433,8 +473,10 @@
         </div>
 
         <!-- Card de depoimento 2 — Camila Rodrigues -->
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center">
-          <img src="camila-rodrigues.jpg" alt="Foto da aluna Camila Rodrigues de uniforme do SAMU" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
+            <span class="font-display font-black text-white text-2xl">CR</span>
+          </div>
 
           <p class="font-display font-bold text-white mb-1">Camila Rodrigues, 21 anos</p>
           <p class="text-gold text-lg tracking-wider mb-3" aria-label="4 de 5 estrelas">★★★★<span class="text-gray-600">★</span></p>
@@ -443,8 +485,10 @@
         </div>
 
         <!-- Card de depoimento 3 — Larissa Souza -->
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
-          <img src="larissa-souza.jpg" alt="Foto da aluna Larissa Souza de uniforme azul fazendo sinal de paz" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
+            <span class="font-display font-black text-white text-2xl">LS</span>
+          </div>
 
           <p class="font-display font-bold text-white mb-1">Larissa Souza, 21 anos</p>
           <p class="text-gold text-lg tracking-wider mb-3" aria-label="5 de 5 estrelas">★★★★★</p>
@@ -459,21 +503,21 @@
   <!-- ============ 4b. COMO FUNCIONA ============ -->
   <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-8 sm:mb-12">
         Como funciona
       </h2>
       <div class="grid sm:grid-cols-3 gap-4 sm:gap-6">
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+        <div class="reveal card-hover neon-card p-6 sm:p-8 text-center">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">1</div>
           <h3 class="font-display font-extrabold text-lg text-white mb-2">Você compra</h3>
           <p class="text-gray-400 text-sm">Pagamento seguro via Ticto — Pix, cartão ou boleto.</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+        <div class="reveal card-hover neon-card p-6 sm:p-8 text-center">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">2</div>
           <h3 class="font-display font-extrabold text-lg text-white mb-2">Recebe na hora</h3>
           <p class="text-gray-400 text-sm">E-mail da Ticto com acesso imediato a todos os materiais.</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+        <div class="reveal card-hover neon-card p-6 sm:p-8 text-center">
           <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">3</div>
           <h3 class="font-display font-extrabold text-lg text-white mb-2">Começa a aplicar</h3>
           <p class="text-gray-400 text-sm">Primeira redação com o Método EAE hoje mesmo.</p>
@@ -485,17 +529,17 @@
   <!-- ============ 5. OFERTA (STACK DE VALOR) ============ -->
   <section id="oferta" class="bg-darker py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
     <div class="max-w-2xl mx-auto text-center">
-      <span class="reveal inline-block bg-gold/15 border border-gold/30 text-gold font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">
+      <span class="reveal inline-block badge-gradient font-display text-xs sm:text-sm mb-4 uppercase tracking-wide">
         🔥 Lote de lançamento
       </span>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow mb-3">
         Tudo o que você recebe hoje
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg mb-6 sm:mb-10">
         7 materiais digitais com acesso imediato, atualizados com os temas que mais caem em ENEM e concursos:
       </p>
 
-      <div class="reveal bg-white/5 border border-white/10 rounded-3xl shadow-xl px-4 py-5 sm:p-8 text-left mb-6 sm:mb-8">
+      <div class="reveal neon-card shadow-xl px-4 py-5 sm:p-8 text-left mb-6 sm:mb-8">
         <ul class="space-y-3 text-sm sm:text-lg text-gray-300">
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> 120 Modelos de Redação<span class="hidden sm:inline"> Prontos</span></span>
@@ -530,12 +574,12 @@
           <p class="text-gray-500 text-lg">Valor total: <span class="line-through">R$323</span></p>
           <p class="text-gray-500 text-lg mt-1">De <span class="line-through">R$47</span> por apenas:</p>
           <p class="font-display font-black text-gradient text-5xl sm:text-6xl mt-2 mb-1">R$29,90</p>
-          <span class="inline-block bg-gold/15 border border-gold/30 text-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Preço de lançamento</span>
+          <span class="inline-block badge-gradient text-xs uppercase tracking-widest">Preço de lançamento</span>
         </div>
       </div>
 
       <div class="reveal">
-        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-lg px-6 sm:px-12 py-5 rounded-full leading-snug">
+        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-lg leading-snug">
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
 
@@ -575,25 +619,17 @@
   <!-- ============ 5b. ESPIADA NOS MATERIAIS (Mapas Mentais + Cronograma) ============ -->
   <section class="bg-darker pb-12 sm:pb-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-xl sm:text-3xl text-white text-center mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-xl sm:text-3xl title-glow text-center mb-8 sm:mb-12">
         Também dentro do material
       </h2>
       <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
-          <!-- TODO: adicionar mockup-mapas-mentais.png com fundo transparente -->
-          <div class="relative h-40 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-mapas-mentais.png" alt="Mockup dos Mapas Mentais" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-3" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal card-hover neon-card p-6 sm:p-8">
+          <div class="w-14 h-14 rounded-2xl bg-primary/15 flex items-center justify-center text-3xl mb-5" aria-hidden="true">🧠</div>
           <h3 class="font-display font-extrabold text-lg text-white mb-2">Mapas Mentais Simples e Objetivos</h3>
           <p class="text-gray-400 text-sm sm:text-base">Os temas que mais caem, resumidos em uma página — pra revisar rápido antes da prova.</p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
-          <!-- TODO: adicionar mockup-cronograma.png com fundo transparente -->
-          <div class="relative h-40 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-cronograma.png" alt="Mockup do Cronograma de Estudos Flexível" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-3" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal card-hover neon-card p-6 sm:p-8">
+          <div class="w-14 h-14 rounded-2xl bg-primary/15 flex items-center justify-center text-3xl mb-5" aria-hidden="true">📅</div>
           <h3 class="font-display font-extrabold text-lg text-white mb-2">Cronograma de Estudos Flexível</h3>
           <p class="text-gray-400 text-sm sm:text-base">Organize a semana mesmo tendo só 30–40 minutos por dia pra estudar redação.</p>
         </div>
@@ -604,7 +640,7 @@
   <!-- ============ 6. BÔNUS ============ -->
   <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         3 bônus grátis <span class="text-eae-green">neste lote</span>
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -612,46 +648,34 @@
       </p>
 
       <div class="space-y-4 sm:space-y-5">
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
-          <!-- TODO: adicionar mockup-bonus-repertorios.png com fundo transparente -->
-          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-bonus-repertorios.png" alt="Mockup do Banco de 50 Repertórios Prontos" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal card-hover neon-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl bg-primary/15 flex items-center justify-center text-3xl flex-shrink-0" aria-hidden="true">📚</div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
               <h3 class="font-display font-extrabold text-lg text-white">Banco de 50 Repertórios Prontos</h3>
-              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <span class="badge-gradient text-xs">GRÁTIS</span>
             </div>
             <p class="text-gray-400">Citações, dados e referências prontos pra encaixar em qualquer tema. Nunca mais fique sem argumento.</p>
           </div>
           <p class="text-gray-500 text-sm whitespace-nowrap">de <span class="line-through">R$39</span> → <strong class="text-eae-green">R$0</strong></p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
-          <!-- TODO: adicionar mockup-bonus-conectivos.png com fundo transparente -->
-          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-bonus-conectivos.png" alt="Mockup do guia Conectivos Nota Máxima" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal card-hover neon-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl bg-primary/15 flex items-center justify-center text-3xl flex-shrink-0" aria-hidden="true">🔗</div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
               <h3 class="font-display font-extrabold text-lg text-white">Conectivos Nota Máxima</h3>
-              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <span class="badge-gradient text-xs">GRÁTIS</span>
             </div>
             <p class="text-gray-400">Os conectivos certos pra cada transição do texto — direto na coesão que a banca pontua.</p>
           </div>
           <p class="text-gray-500 text-sm whitespace-nowrap">de <span class="line-through">R$29</span> → <strong class="text-eae-green">R$0</strong></p>
         </div>
-        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
-          <!-- TODO: adicionar mockup-bonus-checklist.png com fundo transparente -->
-          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-bonus-checklist.png" alt="Mockup do Checklist de Revisão Pré-Prova" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal card-hover neon-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <div class="w-14 h-14 rounded-2xl bg-primary/15 flex items-center justify-center text-3xl flex-shrink-0" aria-hidden="true">✅</div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
               <h3 class="font-display font-extrabold text-lg text-white">Checklist de Revisão Pré-Prova</h3>
-              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <span class="badge-gradient text-xs">GRÁTIS</span>
             </div>
             <p class="text-gray-400">Revise sua redação como um corretor e elimine os erros antes de entregar.</p>
           </div>
@@ -664,7 +688,7 @@
   <!-- ============ 6b. PLANOS (BÁSICO vs COMPLETO) ============ -->
   <section id="planos" class="bg-darker py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-3">
         Escolha a sua versão
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -674,15 +698,10 @@
       <div class="grid sm:grid-cols-2 gap-6 sm:gap-6 items-stretch max-w-3xl mx-auto pt-4">
 
         <!-- Plano BÁSICO -->
-        <div class="reveal bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col">
-          <!-- TODO: adicionar mockup-basico.png (ou reaproveitar mockup-pacote.png temporariamente) -->
-          <div class="relative h-36 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
-            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-            <img src="mockup-basico.png" alt="Mockup do plano Básico" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
-          </div>
+        <div class="reveal neon-card p-6 sm:p-8 flex flex-col">
           <h3 class="font-display font-extrabold text-lg text-white">Redação Destravada <span class="text-gray-400">BÁSICO</span></h3>
           <p class="text-gray-500 text-sm mt-1 mb-5">Pra quem só quer os materiais principais.</p>
-          <p class="font-display font-black text-4xl text-white mb-6">R$19,90</p>
+          <p class="font-display font-black text-4xl text-gradient mb-6">R$19,90</p>
           <ul class="space-y-2.5 text-sm text-gray-300 flex-1 mb-6">
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 120 Modelos de Redação Prontos</li>
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 100 Esqueletos Nota Máxima (Método EAE)</li>
@@ -700,11 +719,7 @@
 
         <!-- Plano COMPLETO -->
         <div class="reveal relative bg-gradient-to-b from-primary/15 to-white/5 border-2 border-primary rounded-3xl p-6 sm:p-8 flex flex-col shadow-[0_0_40px_rgba(124,58,237,.25)]">
-          <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-primary-dark text-white text-xs font-display font-bold px-4 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap shadow-md">⭐ Mais popular</span>
-          <!-- Mockup do pacote completo (imagem já existe) -->
-          <div class="relative h-36 rounded-2xl bg-white/5 flex items-center justify-center overflow-hidden mb-5">
-            <img src="mockup-pacote.png" alt="Mockup do pacote completo Redação Destravada" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2">
-          </div>
+          <span class="absolute -top-4 left-1/2 -translate-x-1/2 badge-gradient text-xs font-display uppercase tracking-widest whitespace-nowrap">⭐ Mais popular</span>
           <h3 class="font-display font-extrabold text-lg text-white">Redação Destravada <span class="text-primary-light">COMPLETO</span></h3>
           <p class="text-gray-400 text-sm mt-1 mb-5">Método completo + 3 bônus do lote de lançamento.</p>
           <p class="mb-6">
@@ -720,7 +735,7 @@
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Bônus: Conectivos Nota Máxima</li>
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Bônus: Checklist de Revisão</li>
           </ul>
-          <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block text-center text-white font-display font-extrabold text-sm px-6 py-4 rounded-full">
+          <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block text-center text-white font-display font-extrabold text-sm">
             QUERO O COMPLETO — R$29,90
           </a>
         </div>
@@ -744,7 +759,7 @@
           <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM13.707 8.293a1 1 0 00-1.414-1.414L9 10.172 7.707 8.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
         </svg>
       </div>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white mb-5">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow mb-5">
         15 dias de garantia, sem perguntas
       </h2>
       <p class="reveal text-gray-300 text-[15px] sm:text-lg leading-relaxed">
@@ -756,10 +771,10 @@
   <!-- ============ 7b. QUEM SOU EU ============ -->
   <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-8 sm:mb-12">
         Quem está por trás do <span class="text-gradient">Método EAE</span>
       </h2>
-      <div class="reveal bg-white/5 border border-white/10 rounded-3xl shadow-xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+      <div class="reveal neon-card shadow-xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
         <!-- Avatar com iniciais (sem foto, como decidido) -->
         <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-[0_0_40px_rgba(124,58,237,.35)]">
           <span class="font-display font-black text-white text-4xl">AR</span>
@@ -786,13 +801,13 @@
   <!-- ============ 8. FAQ ============ -->
   <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-10 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-10 sm:mb-12">
         Perguntas frequentes
       </h2>
 
       <div class="space-y-3" id="faq">
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Isso não é só copiar redação pronta?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -802,7 +817,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Serve pra banca do meu concurso?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -812,7 +827,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Tenho pouco tempo, vou conseguir aplicar?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -822,7 +837,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Já comprei outro material e não funcionou. Por que esse seria diferente?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -832,7 +847,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Funciona pra quem escreve muito mal?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -842,7 +857,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se eu não gostar?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -852,7 +867,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             É seguro comprar? Como funciona o pagamento?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -862,7 +877,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Como eu recebo o material?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -872,7 +887,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             O conteúdo é atualizado?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -882,7 +897,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Por que tão barato? Qual é o truque?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -892,7 +907,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se cair um tema que nunca caiu antes?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -902,7 +917,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Sem professor corrigindo, como vou saber se estou no caminho certo?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -912,7 +927,7 @@
           </div>
         </div>
 
-        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+        <div class="faq-item reveal neon-card overflow-hidden">
           <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Qual a diferença entre o plano Básico e o Completo?
             <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
@@ -929,10 +944,10 @@
   <!-- ============ 9. CTA FINAL ============ -->
   <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <span class="reveal inline-block bg-gold/15 border border-gold/30 text-gold font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-5 uppercase tracking-wide">
+      <span class="reveal inline-block badge-gradient font-display text-xs sm:text-sm mb-5 uppercase tracking-wide">
         ⏳ Oferta de lançamento por tempo limitado
       </span>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white leading-snug mb-5">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow leading-snug mb-5">
         Quer tirar nota máxima na redação e <span class="text-gradient">conquistar sua vaga?</span>
       </h2>
       <p class="reveal text-gray-400 text-[15px] sm:text-lg leading-relaxed mb-6 sm:mb-8">
@@ -947,7 +962,7 @@
       </div>
 
       <div class="reveal">
-        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-lg px-6 sm:px-12 py-5 rounded-full leading-snug">
+        <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-lg leading-snug">
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
         <p class="text-gray-500 text-xs mt-3 max-w-md mx-auto leading-relaxed">
