@@ -224,6 +224,10 @@
     .faq-item.open .faq-chevron { transform: rotate(180deg); }
     .faq-chevron { transition: transform .3s ease; }
 
+    /* Carrossel de depoimentos — esconde a barra de rolagem */
+    .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+
     /* Hover nos cards clicáveis — glow roxo */
     .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
     .card-hover:hover {
@@ -481,10 +485,19 @@
         Resultados reais de quem aplicou o Método EAE.
       </p>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div class="relative">
+        <!-- Setas de navegação do carrossel -->
+        <button id="testi-prev" aria-label="Ver depoimento anterior" class="absolute -left-1 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white shadow-[0_4px_20px_rgba(124,58,237,0.4)] flex items-center justify-center hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="testi-next" aria-label="Ver próximo depoimento" class="absolute -right-1 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white shadow-[0_4px_20px_rgba(124,58,237,0.4)] flex items-center justify-center hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <div id="testi-track" class="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar px-6 sm:px-8 py-2">
 
         <!-- Card de depoimento 1 — Ana Luiza -->
-        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center flex-shrink-0 w-[85%] sm:w-[380px] snap-center">
           <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
             <span class="font-display font-black text-white text-2xl">AL</span>
           </div>
@@ -496,7 +509,7 @@
         </div>
 
         <!-- Card de depoimento 2 — Camila Rodrigues -->
-        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center flex-shrink-0 w-[85%] sm:w-[380px] snap-center">
           <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
             <span class="font-display font-black text-white text-2xl">CR</span>
           </div>
@@ -508,7 +521,7 @@
         </div>
 
         <!-- Card de depoimento 3 — Larissa Souza -->
-        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+        <div class="reveal card-hover neon-card p-6 sm:p-7 flex flex-col items-center text-center flex-shrink-0 w-[85%] sm:w-[380px] snap-center">
           <div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(124,58,237,.35)]" aria-hidden="true">
             <span class="font-display font-black text-white text-2xl">LS</span>
           </div>
@@ -519,6 +532,7 @@
           <span class="bg-eae-green/15 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Enfermagem — UNIP</span>
         </div>
 
+        </div>
       </div>
     </div>
   </section>
@@ -1060,6 +1074,21 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Carrossel de depoimentos — setas rolam um card por clique
+    const testiTrack = document.getElementById('testi-track');
+    if (testiTrack) {
+      const testiStep = () => {
+        const card = testiTrack.querySelector(':scope > div');
+        return card ? card.offsetWidth + 24 : testiTrack.clientWidth;
+      };
+      document.getElementById('testi-prev').addEventListener('click', () => {
+        testiTrack.scrollBy({ left: -testiStep(), behavior: 'smooth' });
+      });
+      document.getElementById('testi-next').addEventListener('click', () => {
+        testiTrack.scrollBy({ left: testiStep(), behavior: 'smooth' });
+      });
+    }
 
     // FAQ accordion
     document.querySelectorAll('.faq-question').forEach((btn) => {
