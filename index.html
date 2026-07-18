@@ -270,6 +270,22 @@
       box-shadow: 0 0 30px rgba(153, 51, 255, 0.3);
       transform: translateY(-2px);
     }
+
+    /* Toast de notificação de compra — desliza do canto inferior esquerdo */
+    #purchase-toast {
+      transform: translateX(calc(-100% - 24px));
+      opacity: 0;
+      transition: transform .5s cubic-bezier(.22, 1, .36, 1), opacity .5s ease;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    #purchase-toast.toast-visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #purchase-toast { transform: none; transition: opacity .3s ease; }
+    }
   </style>
 </head>
 <body class="bg-darker text-gray-100 antialiased overflow-x-hidden">
@@ -1048,21 +1064,22 @@
     </div>
   </footer>
 
-  <!-- ============ NOTIFICAÇÃO DE COMPRA (DESATIVADA POR PADRÃO) ============
-       Componente pronto, mas INATIVO. Não exibe nada para visitantes.
-       Ativar SOMENTE quando houver integração com o webhook real de vendas
-       da Ticto (nunca com nomes inventados):
-       1) mude ENABLE_PURCHASE_NOTIFICATIONS para true no script abaixo;
-       2) chame showPurchaseToast('Nome do comprador') a cada venda real. -->
-  <div id="purchase-toast" class="hidden fixed bottom-4 left-4 z-[70] bg-dark rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3 max-w-[320px]" role="status" aria-live="polite">
+  <!-- ============ NOTIFICAÇÃO DE COMPRA (MODO DEMONSTRAÇÃO) ============
+       Sistema completo de prova social: 230 nomes, sequência aleatória,
+       intervalo aleatório de 3–15s, animação de slide no canto inferior esquerdo.
+       Roda APENAS em ambiente local (file:// / localhost) ou com ?demo=1 na URL.
+       Em produção, ativar SOMENTE com o webhook real de vendas da Ticto
+       (nunca com nomes inventados — publicidade enganosa, CDC art. 37):
+       chame showPurchaseToast('Nome do comprador') a cada venda real. -->
+  <div id="purchase-toast" class="fixed bottom-4 left-4 z-[70] bg-dark rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3 max-w-[320px]" role="status" aria-live="polite">
     <span class="w-10 h-10 rounded-full bg-eae-green/15 flex items-center justify-center flex-shrink-0">
       <svg class="w-6 h-6 text-eae-green" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
       </svg>
     </span>
     <div>
-      <p class="text-sm font-bold text-white leading-snug"><span id="purchase-toast-name"></span> acabou de garantir o Redação Destravada</p>
-      <p class="text-xs text-gray-500 mt-0.5">agora mesmo</p>
+      <p class="text-sm font-bold text-white leading-snug"><span id="purchase-toast-name"></span> acabou de adquirir o Redação Destravada</p>
+      <p class="text-xs text-gray-500 mt-0.5">Seja bem-vindo(a)! 🎉</p>
     </div>
   </div>
 
@@ -1191,15 +1208,99 @@
       });
     });
 
-    // Notificação de compra — DESATIVADA por padrão.
-    // Só ativar com vendas reais vindas do webhook da Ticto (nunca simular compradores).
-    const ENABLE_PURCHASE_NOTIFICATIONS = false;
-    function showPurchaseToast(buyerName) {
-      if (!ENABLE_PURCHASE_NOTIFICATIONS || !buyerName) return;
-      const toast = document.getElementById('purchase-toast');
-      document.getElementById('purchase-toast-name').textContent = buyerName;
-      toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 6000);
+    // ===== Sistema de notificação de compra (prova social) =====
+    // MODO DEMONSTRAÇÃO: roda só em ambiente local ou com ?demo=1 na URL.
+    // Em produção os nomes devem vir de vendas reais (webhook Ticto) —
+    // exibir nomes inventados a visitantes reais é publicidade enganosa (CDC art. 37).
+    const DEMO_NOTIFICACOES =
+      location.protocol === 'file:' ||
+      ['localhost', '127.0.0.1'].includes(location.hostname) ||
+      new URLSearchParams(location.search).has('demo');
+
+    // 230 nomes brasileiros populares (nome + 2 sobrenomes) — usados só no modo demo
+    const NOMES_DEMO = [
+      'Ana Silva Santos', 'Maria Oliveira Souza', 'João Pereira Lima', 'Pedro Alves Ribeiro', 'Lucas Gomes Costa',
+      'Gabriel Martins Rocha', 'Rafael Carvalho Dias', 'Daniel Almeida Nunes', 'Bruno Lopes Freitas', 'Carlos Soares Mendes',
+      'Paulo Fernandes Cardoso', 'Marcos Vieira Ramos', 'Felipe Barbosa Teixeira', 'Gustavo Nascimento Andrade', 'Guilherme Moreira Campos',
+      'Rodrigo Marques Duarte', 'Eduardo Machado Farias', 'Fernando Santana Pinto', 'Ricardo Gonçalves Castro', 'Leandro Araújo Miranda',
+      'Leonardo Correia Azevedo', 'Thiago Cavalcanti Cunha', 'Vinícius Monteiro Barros', 'Alexandre Moura Sales', 'Diego Batista Tavares',
+      'André Aguiar Bezerra', 'Fábio Borges Brito', 'Marcelo Camargo Cordeiro', 'Mateus Dantas Fonseca', 'Matheus Garcia Guedes',
+      'Caio Leal Macedo', 'Igor Magalhães Medeiros', 'Vitor Melo Neves', 'Henrique Pacheco Paiva', 'Samuel Peixoto Pires',
+      'Davi Prado Queiroz', 'Arthur Sampaio Siqueira', 'Miguel Vasconcelos Xavier', 'Heitor Amaral Silva', 'Bernardo Santos Oliveira',
+      'Enzo Souza Rodrigues', 'Otávio Ferreira Alves', 'Renan Pereira Gomes', 'Wesley Lima Costa', 'Jean Ribeiro Martins',
+      'Alan Rocha Carvalho', 'Douglas Dias Almeida', 'Everton Lopes Soares', 'Cristiano Fernandes Vieira', 'Juliana Barbosa Rocha',
+      'Fernanda Nascimento Nunes', 'Camila Andrade Moreira', 'Amanda Marques Machado', 'Aline Mendes Freitas', 'Bruna Cardoso Ramos',
+      'Jéssica Gonçalves Santana', 'Letícia Teixeira Araújo', 'Júlia Correia Monteiro', 'Mariana Moura Batista', 'Vanessa Campos Duarte',
+      'Patrícia Farias Pinto', 'Larissa Castro Miranda', 'Beatriz Azevedo Cunha', 'Adriana Barros Rezende', 'Gabriela Sales Tavares',
+      'Bianca Bezerra Aguiar', 'Carolina Borges Dantas', 'Débora Brito Camargo', 'Isabela Cordeiro Fonseca', 'Natália Garcia Leal',
+      'Priscila Guedes Macedo', 'Renata Magalhães Melo', 'Sabrina Medeiros Neves', 'Tatiane Pacheco Peixoto', 'Thaís Paiva Prado',
+      'Vitória Pires Queiroz', 'Sofia Sampaio Vasconcelos', 'Helena Siqueira Xavier', 'Laura Amaral Santos', 'Alice Silva Oliveira',
+      'Valentina Souza Ferreira', 'Luana Rodrigues Pereira', 'Raquel Alves Lima', 'Simone Gomes Ribeiro', 'Cristiane Costa Martins',
+      'Daniela Carvalho Rocha', 'Elaine Almeida Dias', 'Franciele Lopes Nunes', 'Ingrid Soares Freitas', 'Karina Fernandes Mendes',
+      'Lívia Vieira Cardoso', 'Michele Barbosa Ramos', 'Nicole Nascimento Teixeira', 'Pâmela Andrade Campos', 'Rosana Moreira Duarte',
+      'Sandra Marques Farias', 'Talita Machado Pinto', 'Viviane Santana Castro', 'Yasmin Gonçalves Miranda', 'Ana Araújo Azevedo',
+      'Maria Correia Cunha', 'João Cavalcanti Barros', 'Pedro Monteiro Sales', 'Lucas Moura Tavares', 'Gabriel Batista Aguiar',
+      'Rafael Campos Bezerra', 'Daniel Duarte Borges', 'Bruno Farias Brito', 'Carlos Pinto Camargo', 'Paulo Castro Cordeiro',
+      'Marcos Miranda Dantas', 'Felipe Azevedo Fonseca', 'Gustavo Cunha Garcia', 'Guilherme Barros Guedes', 'Rodrigo Rezende Leal',
+      'Eduardo Sales Macedo', 'Fernando Tavares Magalhães', 'Ricardo Aguiar Medeiros', 'Leandro Bezerra Melo', 'Leonardo Borges Neves',
+      'Thiago Brito Pacheco', 'Vinícius Camargo Paiva', 'Alexandre Cordeiro Peixoto', 'Diego Dantas Pires', 'André Fonseca Prado',
+      'Fábio Garcia Queiroz', 'Marcelo Guedes Sampaio', 'Mateus Leal Siqueira', 'Caio Macedo Vasconcelos', 'Igor Melo Xavier',
+      'Vitor Medeiros Amaral', 'Henrique Neves Silva', 'Samuel Pacheco Santos', 'Davi Paiva Oliveira', 'Arthur Peixoto Souza',
+      'Miguel Pires Rodrigues', 'Heitor Prado Ferreira', 'Bernardo Queiroz Alves', 'Enzo Sampaio Pereira', 'Otávio Siqueira Lima',
+      'Renan Vasconcelos Gomes', 'Wesley Xavier Costa', 'Jean Amaral Ribeiro', 'Alan Silva Martins', 'Douglas Santos Carvalho',
+      'Everton Oliveira Almeida', 'Cristiano Souza Lopes', 'Juliana Rodrigues Soares', 'Fernanda Ferreira Fernandes', 'Camila Alves Vieira',
+      'Amanda Pereira Barbosa', 'Aline Lima Rocha', 'Bruna Gomes Dias', 'Jéssica Costa Nascimento', 'Letícia Ribeiro Andrade',
+      'Júlia Martins Moreira', 'Mariana Carvalho Nunes', 'Vanessa Almeida Marques', 'Patrícia Lopes Machado', 'Larissa Soares Mendes',
+      'Beatriz Fernandes Freitas', 'Adriana Vieira Ramos', 'Gabriela Barbosa Gonçalves', 'Bianca Rocha Santana', 'Natália Dias Teixeira',
+      'Priscila Nascimento Araújo', 'Renata Andrade Correia', 'Sabrina Moreira Cavalcanti', 'Tatiane Nunes Monteiro', 'Thaís Marques Moura',
+      'Vitória Machado Batista', 'Sofia Mendes Campos', 'Helena Freitas Duarte', 'Laura Cardoso Farias', 'Alice Ramos Pinto',
+      'Valentina Gonçalves Castro', 'Luana Santana Miranda', 'Raquel Teixeira Azevedo', 'Simone Araújo Cunha', 'Cristiane Correia Barros',
+      'Daniela Cavalcanti Rezende', 'Elaine Monteiro Sales', 'Franciele Moura Tavares', 'Ingrid Batista Aguiar', 'Karina Campos Bezerra',
+      'Lívia Duarte Borges', 'Michele Farias Brito', 'Nicole Pinto Camargo', 'Pâmela Castro Cordeiro', 'Rosana Miranda Dantas',
+      'Sandra Azevedo Fonseca', 'Talita Cunha Garcia', 'Viviane Barros Guedes', 'Yasmin Rezende Leal', 'Ana Sales Macedo',
+      'Maria Tavares Magalhães', 'João Aguiar Medeiros', 'Pedro Bezerra Melo', 'Lucas Borges Neves', 'Gabriel Brito Pacheco',
+      'Rafael Camargo Paiva', 'Daniel Cordeiro Peixoto', 'Bruno Dantas Pires', 'Carlos Fonseca Prado', 'Paulo Garcia Queiroz',
+      'Marcos Guedes Sampaio', 'Felipe Leal Siqueira', 'Gustavo Macedo Vasconcelos', 'Guilherme Magalhães Xavier', 'Rodrigo Medeiros Amaral',
+      'Eduardo Melo Silva', 'Fernando Neves Santos', 'Ricardo Pacheco Oliveira', 'Leandro Paiva Souza', 'Leonardo Peixoto Rodrigues',
+      'Thiago Pires Ferreira', 'Vinícius Prado Alves', 'Alexandre Queiroz Pereira', 'Diego Sampaio Lima', 'André Siqueira Gomes',
+      'Fábio Vasconcelos Costa', 'Marcelo Xavier Ribeiro', 'Mateus Amaral Martins', 'Juliana Silva Carvalho', 'Fernanda Santos Almeida',
+      'Camila Oliveira Lopes', 'Amanda Souza Soares', 'Aline Rodrigues Fernandes', 'Bruna Ferreira Vieira', 'Jéssica Alves Barbosa'
+    ];
+
+    const purchaseToast = document.getElementById('purchase-toast');
+    const purchaseToastName = document.getElementById('purchase-toast-name');
+    let purchaseToastTimer = null;
+
+    // Exibe uma notificação (usada pelo modo demo e por integrações reais)
+    function showPurchaseToast(buyerName, exibicaoMs = 5000) {
+      if (!buyerName) return;
+      clearTimeout(purchaseToastTimer);
+      purchaseToastName.textContent = buyerName;
+      purchaseToast.classList.add('toast-visible');
+      purchaseToastTimer = setTimeout(() => purchaseToast.classList.remove('toast-visible'), exibicaoMs);
+    }
+
+    if (DEMO_NOTIFICACOES) {
+      // Embaralha (Fisher-Yates) pra sequência aleatória sem repetir antes de esgotar a lista
+      const embaralhar = (arr) => {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      };
+      let fila = embaralhar([...NOMES_DEMO]);
+      const proximoNome = () => {
+        if (!fila.length) fila = embaralhar([...NOMES_DEMO]); // recomeça — roda 24h sem parar
+        return fila.pop();
+      };
+      const EXIBICAO_MS = 5000;
+      const intervaloAleatorio = () => 3000 + Math.random() * 12000; // entre 3 e 15 segundos
+      const cicloNotificacao = () => {
+        showPurchaseToast(proximoNome(), EXIBICAO_MS);
+        setTimeout(cicloNotificacao, EXIBICAO_MS + intervaloAleatorio());
+      };
+      setTimeout(cicloNotificacao, intervaloAleatorio());
     }
   </script>
 </body>
