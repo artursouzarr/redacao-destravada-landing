@@ -51,6 +51,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f1a">
   <title>Redação Destravada — 100% pronto pra qualquer tema | Método EAE</title>
   <meta name="description" content="O método que deixa você 100% preparado pra qualquer tema de redação, mesmo começando do zero. 120 modelos prontos, 100 esqueletos adaptáveis, ENEM, FGV, VUNESP, Cebraspe e FCC. Garantia de 15 dias.">
   <meta property="og:title" content="Redação Destravada — Método EAE">
@@ -69,14 +70,16 @@
       theme: {
         extend: {
           colors: {
+            darker: '#0f0f1a',
+            panel: '#15152a',
             dark: '#1a1a2e',
-            darker: '#0d0d1a',
-            gold: '#d4a849',
-            primary: '#3b82f6',
-            'primary-dark': '#2563eb',
-            'eae-blue': '#3b82f6',
-            'eae-orange': '#f97316',
-            'eae-green': '#3ab577',
+            gold: '#e8c468',
+            primary: '#7c3aed',
+            'primary-dark': '#6d28d9',
+            'primary-light': '#a78bfa',
+            'eae-blue': '#60a5fa',
+            'eae-orange': '#fb923c',
+            'eae-green': '#22c55e',
           },
           fontFamily: {
             display: ['Montserrat', 'sans-serif'],
@@ -104,37 +107,54 @@
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
+      .mockup-3d { transform: none; }
     }
 
     /* Pulse sutil no CTA principal */
     @keyframes pulse-cta {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, .5); }
-      50% { box-shadow: 0 0 0 14px rgba(59, 130, 246, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, .55); }
+      50% { box-shadow: 0 0 0 14px rgba(124, 58, 237, 0); }
     }
     .cta-pulse { animation: pulse-cta 2.2s ease-in-out infinite; }
 
-    /* Botão primário vibrante */
+    /* Botão primário — gradiente roxo com glow */
     .btn-primary {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
       transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
-      box-shadow: 0 6px 20px rgba(59, 130, 246, .35);
+      box-shadow: 0 6px 24px rgba(124, 58, 237, .45);
     }
     .btn-primary:hover {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 32px rgba(59, 130, 246, .45);
-      filter: brightness(1.06);
+      box-shadow: 0 12px 36px rgba(124, 58, 237, .6);
+      filter: brightness(1.1);
     }
 
-    /* Header claro que ganha sombra ao scrollar */
+    /* Título com gradiente de texto */
+    .text-gradient {
+      background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Mockups com perspectiva 3D sutil + drop-shadow roxo */
+    .mockup-3d {
+      transform: perspective(900px) rotateX(6deg);
+      filter: drop-shadow(0 24px 48px rgba(124, 58, 237, .35));
+      transition: transform .4s ease;
+    }
+    .mockup-3d:hover { transform: perspective(900px) rotateX(0deg) scale(1.02); }
+
+    /* Header escuro que ganha sombra ao scrollar */
     #header {
-      background-color: rgba(255, 255, 255, .85);
+      background-color: rgba(15, 15, 26, .8);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: box-shadow .3s ease, background-color .3s ease;
     }
     #header.scrolled {
-      background-color: rgba(255, 255, 255, .95);
-      box-shadow: 0 2px 20px rgba(26, 26, 46, .08);
+      background-color: rgba(15, 15, 26, .95);
+      box-shadow: 0 2px 24px rgba(124, 58, 237, .15);
     }
 
     /* Accordion do FAQ */
@@ -147,25 +167,29 @@
     .faq-item.open .faq-chevron { transform: rotate(180deg); }
     .faq-chevron { transition: transform .3s ease; }
 
-    /* Hover nos cards */
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26, 26, 46, .12); }
+    /* Hover nos cards — glow roxo */
+    .card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(124, 58, 237, .25);
+      border-color: rgba(124, 58, 237, .45);
+    }
   </style>
 </head>
-<body class="bg-[#fafafa] text-dark antialiased overflow-x-hidden">
+<body class="bg-darker text-gray-100 antialiased overflow-x-hidden">
 
-  <!-- ============ 0. BARRA FIXA DE URGÊNCIA ============ -->
-  <div class="fixed top-0 left-0 right-0 z-[60] h-10 bg-dark flex items-center justify-center px-3">
+  <!-- ============ 0. BARRA FIXA DE URGÊNCIA (data dinâmica via JS) ============ -->
+  <div class="fixed top-0 left-0 right-0 z-[60] h-10 bg-gradient-to-r from-primary-dark via-primary to-primary-dark flex items-center justify-center px-3">
     <p class="text-[11px] sm:text-sm font-display font-bold tracking-wide text-white text-center whitespace-nowrap overflow-hidden text-ellipsis">
-      ⚡ OFERTA DE LANÇAMENTO: <span class="text-gold">R$29,90</span> POR TEMPO LIMITADO
+      🔥 OFERTA DE LANÇAMENTO: <span class="text-gold">R$29,90</span> <span id="data-urgencia">HOJE</span>
     </p>
   </div>
 
   <!-- ============ 1. HEADER FIXO ============ -->
   <header id="header" class="fixed top-10 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-center sm:justify-between gap-3">
-      <a href="#" class="hidden sm:block font-display font-extrabold text-dark text-lg sm:text-xl tracking-tight">
-        Redação <span class="text-primary">Destravada</span>
+      <a href="#" class="hidden sm:block font-display font-extrabold text-white text-lg sm:text-xl tracking-tight">
+        Redação <span class="text-primary-light">Destravada</span>
       </a>
       <a href="#oferta" class="btn-primary text-white font-display font-bold text-sm px-6 py-2.5 rounded-full whitespace-nowrap">
         Quero Começar Agora
@@ -174,85 +198,90 @@
   </header>
 
   <!-- ============ 2. HERO ============ -->
-  <section class="bg-white pt-36 sm:pt-48 pb-16 sm:pb-32 px-4 sm:px-6 min-h-[88vh] flex items-center">
+  <section class="bg-darker pt-36 sm:pt-48 pb-16 sm:pb-32 px-4 sm:px-6 min-h-[88vh] flex items-center">
     <div class="max-w-4xl mx-auto text-center w-full">
-      <p class="reveal inline-block bg-primary/10 text-primary font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-6 sm:mb-8">
+      <p class="reveal inline-block bg-primary/15 border border-primary/30 text-primary-light font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-6 sm:mb-8">
         ENEM · FGV · VUNESP · Cebraspe · FCC
       </p>
-      <h1 class="reveal font-display font-black text-[32px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8">
-        O método que deixa você <span class="text-primary">100% pronto</span> pra qualquer tema de redação
+      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 text-white">
+        O método que deixa você <span class="text-gradient">100% pronto</span> pra qualquer tema de redação
       </h1>
-      <p class="reveal text-gray-600 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12">
-        Mesmo começando do zero ou com pouco tempo pra estudar. Você recebe modelos prontos, esqueletos adaptáveis e o passo a passo do <strong class="text-dark">Método EAE</strong> pra estruturar qualquer redação <strong class="text-dark">em menos de 30 minutos</strong>.
+      <p class="reveal text-gray-300 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12">
+        Mesmo começando do zero ou com pouco tempo pra estudar. Você recebe modelos prontos, esqueletos adaptáveis e o passo a passo do <strong class="text-white">Método EAE</strong> pra estruturar qualquer redação <strong class="text-white">em menos de 30 minutos</strong>.
       </p>
 
       <div class="reveal">
         <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-xl px-6 sm:px-14 py-4 sm:py-6 rounded-full leading-snug">
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
-        <p class="text-gray-400 text-xs mt-4 max-w-md mx-auto leading-relaxed">
+        <p class="text-gray-500 text-xs mt-4 max-w-md mx-auto leading-relaxed">
           🔒 Pagamento processado pela Ticto. Seu banco pode exibir um alerta padrão de segurança — é normal e não impede a compra.
         </p>
       </div>
 
       <!-- Mini-badges com números concretos (primeira dobra) -->
       <div class="reveal flex flex-wrap justify-center gap-2.5 sm:gap-4 mt-10 sm:mt-14">
-        <span class="bg-[#fafafa] border border-gray-200 shadow-sm rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700"><strong class="text-primary font-display font-extrabold">120</strong> Modelos</span>
-        <span class="bg-[#fafafa] border border-gray-200 shadow-sm rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700"><strong class="text-primary font-display font-extrabold">100</strong> Esqueletos</span>
-        <span class="bg-[#fafafa] border border-gray-200 shadow-sm rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700"><strong class="text-primary font-display font-extrabold">5</strong> Bancas</span>
-        <span class="bg-[#fafafa] border border-gray-200 shadow-sm rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700"><strong class="text-primary font-display font-extrabold">30 min</strong> por redação</span>
-        <span class="bg-[#fafafa] border border-gray-200 shadow-sm rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-700"><strong class="text-eae-green font-display font-extrabold">15 dias</strong> de garantia</span>
+        <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-primary-light font-display font-extrabold">120</strong> Modelos</span>
+        <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-primary-light font-display font-extrabold">100</strong> Esqueletos</span>
+        <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-primary-light font-display font-extrabold">5</strong> Bancas</span>
+        <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-primary-light font-display font-extrabold">30 min</strong> por redação</span>
+        <span class="bg-white/5 border border-white/10 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-sm sm:text-base text-gray-300"><strong class="text-eae-green font-display font-extrabold">15 dias</strong> de garantia</span>
+      </div>
+
+      <!-- Mockup do pacote completo (imagem já existe) -->
+      <div class="reveal mt-12 sm:mt-16">
+        <img src="mockup-pacote.png" alt="Mockup dos 7 materiais digitais do Redação Destravada" class="mockup-3d w-full max-w-lg mx-auto">
       </div>
     </div>
   </section>
 
   <!-- ============ 2b. SENDO SINCERO... ============ -->
-  <section class="bg-white border-t border-gray-100 py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center leading-snug mb-8 sm:mb-12">
-        Sendo <span class="text-primary">sincero</span> com você...
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center leading-snug mb-8 sm:mb-12">
+        Sendo <span class="text-gradient">sincero</span> com você...
       </h2>
 
       <div class="space-y-3 sm:space-y-4">
-        <div class="reveal bg-[#fafafa] border border-gray-100 rounded-2xl p-5 sm:p-6 shadow-sm flex items-start gap-4">
-          <span class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
+        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
-            <p class="font-display font-bold text-dark">Você até estuda, mas trava na hora de escrever</p>
-            <p class="text-gray-600 text-sm sm:text-base mt-1">Sabe o conteúdo, mas a folha em branco paralisa e as ideias não viram texto.</p>
+            <p class="font-display font-bold text-white">Você até estuda, mas trava na hora de escrever</p>
+            <p class="text-gray-400 text-sm sm:text-base mt-1">Sabe o conteúdo, mas a folha em branco paralisa e as ideias não viram texto.</p>
           </div>
         </div>
-        <div class="reveal bg-[#fafafa] border border-gray-100 rounded-2xl p-5 sm:p-6 shadow-sm flex items-start gap-4">
-          <span class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
+        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
-            <p class="font-display font-bold text-dark">Medo de cair um tema que você nunca viu</p>
-            <p class="text-gray-600 text-sm sm:text-base mt-1">Chegar na prova rezando por um tema "fácil" é apostar a sua vaga na sorte.</p>
+            <p class="font-display font-bold text-white">Medo de cair um tema que você nunca viu</p>
+            <p class="text-gray-400 text-sm sm:text-base mt-1">Chegar na prova rezando por um tema "fácil" é apostar a sua vaga na sorte.</p>
           </div>
         </div>
-        <div class="reveal bg-[#fafafa] border border-gray-100 rounded-2xl p-5 sm:p-6 shadow-sm flex items-start gap-4">
-          <span class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
+        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
-            <p class="font-display font-bold text-dark">Horas de videoaula e a nota não sai do lugar</p>
-            <p class="text-gray-600 text-sm sm:text-base mt-1">Teoria você já tem de sobra. O que falta é um passo a passo pra aplicar.</p>
+            <p class="font-display font-bold text-white">Horas de videoaula e a nota não sai do lugar</p>
+            <p class="text-gray-400 text-sm sm:text-base mt-1">Teoria você já tem de sobra. O que falta é um passo a passo pra aplicar.</p>
           </div>
         </div>
-        <div class="reveal bg-[#fafafa] border border-gray-100 rounded-2xl p-5 sm:p-6 shadow-sm flex items-start gap-4">
-          <span class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
+        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
-            <p class="font-display font-bold text-dark">O repertório some na hora H</p>
-            <p class="text-gray-600 text-sm sm:text-base mt-1">Você leu, anotou, decorou... e na prova não lembra de uma citação sequer.</p>
+            <p class="font-display font-bold text-white">O repertório some na hora H</p>
+            <p class="text-gray-400 text-sm sm:text-base mt-1">Você leu, anotou, decorou... e na prova não lembra de uma citação sequer.</p>
           </div>
         </div>
-        <div class="reveal bg-[#fafafa] border border-gray-100 rounded-2xl p-5 sm:p-6 shadow-sm flex items-start gap-4">
-          <span class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
+        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-full bg-red-500/15 text-red-400 flex items-center justify-center font-bold flex-shrink-0 mt-0.5" aria-hidden="true">✕</span>
           <div>
-            <p class="font-display font-bold text-dark">Ninguém pra dizer se o texto está no caminho certo</p>
-            <p class="text-gray-600 text-sm sm:text-base mt-1">Você escreve, entrega e fica no escuro, sem saber o que o corretor vai pensar.</p>
+            <p class="font-display font-bold text-white">Ninguém pra dizer se o texto está no caminho certo</p>
+            <p class="text-gray-400 text-sm sm:text-base mt-1">Você escreve, entrega e fica no escuro, sem saber o que o corretor vai pensar.</p>
           </div>
         </div>
       </div>
 
-      <div class="reveal bg-dark text-white rounded-3xl px-6 py-8 sm:px-10 sm:py-10 mt-8 sm:mt-10 text-center shadow-xl">
-        <p class="font-display font-extrabold text-xl sm:text-3xl leading-snug">
+      <div class="reveal bg-gradient-to-br from-primary/25 to-primary-dark/10 border border-primary/40 rounded-3xl px-6 py-8 sm:px-10 sm:py-10 mt-8 sm:mt-10 text-center shadow-xl">
+        <p class="font-display font-extrabold text-xl sm:text-3xl leading-snug text-white">
           O problema não é <span class="text-red-400">você</span>.<br>
           É a <span class="text-gold">falta de um método</span>.
         </p>
@@ -261,24 +290,24 @@
   </section>
 
   <!-- ============ 3. PROBLEMA + SOLUÇÃO (MÉTODO EAE) ============ -->
-  <section class="bg-[#fafafa] py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
 
       <div class="max-w-2xl mx-auto text-center mb-10 sm:mb-14">
-        <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark leading-snug mb-5">
+        <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white leading-snug mb-5">
           A redação ainda é o seu maior desafio?
         </h2>
-        <div class="space-y-4 text-gray-600 text-[15px] sm:text-lg leading-relaxed">
+        <div class="space-y-4 text-gray-300 text-[15px] sm:text-lg leading-relaxed">
           <p class="reveal">
             Você quer a vaga, mas não sabe se está estudando redação do jeito certo. Tem medo de cair um tema que nunca viu. E o tempo que sobra no dia é pouco.
           </p>
           <p class="reveal">
-            A boa notícia: você não precisa de mais horas de estudo — precisa de um <strong class="text-dark">método</strong>.
+            A boa notícia: você não precisa de mais horas de estudo — precisa de um <strong class="text-white">método</strong>.
           </p>
         </div>
 
         <!-- Virada estratégica (momento pontual) -->
-        <div class="reveal bg-dark text-white rounded-3xl px-6 py-7 sm:px-10 sm:py-9 mt-8 shadow-xl">
+        <div class="reveal bg-gradient-to-br from-primary/25 to-primary-dark/10 border border-primary/40 text-white rounded-3xl px-6 py-7 sm:px-10 sm:py-9 mt-8 shadow-xl">
           <p class="font-display font-extrabold text-lg sm:text-2xl leading-snug">
             A banca não procura redação bonita.<br>
             Ela procura uma <span class="text-gold">estrutura específica</span> — e estrutura se aprende.
@@ -290,42 +319,42 @@
       </div>
 
       <div class="text-center mb-8 sm:mb-12">
-        <p class="reveal text-primary font-bold uppercase tracking-widest text-xs sm:text-sm mb-3">O Método EAE</p>
-        <h3 class="reveal font-display font-extrabold text-xl sm:text-3xl text-dark leading-snug">
+        <p class="reveal text-primary-light font-bold uppercase tracking-widest text-xs sm:text-sm mb-3">O Método EAE</p>
+        <h3 class="reveal font-display font-extrabold text-xl sm:text-3xl text-white leading-snug">
           3 passos pra estruturar qualquer redação<br class="hidden md:block"> em menos de 30 minutos
         </h3>
       </div>
 
       <div class="grid md:grid-cols-3 gap-4 md:gap-6">
-        <div class="reveal card-hover bg-white rounded-3xl p-6 sm:p-8 shadow-lg">
-          <div class="w-14 h-14 rounded-2xl bg-eae-blue text-white flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
-          <h4 class="font-display font-extrabold text-xl text-dark mb-2">Esqueleto</h4>
-          <p class="text-gray-600 leading-relaxed">Escolha uma estrutura pronta entre <strong>100 esqueletos nota máxima</strong> — tem um pra cada tipo de tema que pode cair na sua prova.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+          <div class="w-14 h-14 rounded-2xl bg-eae-blue text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
+          <h4 class="font-display font-extrabold text-xl text-white mb-2">Esqueleto</h4>
+          <p class="text-gray-400 leading-relaxed">Escolha uma estrutura pronta entre <strong class="text-gray-200">100 esqueletos nota máxima</strong> — tem um pra cada tipo de tema que pode cair na sua prova.</p>
         </div>
-        <div class="reveal card-hover bg-white rounded-3xl p-6 sm:p-8 shadow-lg">
-          <div class="w-14 h-14 rounded-2xl bg-eae-orange text-white flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">A</div>
-          <h4 class="font-display font-extrabold text-xl text-dark mb-2">Argumento</h4>
-          <p class="text-gray-600 leading-relaxed">Encaixe repertório do <strong>banco de 50 argumentos prontos</strong> — sem depender de "cultura geral" na hora da prova.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+          <div class="w-14 h-14 rounded-2xl bg-eae-orange text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">A</div>
+          <h4 class="font-display font-extrabold text-xl text-white mb-2">Argumento</h4>
+          <p class="text-gray-400 leading-relaxed">Encaixe repertório do <strong class="text-gray-200">banco de 50 argumentos prontos</strong> — sem depender de "cultura geral" na hora da prova.</p>
         </div>
-        <div class="reveal card-hover bg-white rounded-3xl p-6 sm:p-8 shadow-lg">
-          <div class="w-14 h-14 rounded-2xl bg-eae-green text-white flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
-          <h4 class="font-display font-extrabold text-xl text-dark mb-2">Entrega</h4>
-          <p class="text-gray-600 leading-relaxed">Feche com a conclusão validada e revise com o <strong>checklist do corretor</strong>. Redação pronta, sem pânico — nem com tema inesperado.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+          <div class="w-14 h-14 rounded-2xl bg-eae-green text-darker flex items-center justify-center text-2xl font-display font-black mb-4 shadow-md">E</div>
+          <h4 class="font-display font-extrabold text-xl text-white mb-2">Entrega</h4>
+          <p class="text-gray-400 leading-relaxed">Feche com a conclusão validada e revise com o <strong class="text-gray-200">checklist do corretor</strong>. Redação pronta, sem pânico — nem com tema inesperado.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ 3b. TABELA COMPARATIVA ============ -->
-  <section class="bg-[#fafafa] pb-12 sm:pb-24 px-4 sm:px-6">
+  <section class="bg-darker pb-12 sm:pb-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center leading-snug mb-8 sm:mb-12">
-        A diferença de estudar <span class="text-primary">com método</span>
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center leading-snug mb-8 sm:mb-12">
+        A diferença de estudar <span class="text-gradient">com método</span>
       </h2>
       <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 items-stretch">
-        <div class="reveal bg-white border-2 border-red-100 rounded-3xl p-6 sm:p-8 shadow-sm">
-          <h3 class="font-display font-extrabold text-lg sm:text-xl text-red-500 mb-5">Sem método ❌</h3>
-          <ul class="space-y-3 text-gray-600 text-sm sm:text-base">
+        <div class="reveal bg-red-500/5 border-2 border-red-500/25 rounded-3xl p-6 sm:p-8">
+          <h3 class="font-display font-extrabold text-lg sm:text-xl text-red-400 mb-5">Sem método ❌</h3>
+          <ul class="space-y-3 text-gray-400 text-sm sm:text-base">
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Começa a redação sem saber por onde ir</li>
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Depende de inspiração no dia da prova</li>
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Decora texto pronto e trava em tema inédito</li>
@@ -333,9 +362,9 @@
             <li class="flex items-start gap-2.5"><span class="text-red-400 font-bold flex-shrink-0">✕</span> Nota oscila a cada simulado</li>
           </ul>
         </div>
-        <div class="reveal bg-white border-2 border-eae-green/40 rounded-3xl p-6 sm:p-8 shadow-lg">
+        <div class="reveal bg-eae-green/5 border-2 border-eae-green/30 rounded-3xl p-6 sm:p-8 shadow-lg">
           <h3 class="font-display font-extrabold text-lg sm:text-xl text-eae-green mb-5">Com Método EAE ✅</h3>
-          <ul class="space-y-3 text-gray-700 text-sm sm:text-base">
+          <ul class="space-y-3 text-gray-300 text-sm sm:text-base">
             <li class="flex items-start gap-2.5"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Esqueleto pronto pra cada tipo de tema</li>
             <li class="flex items-start gap-2.5"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Estrutura completa em menos de 30 minutos</li>
             <li class="flex items-start gap-2.5"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 50 repertórios prontos pra encaixar</li>
@@ -348,78 +377,79 @@
   </section>
 
   <!-- ============ 3c. NÚMEROS REAIS DO MATERIAL ============ -->
-  <section class="bg-dark py-12 sm:py-20 px-4 sm:px-6">
+  <section class="bg-panel border-y border-white/5 py-12 sm:py-20 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
-        O que tem dentro do <span class="text-gold">Redação Destravada</span>
+        O que tem dentro do <span class="text-gradient">Redação Destravada</span>
       </h2>
-      <p class="reveal text-gray-300 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Números reais do material — sem promessa inflada.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-          <p class="font-display font-black text-3xl sm:text-4xl text-primary mb-1">120</p>
-          <p class="text-gray-300 text-xs sm:text-sm leading-snug">Modelos de Redação</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+          <p class="font-display font-black text-3xl sm:text-4xl text-primary-light mb-1">120</p>
+          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Modelos de Redação</p>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
           <p class="font-display font-black text-3xl sm:text-4xl text-eae-orange mb-1">100</p>
-          <p class="text-gray-300 text-xs sm:text-sm leading-snug">Esqueletos Adaptáveis</p>
+          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Esqueletos Adaptáveis</p>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
           <p class="font-display font-black text-3xl sm:text-4xl text-eae-green mb-1">50</p>
-          <p class="text-gray-300 text-xs sm:text-sm leading-snug">Repertórios Prontos</p>
+          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Repertórios Prontos</p>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
           <p class="font-display font-black text-3xl sm:text-4xl text-gold mb-1">5</p>
-          <p class="text-gray-300 text-xs sm:text-sm leading-snug">Bancas Cobertas<br><span class="text-gray-400 text-[11px]">ENEM · FGV · VUNESP · Cebraspe · FCC</span></p>
+          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Bancas Cobertas<br><span class="text-gray-500 text-[11px]">ENEM · FGV · VUNESP · Cebraspe · FCC</span></p>
         </div>
-        <div class="reveal bg-white/5 border border-white/10 rounded-2xl p-5 text-center col-span-2 sm:col-span-1">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-2xl p-5 text-center col-span-2 sm:col-span-1">
           <p class="font-display font-black text-3xl sm:text-4xl text-white mb-1">15</p>
-          <p class="text-gray-300 text-xs sm:text-sm leading-snug">Dias de Garantia</p>
+          <p class="text-gray-400 text-xs sm:text-sm leading-snug">Dias de Garantia</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ 4. DEPOIMENTOS ============ -->
-  <section class="bg-white py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-5xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
         O que dizem nossos alunos
       </h2>
-      <p class="reveal text-gray-600 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Resultados reais de quem aplicou o Método EAE.
       </p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
         <!-- Card de depoimento 1 — Ana Luiza -->
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-7 shadow-lg flex flex-col items-center text-center">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center">
           <img src="ana-luiza.jpg" alt="Foto da aluna Ana Luiza com UFRGS pintado na testa" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
 
-          <p class="font-display font-bold text-dark mb-1">Ana Luiza, 20 anos</p>
+          <p class="font-display font-bold text-white mb-1">Ana Luiza, 20 anos</p>
           <p class="text-gold text-lg tracking-wider mb-3" aria-label="4 de 5 estrelas">★★★★☆</p>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">"Eu nunca tinha coragem de confiar nessas ferramentas, vim de origem humilde, não dá pra sair gastando com qualquer coisa. Mas esse material vai além de qualquer produto fajuto. Tem pontos pra melhorar, como a classificação dos conectivos. No geral, me ajudou bastante. Aconselho quem tiver receio a conversar com o produtor pelas redes sociais antes — ótimo atendimento!"</p>
-          <span class="bg-eae-green/10 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Psicologia — UFRGS</span>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-1">"Eu nunca tinha coragem de confiar nessas ferramentas, vim de origem humilde, não dá pra sair gastando com qualquer coisa. Mas esse material vai além de qualquer produto fajuto. Tem pontos pra melhorar, como a classificação dos conectivos. No geral, me ajudou bastante. Aconselho quem tiver receio a conversar com o produtor pelas redes sociais antes — ótimo atendimento!"</p>
+          <span class="bg-eae-green/15 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Psicologia — UFRGS</span>
         </div>
 
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-7 shadow-lg flex flex-col items-center text-center">
+        <!-- Card de depoimento 2 — Camila Rodrigues -->
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center">
           <img src="camila-rodrigues.jpg" alt="Foto da aluna Camila Rodrigues de uniforme do SAMU" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
 
-          <p class="font-display font-bold text-dark mb-1">Camila Rodrigues, 21 anos</p>
-          <p class="text-gold text-lg tracking-wider mb-3" aria-label="4 de 5 estrelas">★★★★<span class="text-gray-300">★</span></p>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">"Ai gente, me impressionei real, que produto maravilhoso!! De extrema utilidade. Quando impressos ficam bonitinhos, colei na minha parede alguns conectivos para não esquecer."</p>
-          <span class="bg-eae-green/10 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Enfermagem — UNIP</span>
+          <p class="font-display font-bold text-white mb-1">Camila Rodrigues, 21 anos</p>
+          <p class="text-gold text-lg tracking-wider mb-3" aria-label="4 de 5 estrelas">★★★★<span class="text-gray-600">★</span></p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-1">"Ai gente, me impressionei real, que produto maravilhoso!! De extrema utilidade. Quando impressos ficam bonitinhos, colei na minha parede alguns conectivos para não esquecer."</p>
+          <span class="bg-eae-green/15 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Enfermagem — UNIP</span>
         </div>
 
         <!-- Card de depoimento 3 — Larissa Souza -->
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-7 shadow-lg flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-7 flex flex-col items-center text-center sm:col-span-2 lg:col-span-1">
           <img src="larissa-souza.jpg" alt="Foto da aluna Larissa Souza de uniforme azul fazendo sinal de paz" class="w-20 h-20 rounded-full object-cover mb-4 shadow-md" loading="lazy">
 
-          <p class="font-display font-bold text-dark mb-1">Larissa Souza, 21 anos</p>
+          <p class="font-display font-bold text-white mb-1">Larissa Souza, 21 anos</p>
           <p class="text-gold text-lg tracking-wider mb-3" aria-label="5 de 5 estrelas">★★★★★</p>
-          <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-1">"Gostei muito, recomendo utilizarem principalmente os esqueletos!"</p>
-          <span class="bg-eae-green/10 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Enfermagem — UNIP</span>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 flex-1">"Gostei muito, recomendo utilizarem principalmente os esqueletos!"</p>
+          <span class="bg-eae-green/15 text-eae-green text-xs font-bold px-3 py-1.5 rounded-full">Aprovada em Enfermagem — UNIP</span>
         </div>
 
       </div>
@@ -427,83 +457,80 @@
   </section>
 
   <!-- ============ 4b. COMO FUNCIONA ============ -->
-  <section class="bg-white border-t border-gray-100 py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-8 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-8 sm:mb-12">
         Como funciona
       </h2>
       <div class="grid sm:grid-cols-3 gap-4 sm:gap-6">
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg text-center">
-          <div class="w-16 h-16 rounded-full bg-eae-blue/10 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">🛒</div>
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Passo 1</p>
-          <h3 class="font-display font-extrabold text-lg text-dark mb-2">Você compra</h3>
-          <p class="text-gray-600 text-sm">Pagamento seguro via Ticto — Pix, cartão ou boleto.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">1</div>
+          <h3 class="font-display font-extrabold text-lg text-white mb-2">Você compra</h3>
+          <p class="text-gray-400 text-sm">Pagamento seguro via Ticto — Pix, cartão ou boleto.</p>
         </div>
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg text-center">
-          <div class="w-16 h-16 rounded-full bg-eae-orange/10 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">📩</div>
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Passo 2</p>
-          <h3 class="font-display font-extrabold text-lg text-dark mb-2">Recebe na hora</h3>
-          <p class="text-gray-600 text-sm">E-mail da Ticto com acesso imediato a todos os materiais.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">2</div>
+          <h3 class="font-display font-extrabold text-lg text-white mb-2">Recebe na hora</h3>
+          <p class="text-gray-400 text-sm">E-mail da Ticto com acesso imediato a todos os materiais.</p>
         </div>
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg text-center">
-          <div class="w-16 h-16 rounded-full bg-eae-green/10 mx-auto flex items-center justify-center text-3xl mb-4" aria-hidden="true">✍️</div>
-          <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Passo 3</p>
-          <h3 class="font-display font-extrabold text-lg text-dark mb-2">Começa a aplicar</h3>
-          <p class="text-gray-600 text-sm">Primeira redação com o Método EAE hoje mesmo.</p>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 text-center">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-primary-dark mx-auto flex items-center justify-center font-display font-black text-2xl text-white shadow-lg mb-4" aria-hidden="true">3</div>
+          <h3 class="font-display font-extrabold text-lg text-white mb-2">Começa a aplicar</h3>
+          <p class="text-gray-400 text-sm">Primeira redação com o Método EAE hoje mesmo.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ 5. OFERTA (STACK DE VALOR) ============ -->
-  <section id="oferta" class="bg-[#fafafa] py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
+  <section id="oferta" class="bg-darker py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
     <div class="max-w-2xl mx-auto text-center">
-      <span class="reveal inline-block bg-gold/15 text-[#a37c22] font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">
+      <span class="reveal inline-block bg-gold/15 border border-gold/30 text-gold font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-4 uppercase tracking-wide">
         🔥 Lote de lançamento
       </span>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white mb-3">
         Tudo o que você recebe hoje
       </h2>
-      <p class="reveal text-gray-600 text-[15px] sm:text-lg mb-6 sm:mb-10">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg mb-6 sm:mb-10">
         7 materiais digitais com acesso imediato, atualizados com os temas que mais caem em ENEM e concursos:
       </p>
 
-      <div class="reveal bg-white rounded-3xl shadow-xl px-4 py-5 sm:p-8 text-left mb-6 sm:mb-8">
-        <ul class="space-y-3 text-sm sm:text-lg text-gray-700">
+      <div class="reveal bg-white/5 border border-white/10 rounded-3xl shadow-xl px-4 py-5 sm:p-8 text-left mb-6 sm:mb-8">
+        <ul class="space-y-3 text-sm sm:text-lg text-gray-300">
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> 120 Modelos de Redação<span class="hidden sm:inline"> Prontos</span></span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$97</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$97</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> 100 Esqueletos Nota Máxima<span class="hidden sm:inline"> (Método EAE)</span></span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$67</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$67</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> Mapas Mentais<span class="hidden sm:inline"> Simples e Objetivos</span></span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$37</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$37</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> Cronograma de Estudos Flexível</span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$27</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$27</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> Bônus: Banco de 50 Repertórios</span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$39</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$39</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> Bônus: Conectivos Nota Máxima</span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$29</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$29</span>
           </li>
           <li class="flex flex-nowrap items-baseline justify-between gap-2 sm:gap-3">
             <span class="min-w-0"><span class="text-eae-green font-bold">✓</span> Bônus: Checklist de Revisão</span>
-            <span class="text-gray-400 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$27</span>
+            <span class="text-gray-500 line-through text-sm sm:text-base whitespace-nowrap flex-shrink-0">de R$27</span>
           </li>
         </ul>
-        <div class="border-t border-gray-100 mt-6 pt-5 text-center">
-          <p class="text-gray-400 text-lg">Valor total: <span class="line-through">R$323</span></p>
-          <p class="text-gray-400 text-lg mt-1">De <span class="line-through">R$47</span> por apenas:</p>
-          <p class="font-display font-black text-primary text-5xl sm:text-6xl mt-2 mb-1">R$29,90</p>
-          <span class="inline-block bg-gold/15 text-[#a37c22] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Preço de lançamento</span>
+        <div class="border-t border-white/10 mt-6 pt-5 text-center">
+          <p class="text-gray-500 text-lg">Valor total: <span class="line-through">R$323</span></p>
+          <p class="text-gray-500 text-lg mt-1">De <span class="line-through">R$47</span> por apenas:</p>
+          <p class="font-display font-black text-gradient text-5xl sm:text-6xl mt-2 mb-1">R$29,90</p>
+          <span class="inline-block bg-gold/15 border border-gold/30 text-gold text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Preço de lançamento</span>
         </div>
       </div>
 
@@ -512,18 +539,18 @@
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
 
-        <p class="text-gray-400 text-xs text-center mt-3 max-w-md mx-auto leading-relaxed">
+        <p class="text-gray-500 text-xs text-center mt-3 max-w-md mx-auto leading-relaxed">
           🔒 Pagamento processado pela Ticto. Seu banco pode exibir um alerta padrão de segurança — é normal e não impede a compra.
         </p>
 
-        <p class="flex items-center justify-center gap-2 text-gray-600 text-sm mt-5">
+        <p class="flex items-center justify-center gap-2 text-gray-300 text-sm mt-5">
           <svg class="w-5 h-5 text-eae-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM13.707 8.293a1 1 0 00-1.414-1.414L9 10.172 7.707 8.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
           </svg>
           Garantia incondicional de 15 dias — não gostou, devolvemos 100%
         </p>
 
-        <div class="flex items-center justify-center gap-5 mt-5 text-gray-500 text-sm">
+        <div class="flex items-center justify-center gap-5 mt-5 text-gray-400 text-sm">
           <span class="flex items-center gap-1.5">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l7 7-7 7-7-7 7-7zm0 3.5L8.5 9l3.5 3.5L15.5 9 12 5.5zM5 15l7 7 7-7-2-2-5 5-5-5-2 2z"/></svg>
             Pix
@@ -538,103 +565,153 @@
           </span>
         </div>
 
-        <p class="text-gray-500 text-sm mt-5">
-          ⏳ Preço de lançamento — volta para <strong class="text-gray-600">R$47</strong> em breve
+        <p class="text-gray-400 text-sm mt-5">
+          ⏳ Preço de lançamento — volta para <strong class="text-gray-300">R$47</strong> em breve
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ============ 6. BÔNUS ============ -->
-  <section class="bg-white py-12 sm:py-24 px-4 sm:px-6">
+  <!-- ============ 5b. ESPIADA NOS MATERIAIS (Mapas Mentais + Cronograma) ============ -->
+  <section class="bg-darker pb-12 sm:pb-24 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-xl sm:text-3xl text-white text-center mb-8 sm:mb-12">
+        Também dentro do material
+      </h2>
+      <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+          <!-- TODO: adicionar mockup-mapas-mentais.png com fundo transparente -->
+          <div class="relative h-40 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-mapas-mentais.png" alt="Mockup dos Mapas Mentais" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-3" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
+          <h3 class="font-display font-extrabold text-lg text-white mb-2">Mapas Mentais Simples e Objetivos</h3>
+          <p class="text-gray-400 text-sm sm:text-base">Os temas que mais caem, resumidos em uma página — pra revisar rápido antes da prova.</p>
+        </div>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8">
+          <!-- TODO: adicionar mockup-cronograma.png com fundo transparente -->
+          <div class="relative h-40 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-cronograma.png" alt="Mockup do Cronograma de Estudos Flexível" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-3" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
+          <h3 class="font-display font-extrabold text-lg text-white mb-2">Cronograma de Estudos Flexível</h3>
+          <p class="text-gray-400 text-sm sm:text-base">Organize a semana mesmo tendo só 30–40 minutos por dia pra estudar redação.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. BÔNUS ============ -->
+  <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
         3 bônus grátis <span class="text-eae-green">neste lote</span>
       </h2>
-      <p class="reveal text-gray-600 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         Saem de graça enquanto durar o lote de lançamento — depois voltam a ser vendidos separados.
       </p>
 
       <div class="space-y-4 sm:space-y-5">
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-eae-blue/10 flex items-center justify-center text-3xl flex-shrink-0">📚</div>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <!-- TODO: adicionar mockup-bonus-repertorios.png com fundo transparente -->
+          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-bonus-repertorios.png" alt="Mockup do Banco de 50 Repertórios Prontos" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
-              <h3 class="font-display font-extrabold text-lg text-dark">Banco de 50 Repertórios Prontos</h3>
-              <span class="bg-eae-green text-white text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <h3 class="font-display font-extrabold text-lg text-white">Banco de 50 Repertórios Prontos</h3>
+              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
             </div>
-            <p class="text-gray-600">Citações, dados e referências prontos pra encaixar em qualquer tema. Nunca mais fique sem argumento.</p>
+            <p class="text-gray-400">Citações, dados e referências prontos pra encaixar em qualquer tema. Nunca mais fique sem argumento.</p>
           </div>
-          <p class="text-gray-400 text-sm whitespace-nowrap">de <span class="line-through">R$39</span> → <strong class="text-eae-green">R$0</strong></p>
+          <p class="text-gray-500 text-sm whitespace-nowrap">de <span class="line-through">R$39</span> → <strong class="text-eae-green">R$0</strong></p>
         </div>
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-eae-orange/10 flex items-center justify-center text-3xl flex-shrink-0">🔗</div>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <!-- TODO: adicionar mockup-bonus-conectivos.png com fundo transparente -->
+          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-bonus-conectivos.png" alt="Mockup do guia Conectivos Nota Máxima" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
-              <h3 class="font-display font-extrabold text-lg text-dark">Conectivos Nota Máxima</h3>
-              <span class="bg-eae-green text-white text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <h3 class="font-display font-extrabold text-lg text-white">Conectivos Nota Máxima</h3>
+              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
             </div>
-            <p class="text-gray-600">Os conectivos certos pra cada transição do texto — direto na coesão que a banca pontua.</p>
+            <p class="text-gray-400">Os conectivos certos pra cada transição do texto — direto na coesão que a banca pontua.</p>
           </div>
-          <p class="text-gray-400 text-sm whitespace-nowrap">de <span class="line-through">R$29</span> → <strong class="text-eae-green">R$0</strong></p>
+          <p class="text-gray-500 text-sm whitespace-nowrap">de <span class="line-through">R$29</span> → <strong class="text-eae-green">R$0</strong></p>
         </div>
-        <div class="reveal card-hover bg-[#fafafa] rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col sm:flex-row sm:items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-eae-green/10 flex items-center justify-center text-3xl flex-shrink-0">✅</div>
+        <div class="reveal card-hover bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+          <!-- TODO: adicionar mockup-bonus-checklist.png com fundo transparente -->
+          <div class="relative w-full sm:w-44 h-32 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden flex-shrink-0">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-bonus-checklist.png" alt="Mockup do Checklist de Revisão Pré-Prova" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
           <div class="flex-1">
             <div class="flex items-center gap-3 flex-wrap mb-1">
-              <h3 class="font-display font-extrabold text-lg text-dark">Checklist de Revisão Pré-Prova</h3>
-              <span class="bg-eae-green text-white text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
+              <h3 class="font-display font-extrabold text-lg text-white">Checklist de Revisão Pré-Prova</h3>
+              <span class="bg-eae-green text-darker text-xs font-bold px-2.5 py-1 rounded-full">GRÁTIS</span>
             </div>
-            <p class="text-gray-600">Revise sua redação como um corretor e elimine os erros antes de entregar.</p>
+            <p class="text-gray-400">Revise sua redação como um corretor e elimine os erros antes de entregar.</p>
           </div>
-          <p class="text-gray-400 text-sm whitespace-nowrap">de <span class="line-through">R$27</span> → <strong class="text-eae-green">R$0</strong></p>
+          <p class="text-gray-500 text-sm whitespace-nowrap">de <span class="line-through">R$27</span> → <strong class="text-eae-green">R$0</strong></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ 6b. PLANOS (BÁSICO vs COMPLETO) ============ -->
-  <section id="planos" class="bg-[#fafafa] py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
+  <section id="planos" class="bg-darker py-12 sm:py-24 px-4 sm:px-6 scroll-mt-24">
     <div class="max-w-4xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-3">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-3">
         Escolha a sua versão
       </h2>
-      <p class="reveal text-gray-600 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         As duas têm acesso imediato e 15 dias de garantia incondicional.
       </p>
 
       <div class="grid sm:grid-cols-2 gap-6 sm:gap-6 items-stretch max-w-3xl mx-auto pt-4">
 
         <!-- Plano BÁSICO -->
-        <div class="reveal bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-lg flex flex-col">
-          <h3 class="font-display font-extrabold text-lg text-dark">Redação Destravada <span class="text-gray-500">BÁSICO</span></h3>
+        <div class="reveal bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col">
+          <!-- TODO: adicionar mockup-basico.png (ou reaproveitar mockup-pacote.png temporariamente) -->
+          <div class="relative h-36 rounded-2xl bg-white/5 border border-dashed border-white/15 flex items-center justify-center overflow-hidden mb-5">
+            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            <img src="mockup-basico.png" alt="Mockup do plano Básico" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed')">
+          </div>
+          <h3 class="font-display font-extrabold text-lg text-white">Redação Destravada <span class="text-gray-400">BÁSICO</span></h3>
           <p class="text-gray-500 text-sm mt-1 mb-5">Pra quem só quer os materiais principais.</p>
-          <p class="font-display font-black text-4xl text-dark mb-6">R$19,90</p>
-          <ul class="space-y-2.5 text-sm text-gray-700 flex-1 mb-6">
+          <p class="font-display font-black text-4xl text-white mb-6">R$19,90</p>
+          <ul class="space-y-2.5 text-sm text-gray-300 flex-1 mb-6">
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 120 Modelos de Redação Prontos</li>
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 100 Esqueletos Nota Máxima (Método EAE)</li>
-            <li class="flex items-start gap-2 text-gray-400"><span class="font-bold flex-shrink-0">✕</span> Mapas Mentais</li>
-            <li class="flex items-start gap-2 text-gray-400"><span class="font-bold flex-shrink-0">✕</span> Cronograma de Estudos Flexível</li>
-            <li class="flex items-start gap-2 text-gray-400"><span class="font-bold flex-shrink-0">✕</span> Bônus: Banco de 50 Repertórios</li>
-            <li class="flex items-start gap-2 text-gray-400"><span class="font-bold flex-shrink-0">✕</span> Bônus: Conectivos Nota Máxima</li>
-            <li class="flex items-start gap-2 text-gray-400"><span class="font-bold flex-shrink-0">✕</span> Bônus: Checklist de Revisão</li>
+            <li class="flex items-start gap-2 text-gray-500"><span class="font-bold flex-shrink-0">✕</span> Mapas Mentais</li>
+            <li class="flex items-start gap-2 text-gray-500"><span class="font-bold flex-shrink-0">✕</span> Cronograma de Estudos Flexível</li>
+            <li class="flex items-start gap-2 text-gray-500"><span class="font-bold flex-shrink-0">✕</span> Bônus: Banco de 50 Repertórios</li>
+            <li class="flex items-start gap-2 text-gray-500"><span class="font-bold flex-shrink-0">✕</span> Bônus: Conectivos Nota Máxima</li>
+            <li class="flex items-start gap-2 text-gray-500"><span class="font-bold flex-shrink-0">✕</span> Bônus: Checklist de Revisão</li>
           </ul>
           <!-- ⚠️ TODO: criar o produto BÁSICO na Ticto e substituir o link abaixo pelo checkout real -->
-          <a href="https://checkout.ticto.app/SUBSTITUIR_LINK_BASICO" data-price="19.90" data-item-id="redacao-destravada-basico" data-item-name="Redação Destravada BÁSICO" class="block text-center border-2 border-primary text-primary font-display font-bold text-sm px-6 py-4 rounded-full hover:bg-primary/5 transition-colors">
+          <a href="https://checkout.ticto.app/SUBSTITUIR_LINK_BASICO" data-price="19.90" data-item-id="redacao-destravada-basico" data-item-name="Redação Destravada BÁSICO" class="block text-center border-2 border-primary-light/60 text-primary-light font-display font-bold text-sm px-6 py-4 rounded-full hover:bg-primary/10 transition-colors">
             QUERO O BÁSICO — R$19,90
           </a>
         </div>
 
         <!-- Plano COMPLETO -->
-        <div class="reveal relative bg-white border-2 border-primary rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col">
-          <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-display font-bold px-4 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap shadow-md">⭐ Mais popular</span>
-          <h3 class="font-display font-extrabold text-lg text-dark">Redação Destravada <span class="text-primary">COMPLETO</span></h3>
-          <p class="text-gray-500 text-sm mt-1 mb-5">Método completo + 3 bônus do lote de lançamento.</p>
+        <div class="reveal relative bg-gradient-to-b from-primary/15 to-white/5 border-2 border-primary rounded-3xl p-6 sm:p-8 flex flex-col shadow-[0_0_40px_rgba(124,58,237,.25)]">
+          <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-primary-dark text-white text-xs font-display font-bold px-4 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap shadow-md">⭐ Mais popular</span>
+          <!-- Mockup do pacote completo (imagem já existe) -->
+          <div class="relative h-36 rounded-2xl bg-white/5 flex items-center justify-center overflow-hidden mb-5">
+            <img src="mockup-pacote.png" alt="Mockup do pacote completo Redação Destravada" loading="lazy" class="absolute inset-0 w-full h-full object-contain p-2">
+          </div>
+          <h3 class="font-display font-extrabold text-lg text-white">Redação Destravada <span class="text-primary-light">COMPLETO</span></h3>
+          <p class="text-gray-400 text-sm mt-1 mb-5">Método completo + 3 bônus do lote de lançamento.</p>
           <p class="mb-6">
-            <span class="text-gray-400 line-through text-lg align-middle mr-2">R$47</span>
-            <span class="font-display font-black text-4xl text-primary align-middle">R$29,90</span>
+            <span class="text-gray-500 line-through text-lg align-middle mr-2">R$47</span>
+            <span class="font-display font-black text-4xl text-gradient align-middle">R$29,90</span>
           </p>
-          <ul class="space-y-2.5 text-sm text-gray-700 flex-1 mb-6">
+          <ul class="space-y-2.5 text-sm text-gray-300 flex-1 mb-6">
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 120 Modelos de Redação Prontos</li>
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> 100 Esqueletos Nota Máxima (Método EAE)</li>
             <li class="flex items-start gap-2"><span class="text-eae-green font-bold flex-shrink-0">✓</span> Mapas Mentais Simples e Objetivos</li>
@@ -650,7 +727,7 @@
 
       </div>
 
-      <p class="reveal flex items-center justify-center gap-2 text-gray-600 text-sm mt-8 text-center">
+      <p class="reveal flex items-center justify-center gap-2 text-gray-300 text-sm mt-8 text-center">
         <svg class="w-5 h-5 text-eae-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
           <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM13.707 8.293a1 1 0 00-1.414-1.414L9 10.172 7.707 8.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
         </svg>
@@ -660,38 +737,39 @@
   </section>
 
   <!-- ============ 7. GARANTIA ============ -->
-  <section class="bg-[#eefaf4] py-12 sm:py-20 px-4 sm:px-6">
+  <section class="bg-panel border-y border-eae-green/15 py-12 sm:py-20 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <div class="reveal inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-eae-green/15 mb-6">
+      <div class="reveal inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-eae-green/15 shadow-[0_0_40px_rgba(34,197,94,.2)] mb-6">
         <svg class="w-12 h-12 sm:w-14 sm:h-14 text-eae-green" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
           <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM13.707 8.293a1 1 0 00-1.414-1.414L9 10.172 7.707 8.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
         </svg>
       </div>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark mb-5">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white mb-5">
         15 dias de garantia, sem perguntas
       </h2>
-      <p class="reveal text-gray-700 text-[15px] sm:text-lg leading-relaxed">
-        Teste o método inteiro por 15 dias. Não gostou, por qualquer motivo? <strong>Devolvemos 100% do valor.</strong> Sem burocracia e sem precisar justificar — o pedido é feito direto na plataforma de pagamento.
+      <p class="reveal text-gray-300 text-[15px] sm:text-lg leading-relaxed">
+        Teste o método inteiro por 15 dias. Não gostou, por qualquer motivo? <strong class="text-white">Devolvemos 100% do valor.</strong> Sem burocracia e sem precisar justificar — o pedido é feito direto na plataforma de pagamento.
       </p>
     </div>
   </section>
 
   <!-- ============ 7b. QUEM SOU EU ============ -->
-  <section class="bg-[#fafafa] py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-3xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-8 sm:mb-12">
-        Quem está por trás do <span class="text-primary">Método EAE</span>
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-8 sm:mb-12">
+        Quem está por trás do <span class="text-gradient">Método EAE</span>
       </h2>
-      <div class="reveal bg-white rounded-3xl shadow-xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
-        <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-lg">
-          <span class="font-display font-black text-white text-5xl">A</span>
+      <div class="reveal bg-white/5 border border-white/10 rounded-3xl shadow-xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+        <!-- Avatar com iniciais (sem foto, como decidido) -->
+        <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-[0_0_40px_rgba(124,58,237,.35)]">
+          <span class="font-display font-black text-white text-4xl">AR</span>
         </div>
         <div class="text-center sm:text-left">
-          <p class="font-display font-extrabold text-xl text-dark mb-1">Arthur</p>
-          <p class="text-primary font-bold text-sm mb-4">Criador do Método EAE · 17 anos · estudante</p>
-          <div class="space-y-3 text-gray-600 text-[15px] sm:text-base leading-relaxed">
+          <p class="font-display font-extrabold text-xl text-white mb-1">Arthur</p>
+          <p class="text-primary-light font-bold text-sm mb-4">Criador do Método EAE · 17 anos · estudante</p>
+          <div class="space-y-3 text-gray-400 text-[15px] sm:text-base leading-relaxed">
             <p>
-              Eu sou estudante, igual a você. O Método EAE nasceu da minha própria preparação: eu travava na redação até perceber que as bancas não pedem talento — pedem uma <strong class="text-dark">estrutura específica</strong>, que se repete prova após prova.
+              Eu sou estudante, igual a você. O Método EAE nasceu da minha própria preparação: eu travava na redação até perceber que as bancas não pedem talento — pedem uma <strong class="text-gray-200">estrutura específica</strong>, que se repete prova após prova.
             </p>
             <p>
               Então fui a fundo nos critérios de correção do ENEM, FGV, VUNESP, Cebraspe e FCC e transformei isso em um sistema replicável: os esqueletos, os repertórios e o checklist que estão neste material.
@@ -706,141 +784,141 @@
   </section>
 
   <!-- ============ 8. FAQ ============ -->
-  <section class="bg-white py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-panel border-t border-white/5 py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto">
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark text-center mb-10 sm:mb-12">
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white text-center mb-10 sm:mb-12">
         Perguntas frequentes
       </h2>
 
       <div class="space-y-3" id="faq">
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Isso não é só copiar redação pronta?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Não — e isso é importante: copiar texto pronto pode zerar sua redação. No Método EAE você aprende a <strong>estrutura</strong> (o esqueleto), não decora o texto. Os 120 modelos servem de referência pra você ver a estrutura em ação; quem escreve é você, com as suas palavras. Por isso funciona pra qualquer tema novo, inclusive os que nunca caíram.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Não — e isso é importante: copiar texto pronto pode zerar sua redação. No Método EAE você aprende a <strong class="text-gray-200">estrutura</strong> (o esqueleto), não decora o texto. Os 120 modelos servem de referência pra você ver a estrutura em ação; quem escreve é você, com as suas palavras. Por isso funciona pra qualquer tema novo, inclusive os que nunca caíram.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Serve pra banca do meu concurso?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O material cobre <strong>ENEM, FGV, VUNESP, Cebraspe e FCC</strong> — as principais bancas do país. Os esqueletos são adaptáveis justamente porque a lógica de estrutura que essas bancas pontuam é a mesma: introdução com tese, desenvolvimento com argumento e repertório, conclusão fechada.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O material cobre <strong class="text-gray-200">ENEM, FGV, VUNESP, Cebraspe e FCC</strong> — as principais bancas do país. Os esqueletos são adaptáveis justamente porque a lógica de estrutura que essas bancas pontuam é a mesma: introdução com tese, desenvolvimento com argumento e repertório, conclusão fechada.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Tenho pouco tempo, vou conseguir aplicar?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">O método foi desenhado exatamente pra quem trabalha ou estuda o dia todo. Cada redação leva <strong>até 30 minutos</strong> usando os esqueletos, e o Cronograma Flexível organiza seu estudo mesmo que você só tenha 30-40 minutos por dia. Você não precisa de 3 horas diárias — precisa de um método que aproveite o tempo que você tem.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O método foi desenhado exatamente pra quem trabalha ou estuda o dia todo. Cada redação leva <strong class="text-gray-200">até 30 minutos</strong> usando os esqueletos, e o Cronograma Flexível organiza seu estudo mesmo que você só tenha 30-40 minutos por dia. Você não precisa de 3 horas diárias — precisa de um método que aproveite o tempo que você tem.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Já comprei outro material e não funcionou. Por que esse seria diferente?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">A maioria dos materiais te entrega uma pilha de PDF solto e espera que você se vire. A diferença aqui é o <strong>método</strong>: o EAE é um passo a passo replicável — recebeu o tema, escolheu o esqueleto, encaixou o argumento, fechou com a conclusão. E se mesmo assim não funcionar pra você, tem 15 dias de garantia incondicional: devolvemos tudo.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">A maioria dos materiais te entrega uma pilha de PDF solto e espera que você se vire. A diferença aqui é o <strong class="text-gray-200">método</strong>: o EAE é um passo a passo replicável — recebeu o tema, escolheu o esqueleto, encaixou o argumento, fechou com a conclusão. E se mesmo assim não funcionar pra você, tem 15 dias de garantia incondicional: devolvemos tudo.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Funciona pra quem escreve muito mal?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Sim — o método foi feito pra quem está <strong>começando do zero</strong>. Ninguém nasce sabendo escrever redação de banca: quem tira 900+ aprendeu uma estrutura e repete. Com os esqueletos você não depende de talento nem de inspiração; depende só de seguir os 3 passos. Os conectivos e o checklist de revisão cuidam da parte que costuma derrubar quem se acha "fraco em português".</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim — o método foi feito pra quem está <strong class="text-gray-200">começando do zero</strong>. Ninguém nasce sabendo escrever redação de banca: quem tira 900+ aprendeu uma estrutura e repete. Com os esqueletos você não depende de talento nem de inspiração; depende só de seguir os 3 passos. Os conectivos e o checklist de revisão cuidam da parte que costuma derrubar quem se acha "fraco em português".</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se eu não gostar?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Você tem <strong>15 dias de garantia incondicional</strong>. Não gostou por qualquer motivo — ou por motivo nenhum — é só pedir o reembolso dentro do prazo e devolvemos 100% do valor, sem perguntas e sem burocracia. O pedido é feito direto na plataforma de pagamento.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Você tem <strong class="text-gray-200">15 dias de garantia incondicional</strong>. Não gostou por qualquer motivo — ou por motivo nenhum — é só pedir o reembolso dentro do prazo e devolvemos 100% do valor, sem perguntas e sem burocracia. O pedido é feito direto na plataforma de pagamento.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             É seguro comprar? Como funciona o pagamento?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O pagamento é processado pela <strong>Ticto</strong>, uma das maiores plataformas de produtos digitais do Brasil — seus dados de pagamento passam por ela, não por nós. Você pode pagar com <strong>Pix, cartão ou boleto</strong>. E além da segurança da plataforma, a garantia de 15 dias cobre qualquer arrependimento.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. O pagamento é processado pela <strong class="text-gray-200">Ticto</strong>, uma das maiores plataformas de produtos digitais do Brasil — seus dados de pagamento passam por ela, não por nós. Você pode pagar com <strong class="text-gray-200">Pix, cartão ou boleto</strong>. E além da segurança da plataforma, a garantia de 15 dias cobre qualquer arrependimento.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Como eu recebo o material?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">O acesso é <strong>imediato</strong>: assim que o pagamento é confirmado (na hora, no caso de Pix e cartão), você recebe um e-mail da Ticto com o link pra baixar os 7 materiais. Dá pra acessar do celular, tablet ou computador — e os arquivos são seus pra sempre, pode baixar e estudar offline.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O acesso é <strong class="text-gray-200">imediato</strong>: assim que o pagamento é confirmado (na hora, no caso de Pix e cartão), você recebe um e-mail da Ticto com o link pra baixar os 7 materiais. Dá pra acessar do celular, tablet ou computador — e os arquivos são seus pra sempre, pode baixar e estudar offline.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             O conteúdo é atualizado?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. Os modelos e esqueletos seguem os critérios de correção atuais das bancas (as 5 competências do ENEM e os critérios de FGV, VUNESP, Cebraspe e FCC). E como a base do método é <strong>estrutura</strong> — não tema decorado — ele não envelhece a cada edital: a estrutura que pontua é a mesma há anos.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sim. Os modelos e esqueletos seguem os critérios de correção atuais das bancas (as 5 competências do ENEM e os critérios de FGV, VUNESP, Cebraspe e FCC). E como a base do método é <strong class="text-gray-200">estrutura</strong> — não tema decorado — ele não envelhece a cada edital: a estrutura que pontua é a mesma há anos.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Por que tão barato? Qual é o truque?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">Sem truque: R$29,90 é <strong>preço de lançamento</strong>. Estamos abrindo o primeiro lote e queremos alunos aplicando o método e mandando resultados — é isso que vale mais pra nós agora do que a margem. Por isso o preço sobe pra R$47 em breve e os 3 bônus são exclusivos deste lote. Quem entra primeiro paga menos e leva mais.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">Sem truque: R$29,90 é <strong class="text-gray-200">preço de lançamento</strong>. Estamos abrindo o primeiro lote e queremos alunos aplicando o método e mandando resultados — é isso que vale mais pra nós agora do que a margem. Por isso o preço sobe pra R$47 em breve e os 3 bônus são exclusivos deste lote. Quem entra primeiro paga menos e leva mais.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             E se cair um tema que nunca caiu antes?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">É exatamente pra isso que o método existe. Você não decora temas — aprende <strong>100 esqueletos adaptáveis</strong> que cobrem os tipos de tema que as bancas cobram (problema social, tecnologia, saúde, direitos, comportamento...). Tema inédito deixa nervoso quem decorou redação pronta. Quem tem estrutura só escolhe o esqueleto e monta.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">É exatamente pra isso que o método existe. Você não decora temas — aprende <strong class="text-gray-200">100 esqueletos adaptáveis</strong> que cobrem os tipos de tema que as bancas cobram (problema social, tecnologia, saúde, direitos, comportamento...). Tema inédito deixa nervoso quem decorou redação pronta. Quem tem estrutura só escolhe o esqueleto e monta.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Sem professor corrigindo, como vou saber se estou no caminho certo?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong>Checklist de Revisão Pré-Prova</strong> (bônus 3) existe pra isso: ele lista, item por item, o que o corretor procura em cada competência — você revisa a própria redação como um corretor revisaria. Junte isso aos 120 modelos aprovados pra comparar, e você elimina a dúvida "será que está certo?" sem depender de correção paga.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Checklist de Revisão Pré-Prova</strong> (bônus 3) existe pra isso: ele lista, item por item, o que o corretor procura em cada competência — você revisa a própria redação como um corretor revisaria. Junte isso aos 120 modelos aprovados pra comparar, e você elimina a dúvida "será que está certo?" sem depender de correção paga.</p>
           </div>
         </div>
 
-        <div class="faq-item reveal bg-[#fafafa] border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-dark hover:bg-gray-50" aria-expanded="false">
+        <div class="faq-item reveal bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+          <button class="faq-question w-full flex items-center justify-between gap-3 text-left px-4 sm:px-5 py-4 font-display font-bold text-[15px] sm:text-base text-white hover:bg-white/5" aria-expanded="false">
             Qual a diferença entre o plano Básico e o Completo?
-            <svg class="faq-chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            <svg class="faq-chevron w-5 h-5 text-gray-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="faq-answer px-4 sm:px-5">
-            <p class="text-gray-600 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong>Básico (R$19,90)</strong> traz os dois materiais principais: os 120 Modelos de Redação e os 100 Esqueletos Nota Máxima. O <strong>Completo (R$29,90)</strong> inclui tudo do Básico + Mapas Mentais + Cronograma Flexível + os 3 bônus do lote de lançamento (50 Repertórios, Conectivos e Checklist de Revisão). Por R$10 de diferença, o Completo leva o método inteiro — por isso é o mais escolhido. Os dois têm 15 dias de garantia.</p>
+            <p class="text-gray-400 text-[15px] sm:text-base pb-5 leading-relaxed">O <strong class="text-gray-200">Básico (R$19,90)</strong> traz os dois materiais principais: os 120 Modelos de Redação e os 100 Esqueletos Nota Máxima. O <strong class="text-gray-200">Completo (R$29,90)</strong> inclui tudo do Básico + Mapas Mentais + Cronograma Flexível + os 3 bônus do lote de lançamento (50 Repertórios, Conectivos e Checklist de Revisão). Por R$10 de diferença, o Completo leva o método inteiro — por isso é o mais escolhido. Os dois têm 15 dias de garantia.</p>
           </div>
         </div>
 
@@ -849,21 +927,21 @@
   </section>
 
   <!-- ============ 9. CTA FINAL ============ -->
-  <section class="bg-[#fafafa] py-12 sm:py-24 px-4 sm:px-6">
+  <section class="bg-darker py-12 sm:py-24 px-4 sm:px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <span class="reveal inline-block bg-gold/15 text-[#a37c22] font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-5 uppercase tracking-wide">
+      <span class="reveal inline-block bg-gold/15 border border-gold/30 text-gold font-display font-bold text-xs sm:text-sm px-4 py-1.5 rounded-full mb-5 uppercase tracking-wide">
         ⏳ Oferta de lançamento por tempo limitado
       </span>
-      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-dark leading-snug mb-5">
-        Quer tirar nota máxima na redação e <span class="text-primary">conquistar sua vaga?</span>
+      <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl text-white leading-snug mb-5">
+        Quer tirar nota máxima na redação e <span class="text-gradient">conquistar sua vaga?</span>
       </h2>
-      <p class="reveal text-gray-600 text-[15px] sm:text-lg leading-relaxed mb-6 sm:mb-8">
+      <p class="reveal text-gray-400 text-[15px] sm:text-lg leading-relaxed mb-6 sm:mb-8">
         Entre agora no lote de lançamento e fique 100% preparado pra qualquer tema — mesmo começando do zero. São 7 materiais, acesso imediato e 15 dias de garantia.
       </p>
 
-      <div class="reveal bg-gold/10 border-2 border-gold/50 rounded-2xl px-6 py-4 mb-8 inline-block shadow-md">
-        <p class="text-gray-600 text-sm sm:text-base">
-          ⏳ Preço de lançamento <strong class="text-[#a37c22]">R$29,90</strong> sobe para R$47 em breve.<br>
+      <div class="reveal bg-gold/10 border-2 border-gold/40 rounded-2xl px-6 py-4 mb-8 inline-block">
+        <p class="text-gray-300 text-sm sm:text-base">
+          ⏳ Preço de lançamento <strong class="text-gold">R$29,90</strong> sobe para R$47 em breve.<br>
           Os 3 bônus são exclusivos deste lote.
         </p>
       </div>
@@ -872,10 +950,10 @@
         <a href="https://checkout.ticto.app/OD88509BC" class="btn-primary cta-pulse block w-full sm:w-auto sm:inline-block text-white font-display font-extrabold text-base sm:text-lg px-6 sm:px-12 py-5 rounded-full leading-snug">
           QUERO FICAR 100% PREPARADO<br class="sm:hidden"> POR R$29,90
         </a>
-        <p class="text-gray-400 text-xs mt-3 max-w-md mx-auto leading-relaxed">
+        <p class="text-gray-500 text-xs mt-3 max-w-md mx-auto leading-relaxed">
           🔒 Pagamento processado pela Ticto. Seu banco pode exibir um alerta padrão de segurança — é normal e não impede a compra.
         </p>
-        <p class="flex items-center justify-center gap-2 text-gray-600 text-sm mt-5">
+        <p class="flex items-center justify-center gap-2 text-gray-300 text-sm mt-5">
           <svg class="w-5 h-5 text-eae-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM13.707 8.293a1 1 0 00-1.414-1.414L9 10.172 7.707 8.879a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
           </svg>
@@ -886,7 +964,7 @@
   </section>
 
   <!-- ============ 10. FOOTER ============ -->
-  <footer class="bg-darker text-gray-500 py-10 px-4 sm:px-6">
+  <footer class="bg-[#0a0a12] border-t border-white/5 text-gray-500 py-10 px-4 sm:px-6">
     <div class="max-w-4xl mx-auto text-center space-y-4">
       <p class="font-display font-bold text-gray-400">Redação Destravada — Método EAE © 2026</p>
       <p class="text-sm space-x-4">
@@ -906,20 +984,28 @@
        da Ticto (nunca com nomes inventados):
        1) mude ENABLE_PURCHASE_NOTIFICATIONS para true no script abaixo;
        2) chame showPurchaseToast('Nome do comprador') a cada venda real. -->
-  <div id="purchase-toast" class="hidden fixed bottom-4 left-4 z-[70] bg-white rounded-2xl shadow-2xl border border-gray-100 px-4 py-3 flex items-center gap-3 max-w-[320px]" role="status" aria-live="polite">
+  <div id="purchase-toast" class="hidden fixed bottom-4 left-4 z-[70] bg-dark rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3 max-w-[320px]" role="status" aria-live="polite">
     <span class="w-10 h-10 rounded-full bg-eae-green/15 flex items-center justify-center flex-shrink-0">
       <svg class="w-6 h-6 text-eae-green" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
       </svg>
     </span>
     <div>
-      <p class="text-sm font-bold text-dark leading-snug"><span id="purchase-toast-name"></span> acabou de garantir o Redação Destravada</p>
-      <p class="text-xs text-gray-400 mt-0.5">agora mesmo</p>
+      <p class="text-sm font-bold text-white leading-snug"><span id="purchase-toast-name"></span> acabou de garantir o Redação Destravada</p>
+      <p class="text-xs text-gray-500 mt-0.5">agora mesmo</p>
     </div>
   </div>
 
   <!-- ============ JS ============ -->
   <script>
+    // Data dinâmica na barra de urgência — "HOJE (DD/MM)", sempre a data atual do visitante
+    (function () {
+      const hoje = new Date();
+      const dia = String(hoje.getDate()).padStart(2, '0');
+      const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+      document.getElementById('data-urgencia').textContent = `HOJE (${dia}/${mes})`;
+    })();
+
     // Header escurece ao scrollar
     const header = document.getElementById('header');
     const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
