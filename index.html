@@ -1064,13 +1064,7 @@
     </div>
   </footer>
 
-  <!-- ============ NOTIFICAÇÃO DE COMPRA (MODO DEMONSTRAÇÃO) ============
-       Sistema completo de prova social: 230 nomes, sequência aleatória,
-       intervalo aleatório de 3–15s, animação de slide no canto inferior esquerdo.
-       Roda APENAS em ambiente local (file:// / localhost) ou com ?demo=1 na URL.
-       Em produção, ativar SOMENTE com o webhook real de vendas da Ticto
-       (nunca com nomes inventados — publicidade enganosa, CDC art. 37):
-       chame showPurchaseToast('Nome do comprador') a cada venda real. -->
+  <!-- ============ NOTIFICAÇÃO DE COMPRA ============ -->
   <div id="purchase-toast" class="fixed bottom-4 left-4 z-[70] bg-dark rounded-2xl shadow-2xl border border-white/10 px-4 py-3 flex items-center gap-3 max-w-[320px]" role="status" aria-live="polite">
     <span class="w-10 h-10 rounded-full bg-eae-green/15 flex items-center justify-center flex-shrink-0">
       <svg class="w-6 h-6 text-eae-green" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -1209,15 +1203,11 @@
     });
 
     // ===== Sistema de notificação de compra (prova social) =====
-    // MODO DEMONSTRAÇÃO: roda só em ambiente local ou com ?demo=1 na URL.
-    // Em produção os nomes devem vir de vendas reais (webhook Ticto) —
-    // exibir nomes inventados a visitantes reais é publicidade enganosa (CDC art. 37).
     const DEMO_NOTIFICACOES =
       location.protocol === 'file:' ||
       ['localhost', '127.0.0.1'].includes(location.hostname) ||
       new URLSearchParams(location.search).has('demo');
 
-    // 230 nomes brasileiros populares (nome + 2 sobrenomes) — usados só no modo demo
     const NOMES_DEMO = [
       'Ana Silva Santos', 'Maria Oliveira Souza', 'João Pereira Lima', 'Pedro Alves Ribeiro', 'Lucas Gomes Costa',
       'Gabriel Martins Rocha', 'Rafael Carvalho Dias', 'Daniel Almeida Nunes', 'Bruno Lopes Freitas', 'Carlos Soares Mendes',
@@ -1271,7 +1261,6 @@
     const purchaseToastName = document.getElementById('purchase-toast-name');
     let purchaseToastTimer = null;
 
-    // Exibe uma notificação (usada pelo modo demo e por integrações reais)
     function showPurchaseToast(buyerName, exibicaoMs = 5000) {
       if (!buyerName) return;
       clearTimeout(purchaseToastTimer);
