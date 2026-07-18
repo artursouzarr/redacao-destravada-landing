@@ -51,7 +51,7 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0f0f1a">
+  <meta name="theme-color" content="#0d0518">
   <title>Redação Destravada — 100% pronto pra qualquer tema | Método EAE</title>
   <meta name="description" content="O método que deixa você 100% preparado pra qualquer tema de redação, mesmo começando do zero. 120 modelos prontos, 100 esqueletos adaptáveis, ENEM, FGV, VUNESP, Cebraspe e FCC. Garantia de 15 dias.">
   <meta property="og:title" content="Redação Destravada — Método EAE">
@@ -70,8 +70,8 @@
       theme: {
         extend: {
           colors: {
-            darker: '#0f0f1a',
-            panel: '#15152a',
+            darker: '#0d0518',
+            panel: '#150a26',
             dark: '#1a1a2e',
             gold: '#e8c468',
             primary: '#7c3aed',
@@ -94,7 +94,7 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+      background: linear-gradient(180deg, #0d0518 0%, #150a26 100%);
     }
 
     /* Fade-in ao scroll */
@@ -155,6 +155,20 @@
       60%, 100% { left: 150%; }
     }
 
+    /* Barra de urgência — gradiente roxo forte com respiração */
+    .urgency-bar {
+      background: linear-gradient(90deg, #6d28d9 0%, #9333ea 50%, #6d28d9 100%);
+      background-size: 200% 100%;
+      animation: urgency-breathe 6s ease-in-out infinite;
+    }
+    @keyframes urgency-breathe {
+      0%, 100% { background-position: 0% 0; }
+      50% { background-position: 100% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .urgency-bar { animation: none; }
+    }
+
     /* Títulos principais — glow/neon roxo */
     .title-glow {
       color: #ffffff;
@@ -190,13 +204,13 @@
 
     /* Header escuro que ganha sombra ao scrollar */
     #header {
-      background-color: rgba(15, 15, 26, .8);
+      background-color: rgba(13, 5, 24, .8);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: box-shadow .3s ease, background-color .3s ease;
     }
     #header.scrolled {
-      background-color: rgba(15, 15, 26, .95);
+      background-color: rgba(13, 5, 24, .95);
       box-shadow: 0 2px 24px rgba(124, 58, 237, .15);
     }
 
@@ -221,7 +235,7 @@
 <body class="bg-darker text-gray-100 antialiased overflow-x-hidden">
 
   <!-- ============ 0. BARRA FIXA DE URGÊNCIA (data dinâmica via JS) ============ -->
-  <div class="fixed top-0 left-0 right-0 z-[60] h-10 bg-gradient-to-r from-primary-dark via-primary to-primary-dark flex items-center justify-center px-3">
+  <div class="urgency-bar fixed top-0 left-0 right-0 z-[60] h-10 flex items-center justify-center px-3">
     <p class="text-[11px] sm:text-sm font-display font-bold tracking-wide text-white text-center whitespace-nowrap overflow-hidden text-ellipsis">
       🔥 OFERTA DE LANÇAMENTO: <span class="text-gold">R$29,90</span> <span id="data-urgencia">HOJE</span>
     </p>
@@ -245,7 +259,7 @@
       <p class="reveal inline-block badge-gradient text-xs sm:text-sm mb-6 sm:mb-8">
         ENEM · FGV · VUNESP · Cebraspe · FCC
       </p>
-      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 title-glow">
+      <h1 class="reveal font-display font-black text-[34px] leading-tight sm:text-6xl md:text-7xl sm:leading-[1.08] mb-6 sm:mb-8 text-white">
         O método que deixa você <span class="text-gradient">100% pronto</span> pra qualquer tema de redação
       </h1>
       <p class="reveal text-gray-300 text-base sm:text-xl leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12">
@@ -259,6 +273,12 @@
         <p class="text-gray-500 text-xs mt-4 max-w-md mx-auto leading-relaxed">
           🔒 Pagamento processado pela Ticto. Seu banco pode exibir um alerta padrão de segurança — é normal e não impede a compra.
         </p>
+      </div>
+
+      <!-- TODO: adicionar imagem mockup-pacote.png com fundo transparente -->
+      <div class="relative flex justify-center my-10">
+        <div class="absolute inset-0 bg-purple-600/20 rounded-[40px] blur-[80px] scale-110"></div>
+        <img src="mockup-pacote.png" alt="Redação Destravada - Pacote Completo" class="relative z-10 max-w-2xl w-full drop-shadow-[0_20px_40px_rgba(124,58,237,0.4)]" style="transform: perspective(1200px) rotateX(2deg);">
       </div>
 
       <!-- Mini-badges com números concretos (primeira dobra) -->
