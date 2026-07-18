@@ -845,14 +845,19 @@
       <h2 class="reveal font-display font-extrabold text-2xl sm:text-4xl title-glow text-center mb-8 sm:mb-12">
         Quem está por trás do <span class="text-gradient neon-text-glow">Método EAE</span>
       </h2>
-      <div class="reveal neon-card shadow-xl p-6 sm:p-10 flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
-        <!-- Avatar com iniciais (sem foto, como decidido) -->
-        <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center flex-shrink-0 shadow-[0_0_40px_rgba(153,51,255,.35)]">
-          <span class="font-display font-black text-white text-4xl">AR</span>
+      <div class="reveal neon-card shadow-xl p-6 sm:p-10">
+        <!-- TODO: adicionar sua foto na pasta como foto-arthur.png — ela substitui o placeholder automaticamente -->
+        <div class="relative w-56 h-56 sm:w-64 sm:h-64 mx-auto mb-8">
+          <div class="absolute inset-0 bg-purple-600/25 rounded-[32px] blur-[50px] scale-110"></div>
+          <div class="relative z-10 w-full h-full rounded-[28px] border-2 border-dashed border-white/15 bg-white/5 flex flex-col items-center justify-center gap-2 overflow-hidden shadow-[0_0_35px_rgba(153,51,255,0.35)]">
+            <svg class="w-12 h-12 text-white/25" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <p class="text-white/30 text-[10px] font-bold uppercase tracking-widest">Sua foto</p>
+            <img src="foto-arthur.png" alt="Foto de Arthur, criador do Método EAE" loading="lazy" class="absolute inset-0 w-full h-full object-cover rounded-[28px]" onerror="this.remove()" onload="this.parentElement.classList.remove('border-dashed','border-2','border-white/15','bg-white/5')">
+          </div>
         </div>
         <div class="text-center sm:text-left">
-          <p class="font-display font-extrabold text-xl text-white mb-1">Arthur</p>
-          <p class="text-primary-light font-bold text-sm mb-4">Criador do Método EAE · 17 anos · estudante</p>
+          <p class="font-display font-extrabold text-xl text-white mb-1 text-center">Arthur</p>
+          <p class="text-primary-light font-bold text-sm mb-4 text-center">Criador do Método EAE · 17 anos · estudante</p>
           <div class="space-y-3 text-gray-400 text-base sm:text-base leading-relaxed">
             <p>
               Eu sou estudante, igual a você. O Método EAE nasceu da minha própria preparação: eu travava na redação até perceber que as bancas não pedem talento — pedem uma <strong class="text-gray-200">estrutura específica</strong>, que se repete prova após prova.
