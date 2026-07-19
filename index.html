@@ -1267,8 +1267,51 @@ if (ENABLE_PURCHASE_NOTIFICATIONS) {
 
     let toastTimer;
 
+    // Som só é permitido pelo navegador após a primeira interação do visitante
+    let audioCtx = null;
+    let somLiberado = false;
+
+    ["click", "touchstart", "keydown", "scroll"].forEach((evento) => {
+      window.addEventListener(evento, () => { somLiberado = true; }, { once: true, passive: true });
+    });
+
+    function tocarDing() {
+      if (!somLiberado) return;
+
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+
+        const t = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, t);
+        osc.frequency.setValueAtTime(1320, t + 0.08);
+
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.05, t + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(t);
+        osc.stop(t + 0.65);
+      } catch (erro) {
+        // se o áudio falhar, a notificação continua funcionando normalmente
+      }
+    }
+
     function showPurchaseToast(nome, duracao = 5000) {
       clearTimeout(toastTimer);
+
+      tocarDing();
 
       purchaseToastName.textContent = nome;
 
