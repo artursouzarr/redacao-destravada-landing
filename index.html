@@ -1203,12 +1203,11 @@
     });
 
     // ===== Sistema de notificação de compra (prova social) =====
-    const DEMO_NOTIFICACOES =
-      location.protocol === 'file:' ||
-      ['localhost', '127.0.0.1'].includes(location.hostname) ||
-      new URLSearchParams(location.search).has('demo');
+    // ===== CONFIGURAÇÃO =====
 
-    const NOMES_DEMO = [
+const ENABLE_PURCHASE_NOTIFICATIONS = true;
+
+const NOMES_DEMO = [
       'Ana Silva Santos', 'Maria Oliveira Souza', 'João Pereira Lima', 'Pedro Alves Ribeiro', 'Lucas Gomes Costa',
       'Gabriel Martins Rocha', 'Rafael Carvalho Dias', 'Daniel Almeida Nunes', 'Bruno Lopes Freitas', 'Carlos Soares Mendes',
       'Paulo Fernandes Cardoso', 'Marcos Vieira Ramos', 'Felipe Barbosa Teixeira', 'Gustavo Nascimento Andrade', 'Guilherme Moreira Campos',
@@ -1255,42 +1254,80 @@
       'Thiago Pires Ferreira', 'Vinícius Prado Alves', 'Alexandre Queiroz Pereira', 'Diego Sampaio Lima', 'André Siqueira Gomes',
       'Fábio Vasconcelos Costa', 'Marcelo Xavier Ribeiro', 'Mateus Amaral Martins', 'Juliana Silva Carvalho', 'Fernanda Santos Almeida',
       'Camila Oliveira Lopes', 'Amanda Souza Soares', 'Aline Rodrigues Fernandes', 'Bruna Ferreira Vieira', 'Jéssica Alves Barbosa'
-    ];
+];
 
-    const purchaseToast = document.getElementById('purchase-toast');
-    const purchaseToastName = document.getElementById('purchase-toast-name');
-    let purchaseToastTimer = null;
+// ========================
 
-    function showPurchaseToast(buyerName, exibicaoMs = 5000) {
-      if (!buyerName) return;
-      clearTimeout(purchaseToastTimer);
-      purchaseToastName.textContent = buyerName;
-      purchaseToast.classList.add('toast-visible');
-      purchaseToastTimer = setTimeout(() => purchaseToast.classList.remove('toast-visible'), exibicaoMs);
+if (ENABLE_PURCHASE_NOTIFICATIONS) {
+
+  const purchaseToast = document.getElementById("purchase-toast");
+  const purchaseToastName = document.getElementById("purchase-toast-name");
+
+  if (purchaseToast && purchaseToastName) {
+
+    let toastTimer;
+
+    function showPurchaseToast(nome, duracao = 5000) {
+      clearTimeout(toastTimer);
+
+      purchaseToastName.textContent = nome;
+
+      purchaseToast.classList.add("toast-visible");
+
+      toastTimer = setTimeout(() => {
+        purchaseToast.classList.remove("toast-visible");
+      }, duracao);
     }
 
-    if (DEMO_NOTIFICACOES) {
-      // Embaralha (Fisher-Yates) pra sequência aleatória sem repetir antes de esgotar a lista
-      const embaralhar = (arr) => {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      };
-      let fila = embaralhar([...NOMES_DEMO]);
-      const proximoNome = () => {
-        if (!fila.length) fila = embaralhar([...NOMES_DEMO]); // recomeça — roda 24h sem parar
-        return fila.pop();
-      };
-      const EXIBICAO_MS = 5000;
-      const intervaloAleatorio = () => 3000 + Math.random() * 12000; // entre 3 e 15 segundos
-      const cicloNotificacao = () => {
-        showPurchaseToast(proximoNome(), EXIBICAO_MS);
-        setTimeout(cicloNotificacao, EXIBICAO_MS + intervaloAleatorio());
-      };
-      setTimeout(cicloNotificacao, intervaloAleatorio());
+    function embaralhar(lista) {
+      const copia = [...lista];
+
+      for (let i = copia.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copia[i], copia[j]] = [copia[j], copia[i]];
+      }
+
+      return copia;
     }
+
+    let fila = embaralhar(NOMES_DEMO);
+
+    function proximoNome() {
+      if (fila.length === 0) {
+        fila = embaralhar(NOMES_DEMO);
+      }
+
+      return fila.pop();
+    }
+
+    function intervaloAleatorio() {
+      return Math.floor(Math.random() * 12000) + 3000;
+    }
+
+    function iniciarLoop() {
+
+      showPurchaseToast(proximoNome(), 5000);
+
+      setTimeout(() => {
+        iniciarLoop();
+      }, 5000 + intervaloAleatorio());
+
+    }
+
+    // Espera o DOM terminar de renderizar
+    window.addEventListener("load", () => {
+
+      setTimeout(() => {
+        iniciarLoop();
+      }, intervaloAleatorio());
+
+    });
+
+  } else {
+    console.warn("purchase-toast ou purchase-toast-name não encontrados.");
+  }
+
+}
   </script>
 </body>
 </html>
