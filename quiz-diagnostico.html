@@ -32,6 +32,9 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
+    /* Vence os display: inline-block/flex dos componentes abaixo */
+    [hidden] { display: none !important; }
+
     html {
       font-size: 14px;
       scroll-behavior: smooth;
@@ -198,16 +201,23 @@
     }
 
     /* ============================================================
-       2. Tour pelos materiais
+       2. Tour DESTRAVA — um material por tela
        ============================================================ */
-    .material {
-      margin-bottom: 3rem;
+    #material-bloco {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .25s ease, transform .25s ease;
     }
+    #material-bloco.fading {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
     .material-img {
       position: relative;
       display: flex;
       justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     .material-img::before {
       content: '';
@@ -224,28 +234,37 @@
       width: 100%;
       filter: drop-shadow(0 15px 35px rgba(124, 58, 237, 0.3));
     }
+
     .material-card {
-      padding: 1rem;
+      padding: 1.25rem;
       text-align: center;
     }
     .material-card h3 {
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       font-family: 'Inter', system-ui, sans-serif;
       text-transform: none;
       color: #fff;
-      margin-bottom: .375rem;
+      line-height: 1.35;
+      margin-bottom: .75rem;
     }
-    .material-card p {
-      color: #9ca3af;
-      font-size: .8rem;
-      line-height: 1.5;
+    .material-desc {
+      color: #d1d5db;
+      font-size: .95rem;
+      line-height: 1.75;
+      text-align: left;
     }
     .material-card.bonus {
       background: hsl(var(--card));
       border: 2px solid rgba(34, 197, 94, .4);
       border-radius: 1rem;
       box-shadow: 0 0 25px rgba(34, 197, 94, 0.2);
+    }
+    .material-de {
+      color: #6b7280;
+      font-size: .78rem;
+      text-decoration: line-through;
+      margin-bottom: .375rem;
     }
     .badge-free {
       display: inline-block;
@@ -257,6 +276,26 @@
       border-radius: 9999px;
       box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
       margin-bottom: .5rem;
+    }
+
+    /* Pontinhos indicadores do tour */
+    .tour-dots {
+      display: flex;
+      justify-content: center;
+      gap: .5rem;
+      margin: 1.5rem 0 1.25rem;
+    }
+    .tour-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, .15);
+      transition: background-color .3s ease, box-shadow .3s ease, width .3s ease;
+    }
+    .tour-dot.on {
+      width: 22px;
+      background: linear-gradient(90deg, #3b82f6, #9933ff);
+      box-shadow: 0 0 12px rgba(153, 51, 255, .6);
     }
 
     /* ============================================================
@@ -576,110 +615,45 @@
 
 
 <!-- ============================================================
-     2. TOUR PELOS 7 MATERIAIS
+     2. TOUR DESTRAVA — um material por tela
      ============================================================ -->
 <section id="tela-tour" class="screen sec">
   <div class="wrap">
-    <div class="center mb-10">
-      <span class="badge-gradient mb-4">📦 Antes de começar</span>
+    <div class="center mb-8">
+      <span class="badge-gradient">📦 Tour DESTRAVA</span>
       <h2 class="h-hero title-glow" style="margin-top:1rem;">
-        Os 7 materiais<br>do <span class="text-gradient">Método EAE</span>
+        Conheça os <span class="text-gradient">7 materiais</span>
       </h2>
-      <p class="lead mt-4">
-        Dá uma olhada no que existe pra te ajudar em cada competência. Depois disso, o quiz.
-      </p>
     </div>
 
-    <!-- 1. 120 Modelos de Redação -->
-    <div class="material">
+    <div class="progress-head">
+      <span id="tour-label">Material 1 de 7</span>
+      <span id="tour-pct">14%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="tour-fill"></div>
+    </div>
+
+    <div id="material-bloco">
       <div class="material-img">
-        <img src="mockup-120-modelos.webp" alt="120 Modelos de Redação" width="1600" height="900" loading="lazy" decoding="async">
+        <img id="material-img" src="" alt="" width="1600" height="900" decoding="async">
       </div>
-      <div class="neon-card material-card">
-        <h3>✔️ 120 Modelos de Redação Aprovados</h3>
-        <p>Servem de referência pra você ver a estrutura em ação — quem escreve é você, com as suas palavras.</p>
-      </div>
-    </div>
-
-    <!-- 2. 100 Esqueletos Adaptáveis -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-100-esqueletos.webp" alt="100 Esqueletos Adaptáveis" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="neon-card material-card">
-        <h3>✔️ 100 Esqueletos Adaptáveis (Método EAE)</h3>
-        <p>Tem um pra cada tipo de tema que pode cair na sua prova.</p>
+      <div id="material-card" class="neon-card material-card">
+        <span class="badge-free" id="material-badge" hidden>🎁 GRÁTIS</span>
+        <p class="material-de" id="material-de" hidden></p>
+        <h3 id="material-titulo"></h3>
+        <p class="material-desc" id="material-desc"></p>
       </div>
     </div>
 
-    <!-- 3. Mapas Mentais de Repertório -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-mapas-mentais.webp" alt="Mapas Mentais de Repertório" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="neon-card material-card">
-        <h3>✔️ Mapas Mentais de Repertório</h3>
-        <p>Os temas que mais caem, resumidos em uma página — pra revisar rápido antes da prova.</p>
-      </div>
-    </div>
+    <div class="tour-dots" id="tour-dots" aria-hidden="true"></div>
 
-    <!-- 4. Cronograma Inteligente -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-cronograma.webp" alt="Cronograma Inteligente de Estudos" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="neon-card material-card">
-        <h3>✔️ Cronograma Inteligente de Estudos</h3>
-        <p>Organize a semana mesmo tendo só 30–40 minutos por dia pra estudar redação.</p>
-      </div>
-    </div>
+    <button type="button" class="btn-primary cta-pulse" id="btn-tour-proximo">
+      Próximo
+    </button>
 
-    <!-- 5. Banco de 50 Repertórios -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-bonus-repertorios.webp" alt="Bônus: Banco de 50 Repertórios Prontos" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="material-card bonus">
-        <span class="badge-free">🎁 GRÁTIS</span>
-        <p class="risco" style="color:#6b7280; font-size:.75rem; text-decoration:line-through; margin-bottom:.25rem;">de R$39</p>
-        <h3>✔️ Bônus: Banco de 50 Repertórios Prontos</h3>
-        <p>Citações, dados e referências prontos pra encaixar em qualquer tema. Nunca mais fique sem argumento.</p>
-      </div>
-    </div>
-
-    <!-- 6. Conectivos Nota Máxima -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-bonus-conectivos.webp" alt="Bônus: Conectivos Nota Máxima" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="material-card bonus">
-        <span class="badge-free">🎁 GRÁTIS</span>
-        <p style="color:#6b7280; font-size:.75rem; text-decoration:line-through; margin-bottom:.25rem;">de R$29</p>
-        <h3>✔️ Bônus: Conectivos Nota Máxima</h3>
-        <p>Os conectivos certos pra cada transição do texto — direto na coesão que a banca pontua.</p>
-      </div>
-    </div>
-
-    <!-- 7. Checklist de Revisão -->
-    <div class="material">
-      <div class="material-img">
-        <img src="mockup-bonus-checklist.webp" alt="Bônus: Checklist de Revisão Pré-Prova" width="1600" height="900" loading="lazy" decoding="async">
-      </div>
-      <div class="material-card bonus">
-        <span class="badge-free">🎁 GRÁTIS</span>
-        <p style="color:#6b7280; font-size:.75rem; text-decoration:line-through; margin-bottom:.25rem;">de R$27</p>
-        <h3>✔️ Bônus: Checklist de Revisão Pré-Prova</h3>
-        <p>Revise sua redação como um corretor e elimine os erros antes de entregar.</p>
-      </div>
-    </div>
-
-    <div class="center mt-6">
-      <p class="lead mb-6">
-        Agora sim: <strong style="color:#fff;">vamos descobrir de quais deles você mais precisa.</strong>
-      </p>
-      <button type="button" class="btn-primary cta-pulse" data-go="tela-quiz">
-        Continuar para o quiz
-      </button>
+    <div class="center">
+      <button type="button" class="btn-voltar" id="btn-tour-voltar" hidden>← Voltar</button>
     </div>
   </div>
 </section>
@@ -987,10 +961,152 @@
     btn.addEventListener('click', function () {
       const destino = btn.getAttribute('data-go');
       mostrarTela(destino);
-      if (destino === 'tela-quiz') {
+      if (destino === 'tela-tour') {
+        renderMaterial();
+      } else if (destino === 'tela-quiz') {
         renderPergunta();
       }
     });
+  });
+
+  /* ============================================================
+     TOUR DESTRAVA — um material por tela
+     ============================================================ */
+  const materiais = [
+    {
+      img: 'mockup-120-modelos.webp',
+      alt: '120 Modelos de Redação',
+      titulo: '✔️ 120 Modelos de Redação Aprovados',
+      desc: 'Não adianta ler redação aleatória na internet. Esses 120 modelos foram organizados com base nos temas que mais caem em ENEM e nos principais concursos — FGV, VUNESP, Cebraspe, FCC. Cada modelo mostra na prática como uma redação nota alta se estrutura do início ao fim, servindo de referência real pra você entender o padrão que as bancas esperam.'
+    },
+    {
+      img: 'mockup-100-esqueletos.webp',
+      alt: '100 Esqueletos Adaptáveis',
+      titulo: '✔️ 100 Esqueletos Adaptáveis (Método EAE)',
+      desc: 'Aqui está o coração do método. Em vez de decorar 100 redações prontas (que só servem pra aquele tema específico), você tem 100 estruturas — esqueletos — que se adaptam a qualquer assunto. Cai um tema sobre tecnologia? Tem esqueleto pra isso. Cai sobre meio ambiente, saúde, educação? Também tem. Você para de treinar decoreba e começa a treinar estrutura, que é o que realmente se aplica em qualquer prova.'
+    },
+    {
+      img: 'mockup-mapas-mentais.webp',
+      alt: 'Mapas Mentais de Repertório',
+      titulo: '✔️ Mapas Mentais de Repertório',
+      desc: 'Repertório sociocultural é o que diferencia uma redação mediana de uma redação nota alta. Só que decorar dado solto não funciona — na hora da prova, você esquece. Os mapas mentais organizam esse conteúdo de forma visual, conectando ideias, autores e conceitos de um jeito que gruda na memória de verdade, não só decorado.'
+    },
+    {
+      img: 'mockup-cronograma.webp',
+      alt: 'Cronograma Inteligente de Estudos',
+      titulo: '✔️ Cronograma Inteligente de Estudos',
+      desc: 'De nada adianta ter material bom se você não sabe quando e como estudar. O cronograma foi pensado pra quem não tem o dia inteiro livre — organiza sua semana de um jeito realista, focando no que mais importa sem sobrecarregar sua rotina.'
+    },
+    {
+      img: 'mockup-bonus-repertorios.webp',
+      alt: 'Bônus: Banco de 50 Repertórios Prontos',
+      titulo: '✔️ Bônus: Banco de 50 Repertórios Prontos',
+      desc: 'Além dos mapas mentais, esse banco te dá 50 repertórios já prontos pra usar: citações, dados, referências socioculturais organizadas por tema. Na hora da prova, você não perde tempo tentando lembrar de um autor — você já treinou com repertório pronto e sabe exatamente onde encaixar.',
+      bonus: true,
+      de: 'de R$39'
+    },
+    {
+      img: 'mockup-bonus-conectivos.webp',
+      alt: 'Bônus: Conectivos Nota Máxima',
+      titulo: '✔️ Bônus: Conectivos Nota Máxima',
+      desc: 'Coesão textual é uma das 5 competências avaliadas pela banca, e muita gente perde ponto aqui sem nem perceber. Esse material reúne os conectivos que fazem sua redação fluir naturalmente entre os parágrafos, evitando repetição e deixando o texto com aparência mais madura e articulada.',
+      bonus: true,
+      de: 'de R$29'
+    },
+    {
+      img: 'mockup-bonus-checklist.webp',
+      alt: 'Bônus: Checklist de Revisão Pré-Prova',
+      titulo: '✔️ Bônus: Checklist de Revisão Pré-Prova',
+      desc: 'Antes de entregar qualquer redação, existe uma lista de verificação que os corretores usam mentalmente pra avaliar. Esse checklist te dá acesso a essa mesma lógica — você revisa seu texto com os mesmos critérios de quem vai te corrigir, evitando perder ponto por deslize bobo que poderia ser evitado.',
+      bonus: true,
+      de: 'de R$27'
+    }
+  ];
+
+  let materialAtual = 0;
+
+  const elMaterialBloco = document.getElementById('material-bloco');
+  const elMaterialImg = document.getElementById('material-img');
+  const elMaterialCard = document.getElementById('material-card');
+  const elMaterialBadge = document.getElementById('material-badge');
+  const elMaterialDe = document.getElementById('material-de');
+  const elMaterialTitulo = document.getElementById('material-titulo');
+  const elMaterialDesc = document.getElementById('material-desc');
+  const elTourLabel = document.getElementById('tour-label');
+  const elTourPct = document.getElementById('tour-pct');
+  const elTourFill = document.getElementById('tour-fill');
+  const elTourDots = document.getElementById('tour-dots');
+  const btnTourProximo = document.getElementById('btn-tour-proximo');
+  const btnTourVoltar = document.getElementById('btn-tour-voltar');
+
+  // pontinhos indicadores
+  materiais.forEach(function () {
+    const dot = document.createElement('span');
+    dot.className = 'tour-dot';
+    elTourDots.appendChild(dot);
+  });
+  const dots = elTourDots.querySelectorAll('.tour-dot');
+
+  function renderMaterial() {
+    const m = materiais[materialAtual];
+    const numero = materialAtual + 1;
+
+    elTourLabel.textContent = 'Material ' + numero + ' de ' + materiais.length;
+    const pct = Math.round((numero / materiais.length) * 100);
+    elTourPct.textContent = pct + '%';
+    elTourFill.style.width = pct + '%';
+
+    elMaterialImg.src = m.img;
+    elMaterialImg.alt = m.alt;
+    elMaterialTitulo.textContent = m.titulo;
+    elMaterialDesc.textContent = m.desc;
+
+    // bônus ganham o card verde com selo e preço riscado
+    elMaterialCard.className = m.bonus ? 'material-card bonus' : 'neon-card material-card';
+    elMaterialBadge.hidden = !m.bonus;
+    if (m.de) {
+      elMaterialDe.textContent = m.de;
+      elMaterialDe.hidden = false;
+    } else {
+      elMaterialDe.hidden = true;
+    }
+
+    dots.forEach(function (d, i) {
+      d.classList.toggle('on', i === materialAtual);
+    });
+
+    const ultimo = materialAtual === materiais.length - 1;
+    btnTourProximo.textContent = ultimo ? 'Continuar para o quiz' : 'Próximo';
+    btnTourVoltar.hidden = materialAtual === 0;
+
+    // pré-carrega a próxima imagem pra troca não piscar
+    if (!ultimo) {
+      new Image().src = materiais[materialAtual + 1].img;
+    }
+  }
+
+  function trocarMaterial(novoIndice) {
+    elMaterialBloco.classList.add('fading');
+    setTimeout(function () {
+      materialAtual = novoIndice;
+      renderMaterial();
+      elMaterialBloco.classList.remove('fading');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 250);
+  }
+
+  btnTourProximo.addEventListener('click', function () {
+    if (materialAtual === materiais.length - 1) {
+      mostrarTela('tela-quiz');
+      renderPergunta();
+    } else {
+      trocarMaterial(materialAtual + 1);
+    }
+  });
+
+  btnTourVoltar.addEventListener('click', function () {
+    if (materialAtual === 0) return;
+    trocarMaterial(materialAtual - 1);
   });
 
   /* ============================================================
