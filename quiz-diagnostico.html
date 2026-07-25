@@ -278,24 +278,78 @@
       margin-bottom: .5rem;
     }
 
-    /* Pontinhos indicadores do tour */
-    .tour-dots {
-      display: flex;
-      justify-content: center;
-      gap: .5rem;
-      margin: 1.5rem 0 1.25rem;
+    /* ------------------------------------------------------------
+       Trilha de progresso do tour — mapa de fases estilo tabuleiro
+       ------------------------------------------------------------ */
+    .trilha {
+      max-width: 380px;
+      margin: 0 auto 1.75rem;
+      width: 100%;
     }
-    .tour-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, .15);
-      transition: background-color .3s ease, box-shadow .3s ease, width .3s ease;
+    .trilha svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      /* sem overflow visible: o viewBox já reserva a área do glow do marcador,
+         e assim o filtro não pinta fora da caixa criando scroll horizontal */
     }
-    .tour-dot.on {
-      width: 22px;
-      background: linear-gradient(90deg, #3b82f6, #9933ff);
-      box-shadow: 0 0 12px rgba(153, 51, 255, .6);
+    .trilha-label {
+      text-align: center;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #b366ff;
+      margin-bottom: .625rem;
+    }
+    .trilha-nome {
+      text-align: center;
+      font-size: .8rem;
+      font-weight: 600;
+      color: #d4a849;
+      margin-top: .5rem;
+      min-height: 1.2em;
+    }
+
+    /* Marcador dourado que percorre a trilha */
+    .trilha-marker {
+      transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    /* Faixa percorrida do caminho */
+    .trilha-progresso {
+      transition: stroke-dashoffset .5s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    /* Pontos: apagados por padrão, sólidos quando visitados */
+    .trilha-dot {
+      opacity: .45;
+      transition: opacity .4s ease;
+    }
+    .trilha-dot.visitado { opacity: 1; }
+    .trilha-dot .disco {
+      fill: #101c35;
+      stroke: rgba(255, 255, 255, .22);
+      stroke-width: 1.5;
+      transition: fill .4s ease, stroke .4s ease;
+    }
+    .trilha-dot.visitado .disco {
+      fill: url(#grad-trilha);
+      stroke: rgba(255, 255, 255, .4);
+    }
+    .trilha-dot .num {
+      fill: rgba(255, 255, 255, .55);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      transition: fill .4s ease;
+    }
+    .trilha-dot.visitado .num { fill: #fff; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .trilha-marker, .trilha-progresso, .trilha-dot, .trilha-dot .disco, .trilha-dot .num {
+        transition: none;
+      }
     }
 
     /* ============================================================
@@ -626,12 +680,51 @@
       </h2>
     </div>
 
-    <div class="progress-head">
-      <span id="tour-label">Material 1 de 7</span>
-      <span id="tour-pct">14%</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="tour-fill"></div>
+    <!-- Trilha de progresso: 7 fases conectadas por um caminho ondulado -->
+    <div class="trilha">
+      <p class="trilha-label" id="tour-label">Material 1 de 7</p>
+
+      <svg id="trilha-svg" viewBox="-8 -4 356 112" role="img"
+           aria-label="Trilha de progresso pelos 7 materiais do Método EAE">
+        <defs>
+          <!-- userSpaceOnUse: o gradiente atravessa a trilha inteira, então cada
+               ponto pega a cor da sua posição (1 azul → 7 roxo) -->
+          <linearGradient id="grad-trilha" gradientUnits="userSpaceOnUse"
+                          x1="26" y1="0" x2="314" y2="0">
+            <stop offset="0%" stop-color="#3b82f6"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+          <filter id="glow-marcador" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="3.2" result="borrao"/>
+            <feMerge>
+              <feMergeNode in="borrao"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- caminho completo, apagado -->
+        <path id="trilha-base" fill="none" stroke="rgba(255,255,255,.12)"
+              stroke-width="3" stroke-linecap="round" stroke-dasharray="1 7"/>
+        <!-- trecho já percorrido, no gradiente azul-roxo -->
+        <path id="trilha-progresso" class="trilha-progresso" fill="none"
+              stroke="url(#grad-trilha)" stroke-width="3.5" stroke-linecap="round"/>
+
+        <g id="trilha-dots"></g>
+
+        <!-- marcador dourado: chapéu de formatura -->
+        <g id="trilha-marcador" class="trilha-marker" filter="url(#glow-marcador)">
+          <circle r="13" fill="#d4a849"/>
+          <circle r="13" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
+          <path d="M -7.5 -2.2 L 0 -6 L 7.5 -2.2 L 0 1.6 Z" fill="#0d0518"/>
+          <path d="M -4.4 -0.4 L -4.4 3 C -4.4 3 -1.9 4.9 0 4.9 C 1.9 4.9 4.4 3 4.4 3 L 4.4 -0.4"
+                fill="none" stroke="#0d0518" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 7.5 -2.2 L 7.5 2.6" stroke="#0d0518" stroke-width="1.4" stroke-linecap="round"/>
+        </g>
+      </svg>
+
+      <p class="trilha-nome" id="trilha-nome"></p>
     </div>
 
     <div id="material-bloco">
@@ -645,8 +738,6 @@
         <p class="material-desc" id="material-desc"></p>
       </div>
     </div>
-
-    <div class="tour-dots" id="tour-dots" aria-hidden="true"></div>
 
     <button type="button" class="btn-primary cta-pulse" id="btn-tour-proximo">
       Próximo
@@ -1033,28 +1124,142 @@
   const elMaterialTitulo = document.getElementById('material-titulo');
   const elMaterialDesc = document.getElementById('material-desc');
   const elTourLabel = document.getElementById('tour-label');
-  const elTourPct = document.getElementById('tour-pct');
-  const elTourFill = document.getElementById('tour-fill');
-  const elTourDots = document.getElementById('tour-dots');
   const btnTourProximo = document.getElementById('btn-tour-proximo');
   const btnTourVoltar = document.getElementById('btn-tour-voltar');
 
-  // pontinhos indicadores
-  materiais.forEach(function () {
-    const dot = document.createElement('span');
-    dot.className = 'tour-dot';
-    elTourDots.appendChild(dot);
+  /* ------------------------------------------------------------
+     Trilha de progresso — 7 fases num caminho ondulado (SVG)
+     ------------------------------------------------------------ */
+  const NS = 'http://www.w3.org/2000/svg';
+  const nomesCurtos = [
+    '120 Modelos', '100 Esqueletos', 'Mapas Mentais', 'Cronograma',
+    'Banco de Repertórios', 'Conectivos', 'Checklist'
+  ];
+
+  const svgTrilha = document.getElementById('trilha-svg');
+  const trilhaBase = document.getElementById('trilha-base');
+  const trilhaProgresso = document.getElementById('trilha-progresso');
+  const trilhaDots = document.getElementById('trilha-dots');
+  const trilhaMarcador = document.getElementById('trilha-marcador');
+  const trilhaNome = document.getElementById('trilha-nome');
+
+  // Coordenadas dos 7 pontos: x uniforme, y numa senoide (onda)
+  const LARGURA = 340, MARGEM = 26, MEIO = 52, AMPLITUDE = 22;
+  const passo = (LARGURA - MARGEM * 2) / (materiais.length - 1);
+  const pontos = materiais.map(function (_, i) {
+    return {
+      x: MARGEM + passo * i,
+      y: MEIO - AMPLITUDE * Math.sin(i * Math.PI / 2)
+    };
   });
-  const dots = elTourDots.querySelectorAll('.tour-dot');
+
+  // Catmull-Rom convertida em bézier cúbica: a curva passa exatamente pelos pontos
+  function caminhoSuave(pts) {
+    let d = 'M ' + pts[0].x.toFixed(2) + ' ' + pts[0].y.toFixed(2);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[i + 2] || pts[i + 1];
+      const c1x = p1.x + (p2.x - p0.x) / 6, c1y = p1.y + (p2.y - p0.y) / 6;
+      const c2x = p2.x - (p3.x - p1.x) / 6, c2y = p2.y - (p3.y - p1.y) / 6;
+      d += ' C ' + c1x.toFixed(2) + ' ' + c1y.toFixed(2) + ', ' +
+                   c2x.toFixed(2) + ' ' + c2y.toFixed(2) + ', ' +
+                   p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
+    }
+    return d;
+  }
+
+  let trilhaPronta = false;
+  let comprimentos = [];
+  let comprimentoTotal = 0;
+  let dotsTrilha = [];
+
+  function montarTrilha() {
+    const d = caminhoSuave(pontos);
+    trilhaBase.setAttribute('d', d);
+    trilhaProgresso.setAttribute('d', d);
+
+    pontos.forEach(function (p, i) {
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('class', 'trilha-dot');
+      g.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ',' + p.y.toFixed(2) + ')');
+
+      const disco = document.createElementNS(NS, 'circle');
+      disco.setAttribute('class', 'disco');
+      disco.setAttribute('r', '8.5');
+      g.appendChild(disco);
+
+      const num = document.createElementNS(NS, 'text');
+      num.setAttribute('class', 'num');
+      num.setAttribute('text-anchor', 'middle');
+      num.setAttribute('dy', '3.2');
+      num.textContent = String(i + 1);
+      g.appendChild(num);
+
+      trilhaDots.appendChild(g);
+    });
+    dotsTrilha = trilhaDots.querySelectorAll('.trilha-dot');
+
+    // Comprimento do caminho até cada ponto, pra revelar só o trecho percorrido
+    try {
+      comprimentoTotal = trilhaProgresso.getTotalLength();
+      comprimentos = pontos.map(function (alvo) {
+        let melhor = 0, menorDist = Infinity;
+        for (let i = 0; i <= 400; i++) {
+          const l = comprimentoTotal * i / 400;
+          const q = trilhaProgresso.getPointAtLength(l);
+          const dist = (q.x - alvo.x) * (q.x - alvo.x) + (q.y - alvo.y) * (q.y - alvo.y);
+          if (dist < menorDist) { menorDist = dist; melhor = l; }
+        }
+        return melhor;
+      });
+    } catch (e) {
+      // Fallback proporcional caso a medição do path não esteja disponível
+      comprimentoTotal = LARGURA;
+      comprimentos = pontos.map(function (_, i) {
+        return comprimentoTotal * i / (pontos.length - 1);
+      });
+    }
+
+    // Posição inicial sem animar: com a transição ativa, a primeira aplicação
+    // do transform partiria da identidade e o marcador entraria voando do canto
+    trilhaMarcador.style.transition = 'none';
+    trilhaProgresso.style.transition = 'none';
+
+    trilhaProgresso.style.strokeDasharray = comprimentoTotal;
+    trilhaProgresso.style.strokeDashoffset = comprimentoTotal - comprimentos[0];
+    trilhaMarcador.style.transform =
+      'translate(' + pontos[0].x.toFixed(2) + 'px, ' + pontos[0].y.toFixed(2) + 'px)';
+
+    svgTrilha.getBoundingClientRect(); // aplica o estilo antes de religar a transição
+    trilhaMarcador.style.transition = '';
+    trilhaProgresso.style.transition = '';
+
+    trilhaPronta = true;
+  }
+
+  function atualizarTrilha() {
+    if (!trilhaPronta) montarTrilha();
+
+    const p = pontos[materialAtual];
+    trilhaMarcador.style.transform =
+      'translate(' + p.x.toFixed(2) + 'px, ' + p.y.toFixed(2) + 'px)';
+    trilhaProgresso.style.strokeDashoffset = comprimentoTotal - comprimentos[materialAtual];
+
+    dotsTrilha.forEach(function (g, i) {
+      g.classList.toggle('visitado', i <= materialAtual);
+    });
+
+    trilhaNome.textContent = nomesCurtos[materialAtual];
+  }
 
   function renderMaterial() {
     const m = materiais[materialAtual];
     const numero = materialAtual + 1;
 
     elTourLabel.textContent = 'Material ' + numero + ' de ' + materiais.length;
-    const pct = Math.round((numero / materiais.length) * 100);
-    elTourPct.textContent = pct + '%';
-    elTourFill.style.width = pct + '%';
+    atualizarTrilha();
 
     elMaterialImg.src = m.img;
     elMaterialImg.alt = m.alt;
@@ -1070,10 +1275,6 @@
     } else {
       elMaterialDe.hidden = true;
     }
-
-    dots.forEach(function (d, i) {
-      d.classList.toggle('on', i === materialAtual);
-    });
 
     const ultimo = materialAtual === materiais.length - 1;
     btnTourProximo.textContent = ultimo ? 'Continuar para o quiz' : 'Próximo';
