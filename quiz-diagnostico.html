@@ -2,13 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#081021">
   <title>Diagnóstico Gratuito de Redação — Método EAE</title>
   <meta name="description" content="Responda 18 perguntas rápidas e receba um diagnóstico personalizado e gratuito sobre onde você está em cada uma das 5 competências da redação do ENEM.">
   <meta property="og:title" content="Diagnóstico Gratuito de Redação — Método EAE">
   <meta property="og:description" content="18 perguntas rápidas. No final, um diagnóstico personalizado das suas 5 competências de redação.">
-  <meta property="og:image" content="mockup-pacote.png">
+  <!-- webp de 69KB no lugar do PNG de 1,9MB: scrapers e preview em 4G agradecem -->
+  <meta property="og:image" content="mockup-hero.webp">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.ico">
 
@@ -51,7 +52,11 @@
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       line-height: 1.5;
+      /* sem flash cinza no toque e sem o delay de 300ms do duplo-toque */
+      -webkit-tap-highlight-color: transparent;
     }
+
+    button, a { touch-action: manipulation; }
 
     h1, h2, h3, h4 {
       font-family: 'Montserrat', sans-serif;
@@ -73,8 +78,11 @@
     .btn-primary {
       position: relative;
       overflow: hidden;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
+      min-height: 52px;          /* bem acima do mínimo de 44px pra toque */
       background: linear-gradient(135deg, #9933ff 0%, #b366ff 50%, #9933ff 100%);
       background-size: 200% 200%;
       box-shadow: 0 0 30px rgba(153, 51, 255, 0.5);
@@ -90,12 +98,16 @@
       text-decoration: none;
       transition: all 0.3s ease;
     }
-    .btn-primary:hover {
-      animation: none;
-      box-shadow: 0 0 50px rgba(153, 51, 255, 0.7);
-      transform: scale(1.03);
-      background-position: 100% 0;
+    /* Só em aparelho com ponteiro real: no touch o :hover "gruda" depois do tap */
+    @media (hover: hover) and (pointer: fine) {
+      .btn-primary:hover {
+        animation: none;
+        box-shadow: 0 0 50px rgba(153, 51, 255, 0.7);
+        transform: scale(1.03);
+        background-position: 100% 0;
+      }
     }
+    .btn-primary:active { transform: scale(.985); }
     .btn-primary::before {
       content: '';
       position: absolute;
@@ -147,8 +159,8 @@
       color: #fff;
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
-      font-size: .75rem;
-      padding: 6px 20px;
+      font-size: 11.5px;
+      padding: 7px 20px;
       border-radius: 9999px;
       box-shadow: 0 4px 20px rgba(153, 51, 255, 0.4);
       text-transform: uppercase;
@@ -190,13 +202,16 @@
       display: flex;
       align-items: center;
     }
+    /* scale(1.1) fazia o brilho vazar ~19px de cada lado; no mobile isso
+       alarga o documento e o navegador responde dando zoom-out na página.
+       scaleY mantém o bloom vertical sem estourar a largura. */
     .abertura-glow {
       position: absolute;
       inset: 0;
       background: rgba(147, 51, 234, .2);
       border-radius: 40px;
       filter: blur(80px);
-      transform: scale(1.1);
+      transform: scaleY(1.1);
       pointer-events: none;
     }
 
@@ -207,6 +222,8 @@
       opacity: 1;
       transform: translateY(0);
       transition: opacity .25s ease, transform .25s ease;
+      /* o "Próximo" encostava na borda do card */
+      margin-bottom: 1.5rem;
     }
     #material-bloco.fading {
       opacity: 0;
@@ -217,8 +234,12 @@
       position: relative;
       display: flex;
       justify-content: center;
+      /* respiro lateral extra além do padding do .wrap, pra imagem não
+         encostar na borda da tela em aparelho pequeno */
+      padding: 0 .75rem;
       margin-bottom: 1.25rem;
     }
+    /* mesmo motivo do .abertura-glow: nada de escalar na horizontal */
     .material-img::before {
       content: '';
       position: absolute;
@@ -226,7 +247,7 @@
       background: rgba(147, 51, 234, .15);
       border-radius: 40px;
       filter: blur(60px);
-      transform: scale(1.1);
+      transform: scaleY(1.1);
     }
     .material-img img {
       position: relative;
@@ -236,7 +257,7 @@
     }
 
     .material-card {
-      padding: 1.25rem;
+      padding: 1.25rem 1.125rem;
       text-align: center;
     }
     .material-card h3 {
@@ -248,10 +269,12 @@
       line-height: 1.35;
       margin-bottom: .75rem;
     }
+    /* px em vez de rem: legibilidade mínima é uma medida absoluta, e a raiz
+       do site é 14px (herdada do index.html) */
     .material-desc {
-      color: #d1d5db;
-      font-size: .95rem;
-      line-height: 1.75;
+      color: #dfe3ea;
+      font-size: 15px;
+      line-height: 1.72;
       text-align: left;
     }
     .material-card.bonus {
@@ -261,8 +284,8 @@
       box-shadow: 0 0 25px rgba(34, 197, 94, 0.2);
     }
     .material-de {
-      color: #6b7280;
-      font-size: .78rem;
+      color: #8b93a1;
+      font-size: 12px;
       text-decoration: line-through;
       margin-bottom: .375rem;
     }
@@ -271,19 +294,24 @@
       background: linear-gradient(to right, #22c55e, #16a34a);
       color: #fff;
       font-weight: 800;
-      font-size: .7rem;
-      padding: 4px 16px;
+      font-size: 11px;
+      padding: 5px 16px;
       border-radius: 9999px;
       box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
       margin-bottom: .5rem;
     }
+
+    /* A trilha logo abaixo já comunica "onde estou", então no mobile o título
+       do tour não precisa gastar duas linhas grandes acima da dobra. */
+    #tela-tour .h-hero { font-size: 1.45rem; }
+    #tela-tour .center.mb-8 { margin-bottom: 1.5rem; }
 
     /* ------------------------------------------------------------
        Trilha de progresso do tour — mapa de fases estilo tabuleiro
        ------------------------------------------------------------ */
     .trilha {
       max-width: 380px;
-      margin: 0 auto 1.75rem;
+      margin: 0 auto 1.25rem;
       width: 100%;
     }
     .trilha svg {
@@ -295,7 +323,7 @@
     }
     .trilha-label {
       text-align: center;
-      font-size: .7rem;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
@@ -304,16 +332,18 @@
     }
     .trilha-nome {
       text-align: center;
-      font-size: .8rem;
+      font-size: 13px;
       font-weight: 600;
-      color: #d4a849;
-      margin-top: .5rem;
+      color: #e0b95c;
+      margin-top: .375rem;
       min-height: 1.2em;
     }
 
-    /* Marcador dourado que percorre a trilha */
+    /* Marcador dourado que percorre a trilha.
+       will-change promove a um layer próprio: o percurso vira só composite. */
     .trilha-marker {
       transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+      will-change: transform;
     }
 
     /* Faixa percorrida do caminho */
@@ -323,7 +353,7 @@
 
     /* Pontos: apagados por padrão, sólidos quando visitados */
     .trilha-dot {
-      opacity: .45;
+      opacity: .6;
       transition: opacity .4s ease;
     }
     .trilha-dot.visitado { opacity: 1; }
@@ -338,9 +368,9 @@
       stroke: rgba(255, 255, 255, .4);
     }
     .trilha-dot .num {
-      fill: rgba(255, 255, 255, .55);
+      fill: rgba(255, 255, 255, .7);
       font-family: 'Inter', system-ui, sans-serif;
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 700;
       transition: fill .4s ease;
     }
@@ -437,7 +467,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: .625rem;
-      font-size: .75rem;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: .05em;
       text-transform: uppercase;
@@ -448,7 +478,7 @@
       border-radius: 9999px;
       background: rgba(255, 255, 255, .07);
       overflow: hidden;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
     .progress-fill {
       height: 100%;
@@ -481,44 +511,64 @@
     }
 
     .alt {
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
+      min-height: 52px;          /* alvo de toque confortável mesmo em 1 linha */
       text-align: left;
       background: hsl(var(--card));
       border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
-      padding: 1rem 1.125rem;
-      margin-bottom: .75rem;
-      color: #e5e7eb;
-      font-size: .95rem;
+      padding: .9rem 1.125rem;
+      margin-bottom: .875rem;    /* 12px+ de separação: evita tocar na errada */
+      color: #e9ecf2;
+      font-size: 15px;
       font-weight: 500;
-      line-height: 1.45;
+      line-height: 1.5;
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background-color .2s ease;
     }
-    .alt:hover, .alt:focus-visible {
+    .alt:focus-visible {
       border-color: #9933ff;
       background: rgba(153, 51, 255, .1);
       box-shadow: 0 0 24px rgba(153, 51, 255, .3);
-      transform: translateY(-2px);
       outline: none;
     }
+    @media (hover: hover) and (pointer: fine) {
+      .alt:hover {
+        border-color: #9933ff;
+        background: rgba(153, 51, 255, .1);
+        box-shadow: 0 0 24px rgba(153, 51, 255, .3);
+        transform: translateY(-2px);
+      }
+    }
+    .alt:active { background: rgba(153, 51, 255, .16); }
     .alt.selected {
       border-color: #b366ff;
       background: rgba(153, 51, 255, .2);
       box-shadow: 0 0 28px rgba(153, 51, 255, .45);
     }
+    /* o clique já desabilita as alternativas; sem isso elas apagam durante o fade */
+    .alt:disabled { opacity: 1; cursor: default; }
 
+    /* Era ~19px de altura: abaixo do alvo de toque. Ganha padding próprio
+       em vez de só margem, pra área clicável valer 44px de verdade. */
     .btn-voltar {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: .375rem;
-      margin-top: 1.25rem;
-      font-size: .8rem;
+      min-height: 44px;
+      padding: .5rem 1.25rem;
+      margin-top: .75rem;
+      font-size: 13px;
       font-weight: 600;
-      color: #6b7280;
+      color: #8b93a1;
       transition: color .2s ease;
     }
-    .btn-voltar:hover { color: #b366ff; }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-voltar:hover { color: #b366ff; }
+    }
+    .btn-voltar:active { color: #b366ff; }
     .btn-voltar[hidden] { display: none; }
 
     /* ============================================================
@@ -534,17 +584,21 @@
       margin-bottom: .5rem;
     }
     .comp-nome {
+      flex: 1 1 auto;
+      min-width: 0;              /* deixa encolher/quebrar antes de empurrar o % */
       font-family: 'Inter', system-ui, sans-serif;
       font-weight: 700;
-      font-size: .9rem;
+      font-size: 14px;
+      line-height: 1.35;
       text-transform: none;
       color: #fff;
     }
     .comp-nome span { color: #b366ff; font-weight: 800; }
     .comp-pct {
+      flex: 0 0 auto;
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       white-space: nowrap;
     }
 
@@ -568,11 +622,11 @@
 
     .faixa-tag {
       display: inline-block;
-      font-size: .65rem;
+      font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: .08em;
-      padding: 3px 10px;
+      padding: 4px 11px;
       border-radius: 9999px;
       margin-top: .625rem;
     }
@@ -582,9 +636,9 @@
 
     .comp-texto {
       margin-top: .5rem;
-      color: #d1d5db;
-      font-size: .85rem;
-      line-height: 1.6;
+      color: #dfe3ea;
+      font-size: 14px;
+      line-height: 1.65;
     }
 
     /* ============================================================
@@ -601,11 +655,11 @@
     }
 
     .aviso-pagamento {
-      color: #6b7280;
-      font-size: .75rem;
+      color: #8b93a1;
+      font-size: 12px;
       line-height: 1.6;
       text-align: center;
-      margin-top: .75rem;
+      margin-top: 1rem;
     }
 
     /* ============================================================
@@ -644,8 +698,12 @@
 
     @media (min-width: 640px) {
       .h-hero { font-size: 2.5rem; }
+      #tela-tour .h-hero { font-size: 2.25rem; }
       .pergunta-texto { font-size: 1.6rem; }
       .lead { font-size: 1.125rem; }
+      .material-desc { font-size: 1rem; }
+      .alt { font-size: 1rem; }
+      .comp-texto { font-size: .95rem; }
       .sec { padding: 4rem 0; }
       .btn-primary { font-size: 1.05rem; padding: 20px 40px; }
       .preco-final { font-size: 3.5rem; }
@@ -721,22 +779,27 @@
       <stop offset="0%" stop-color="#3b82f6"/>
       <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
-    <filter id="glow-marcador" x="-70%" y="-70%" width="240%" height="240%">
-      <feGaussianBlur stdDeviation="3.2" result="borrao"/>
-      <feMerge>
-        <feMergeNode in="borrao"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <!-- Halo em gradiente no lugar de um feGaussianBlur.
+         O marcador se move a cada passo da trilha; um filtro SVG obriga o
+         navegador a re-rasterizar o borrão em todo frame, que é justamente
+         o que trava em aparelho fraco. Geometria estática é só composite. -->
+    <radialGradient id="halo-marcador">
+      <stop offset="42%" stop-color="#d4a849" stop-opacity=".55"/>
+      <stop offset="70%" stop-color="#d4a849" stop-opacity=".22"/>
+      <stop offset="100%" stop-color="#d4a849" stop-opacity="0"/>
+    </radialGradient>
     <!-- marcador dourado: chapéu de formatura, reaproveitado via <use> -->
     <g id="marcador-forma">
-      <circle r="13" fill="#d4a849"/>
-      <circle r="13" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5"/>
-      <path d="M -7.5 -2.2 L 0 -6 L 7.5 -2.2 L 0 1.6 Z" fill="#0d0518"/>
-      <path d="M -4.4 -0.4 L -4.4 3 C -4.4 3 -1.9 4.9 0 4.9 C 1.9 4.9 4.4 3 4.4 3 L 4.4 -0.4"
-            fill="none" stroke="#0d0518" stroke-width="1.6"
-            stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M 7.5 -2.2 L 7.5 2.6" stroke="#0d0518" stroke-width="1.4" stroke-linecap="round"/>
+      <circle r="24" fill="url(#halo-marcador)"/>
+      <circle r="14" fill="#d4a849"/>
+      <circle r="14" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+      <g transform="scale(1.08)">
+        <path d="M -7.5 -2.2 L 0 -6 L 7.5 -2.2 L 0 1.6 Z" fill="#0d0518"/>
+        <path d="M -4.4 -0.4 L -4.4 3 C -4.4 3 -1.9 4.9 0 4.9 C 1.9 4.9 4.4 3 4.4 3 L 4.4 -0.4"
+              fill="none" stroke="#0d0518" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 7.5 -2.2 L 7.5 2.6" stroke="#0d0518" stroke-width="1.4" stroke-linecap="round"/>
+      </g>
     </g>
   </defs>
 </svg>
@@ -804,7 +867,7 @@
 
         <g id="trilha-dots"></g>
 
-        <g id="trilha-marcador" class="trilha-marker" filter="url(#glow-marcador)">
+        <g id="trilha-marcador" class="trilha-marker">
           <use href="#marcador-forma"/>
         </g>
       </svg>
@@ -814,7 +877,8 @@
 
     <div id="material-bloco">
       <div class="material-img">
-        <img id="material-img" src="" alt="" width="1600" height="900" decoding="async">
+        <img id="material-img" src="" alt="" width="1600" height="900"
+             decoding="async" fetchpriority="high">
       </div>
       <div id="material-card" class="neon-card material-card">
         <span class="badge-free" id="material-badge" hidden>🎁 GRÁTIS</span>
@@ -875,7 +939,7 @@
 
         <g id="conc-dots"></g>
 
-        <g id="conc-marcador" class="trilha-marker" filter="url(#glow-marcador)">
+        <g id="conc-marcador" class="trilha-marker">
           <use href="#marcador-forma"/>
         </g>
       </svg>
@@ -1240,6 +1304,15 @@
 
   let materialAtual = 0;
 
+  /* A abertura não usa imagem nenhuma, então a banda ociosa enquanto o usuário
+     lê a tela 1 já busca o primeiro mockup — em 4G isso é a diferença entre o
+     tour abrir com imagem e abrir com buraco branco. */
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(function () { new Image().src = materiais[0].img; });
+  } else {
+    window.addEventListener('load', function () { new Image().src = materiais[0].img; });
+  }
+
   const elMaterialBloco = document.getElementById('material-bloco');
   const elMaterialImg = document.getElementById('material-img');
   const elMaterialCard = document.getElementById('material-card');
@@ -1289,6 +1362,52 @@
     return d;
   }
 
+  /* ------------------------------------------------------------
+     Comprimento do caminho até cada um dos 7 pontos.
+
+     As duas trilhas (tour e conclusão) usam o mesmo 'd' e os mesmos pontos,
+     então a medição é idêntica: faz uma vez e guarda. Antes cada trilha
+     media sozinha, com 400 amostras POR ponto (2807 getPointAtLength no
+     total) — e a da conclusão fazia isso exatamente no quadro em que a
+     animação começava, o que aparecia como um tranco no celular.
+
+     Agora é uma passada só pelo caminho, atualizando os 7 alvos de uma vez:
+     241 chamadas na trilha do tour e zero na da conclusão.
+     ------------------------------------------------------------ */
+  let medidaCaminho = null;
+
+  function medirCaminho(pathEl) {
+    if (medidaCaminho) return medidaCaminho;
+
+    try {
+      const total = pathEl.getTotalLength();
+      if (!total) throw new Error('caminho sem comprimento');
+
+      const AMOSTRAS = 240;
+      const melhor = pontos.map(function () { return { l: 0, dist: Infinity }; });
+
+      for (let i = 0; i <= AMOSTRAS; i++) {
+        const l = total * i / AMOSTRAS;
+        const q = pathEl.getPointAtLength(l);
+        for (let k = 0; k < pontos.length; k++) {
+          const dx = q.x - pontos[k].x, dy = q.y - pontos[k].y;
+          const dist = dx * dx + dy * dy;
+          if (dist < melhor[k].dist) { melhor[k].dist = dist; melhor[k].l = l; }
+        }
+      }
+
+      medidaCaminho = { total: total, comps: melhor.map(function (m) { return m.l; }) };
+      return medidaCaminho;
+    } catch (e) {
+      // Fallback proporcional (ex.: SVG ainda sem layout). Não guarda em cache:
+      // a próxima trilha pode conseguir medir de verdade.
+      return {
+        total: LARGURA,
+        comps: pontos.map(function (_, i) { return LARGURA * i / (pontos.length - 1); })
+      };
+    }
+  }
+
   /**
    * Cria uma instância de trilha sobre um SVG já presente no HTML.
    * Usada duas vezes: no tour (passo a passo) e na conclusão (corrida final).
@@ -1317,13 +1436,13 @@
 
         const disco = document.createElementNS(NS, 'circle');
         disco.setAttribute('class', 'disco');
-        disco.setAttribute('r', '8.5');
+        disco.setAttribute('r', '10.5');
         g.appendChild(disco);
 
         const num = document.createElementNS(NS, 'text');
         num.setAttribute('class', 'num');
         num.setAttribute('text-anchor', 'middle');
-        num.setAttribute('dy', '3.2');
+        num.setAttribute('dy', '3.9');
         num.textContent = String(i + 1);
         g.appendChild(num);
 
@@ -1332,25 +1451,9 @@
       dots = grupoDots.querySelectorAll('.trilha-dot');
 
       // Comprimento do caminho até cada ponto, pra revelar só o trecho percorrido
-      try {
-        comprimentoTotal = progresso.getTotalLength();
-        comprimentos = pontos.map(function (alvo) {
-          let melhor = 0, menorDist = Infinity;
-          for (let i = 0; i <= 400; i++) {
-            const l = comprimentoTotal * i / 400;
-            const q = progresso.getPointAtLength(l);
-            const dist = (q.x - alvo.x) * (q.x - alvo.x) + (q.y - alvo.y) * (q.y - alvo.y);
-            if (dist < menorDist) { menorDist = dist; melhor = l; }
-          }
-          return melhor;
-        });
-      } catch (e) {
-        // Fallback proporcional caso a medição do path não esteja disponível
-        comprimentoTotal = LARGURA;
-        comprimentos = pontos.map(function (_, i) {
-          return comprimentoTotal * i / (pontos.length - 1);
-        });
-      }
+      const medida = medirCaminho(progresso);
+      comprimentoTotal = medida.total;
+      comprimentos = medida.comps;
 
       progresso.style.strokeDasharray = comprimentoTotal;
       pronta = true;
