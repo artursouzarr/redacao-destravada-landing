@@ -307,6 +307,104 @@
     #tela-tour .center.mb-8 { margin-bottom: 1.5rem; }
 
     /* ------------------------------------------------------------
+       Tela de impacto — o par da tela de material: "o que é" vira
+       "o que muda pra você". Card com aresta em gradiente pra ler
+       na hora como uma tela de natureza diferente.
+       ------------------------------------------------------------ */
+    .impacto-card {
+      position: relative;
+      overflow: hidden;
+      background: hsl(var(--card));
+      border: 1px solid rgba(153, 51, 255, .35);
+      border-radius: 1rem;
+      box-shadow: 0 0 28px rgba(153, 51, 255, .18);
+      padding: 1.375rem 1.125rem 1.25rem;
+    }
+    .impacto-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #9933ff, #ec4899);
+    }
+
+    .impacto-contexto {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #8b93a1;
+      margin-bottom: .625rem;
+    }
+
+    .impacto-head {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: .875rem;
+    }
+    .impacto-icone {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #9933ff, #b366ff);
+      box-shadow: 0 0 16px rgba(153, 51, 255, .5);
+      color: #fff;
+    }
+    .impacto-icone svg { width: 17px; height: 17px; display: block; }
+    .impacto-titulo {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 1.2;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 0 18px rgba(153, 51, 255, .5);
+    }
+
+    .impacto-par {
+      color: #dfe3ea;
+      font-size: 15px;
+      line-height: 1.72;
+      text-align: left;
+    }
+    .impacto-par + .impacto-par { margin-top: .875rem; }
+    .rot-direto { color: #b366ff; font-weight: 800; }
+    .rot-muda   { color: #e0b95c; font-weight: 800; }
+
+    /* Sub-indicador das 2 telas de cada material */
+    .sub-passos {
+      display: flex;
+      justify-content: center;
+      gap: .375rem;
+      margin-top: .5rem;
+    }
+    .sub-passo {
+      width: 26px;
+      height: 3px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, .14);
+      transition: background-color .3s ease, box-shadow .3s ease;
+    }
+    .sub-passo.ativo {
+      background: linear-gradient(90deg, #3b82f6, #9933ff);
+      box-shadow: 0 0 10px rgba(153, 51, 255, .55);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sub-passo { transition: none; }
+    }
+
+    @media (min-width: 640px) {
+      .impacto-par { font-size: 1rem; }
+      .impacto-titulo { font-size: 1rem; }
+    }
+
+    /* ------------------------------------------------------------
        Trilha de progresso do tour — mapa de fases estilo tabuleiro
        ------------------------------------------------------------ */
     .trilha {
@@ -873,18 +971,56 @@
       </svg>
 
       <p class="trilha-nome" id="trilha-nome"></p>
+
+      <!-- Sub-indicador: cada material tem 2 telas (o que é / impacto).
+           Fica fora do SVG porque 14 pontos na trilha não cabem em 375px —
+           o espaçamento cairia de 46px pra 22px e os discos se tocariam. -->
+      <div class="sub-passos" id="sub-passos" aria-hidden="true">
+        <span class="sub-passo"></span>
+        <span class="sub-passo"></span>
+      </div>
     </div>
 
     <div id="material-bloco">
-      <div class="material-img">
-        <img id="material-img" src="" alt="" width="1600" height="900"
-             decoding="async" fetchpriority="high">
+      <!-- tela A: o que o material É -->
+      <div id="bloco-material">
+        <div class="material-img">
+          <img id="material-img" src="" alt="" width="1600" height="900"
+               decoding="async" fetchpriority="high">
+        </div>
+        <div id="material-card" class="neon-card material-card">
+          <span class="badge-free" id="material-badge" hidden>🎁 GRÁTIS</span>
+          <p class="material-de" id="material-de" hidden></p>
+          <h3 id="material-titulo"></h3>
+          <p class="material-desc" id="material-desc"></p>
+        </div>
       </div>
-      <div id="material-card" class="neon-card material-card">
-        <span class="badge-free" id="material-badge" hidden>🎁 GRÁTIS</span>
-        <p class="material-de" id="material-de" hidden></p>
-        <h3 id="material-titulo"></h3>
-        <p class="material-desc" id="material-desc"></p>
+
+      <!-- tela B: o que MUDA na vida de quem usa -->
+      <div id="bloco-impacto" hidden>
+        <div class="impacto-card">
+          <p class="impacto-contexto" id="impacto-contexto"></p>
+
+          <div class="impacto-head">
+            <span class="impacto-icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M13 2 L4.5 13.5 H11 L10 22 L19.5 10 H13 Z"
+                      fill="currentColor" stroke="currentColor"
+                      stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="impacto-titulo">Impacto na sua redação</span>
+          </div>
+
+          <p class="impacto-par">
+            <strong class="rot-direto">Impacto direto:</strong>
+            <span id="impacto-direto"></span>
+          </p>
+          <p class="impacto-par">
+            <strong class="rot-muda">O que muda:</strong>
+            <span id="impacto-muda"></span>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -1241,7 +1377,7 @@
       const destino = btn.getAttribute('data-go');
       mostrarTela(destino);
       if (destino === 'tela-tour') {
-        renderMaterial();
+        renderPasso();
       } else if (destino === 'tela-quiz') {
         renderPergunta();
       }
@@ -1249,38 +1385,61 @@
   });
 
   /* ============================================================
-     TOUR DESTRAVA — um material por tela
+     TOUR DESTRAVA — duas telas por material:
+       passo par   → o que o material É (imagem + descrição)
+       passo ímpar → o que MUDA pra quem usa (tela de impacto)
+     São 7 materiais = 14 passos, sobre a mesma trilha de 7 pontos.
      ============================================================ */
   const materiais = [
     {
       img: 'mockup-120-modelos.webp',
       alt: '120 Modelos de Redação',
       titulo: '✔️ 120 Modelos de Redação Aprovados',
-      desc: 'Não adianta ler redação aleatória na internet. Esses 120 modelos foram organizados com base nos temas que mais caem em ENEM e nos principais concursos — FGV, VUNESP, Cebraspe, FCC. Cada modelo mostra na prática como uma redação nota alta se estrutura do início ao fim, servindo de referência real pra você entender o padrão que as bancas esperam.'
+      desc: 'Não adianta ler redação aleatória na internet. Esses 120 modelos foram organizados com base nos temas que mais caem em ENEM e nos principais concursos — FGV, VUNESP, Cebraspe, FCC. Cada modelo mostra na prática como uma redação nota alta se estrutura do início ao fim, servindo de referência real pra você entender o padrão que as bancas esperam.',
+      impacto: {
+        direto: 'você para de treinar no escuro. Ler um modelo de redação nota alta é diferente de ler qualquer texto na internet — você enxerga, na prática, como uma introdução prende o corretor nas primeiras linhas, como um argumento se conecta com um repertório de verdade, e como uma conclusão fecha sem parecer forçada.',
+        muda: 'seu “olho treinado” desenvolve muito mais rápido. Em vez de tentar adivinhar o que é uma redação boa, você tem 120 referências reais pra internalizar o padrão — e isso se reflete direto na sua próxima redação, mesmo que você não decore nenhuma delas.'
+      }
     },
     {
       img: 'mockup-100-esqueletos.webp',
       alt: '100 Esqueletos Adaptáveis',
       titulo: '✔️ 100 Esqueletos Adaptáveis (Método EAE)',
-      desc: 'Aqui está o coração do método. Em vez de decorar 100 redações prontas (que só servem pra aquele tema específico), você tem 100 estruturas — esqueletos — que se adaptam a qualquer assunto. Cai um tema sobre tecnologia? Tem esqueleto pra isso. Cai sobre meio ambiente, saúde, educação? Também tem. Você para de treinar decoreba e começa a treinar estrutura, que é o que realmente se aplica em qualquer prova.'
+      desc: 'Aqui está o coração do método. Em vez de decorar 100 redações prontas (que só servem pra aquele tema específico), você tem 100 estruturas — esqueletos — que se adaptam a qualquer assunto. Cai um tema sobre tecnologia? Tem esqueleto pra isso. Cai sobre meio ambiente, saúde, educação? Também tem. Você para de treinar decoreba e começa a treinar estrutura, que é o que realmente se aplica em qualquer prova.',
+      impacto: {
+        direto: 'você nunca mais trava na hora de começar. Cada esqueleto é uma estrutura pronta — só encaixar o tema — que elimina o momento mais perigoso da prova: aquele minuto de pânico olhando pra folha em branco sem saber por onde começar.',
+        muda: 'sua velocidade de produção aumenta muito. Em vez de gastar 10-15 minutos só decidindo como estruturar o texto, você escolhe o esqueleto certo em segundos e já parte pra escrever — sobrando mais tempo pra revisão, que é onde a nota realmente se garante.'
+      }
     },
     {
       img: 'mockup-mapas-mentais.webp',
       alt: 'Mapas Mentais de Repertório',
       titulo: '✔️ Mapas Mentais de Repertório',
-      desc: 'Repertório sociocultural é o que diferencia uma redação mediana de uma redação nota alta. Só que decorar dado solto não funciona — na hora da prova, você esquece. Os mapas mentais organizam esse conteúdo de forma visual, conectando ideias, autores e conceitos de um jeito que gruda na memória de verdade, não só decorado.'
+      desc: 'Repertório sociocultural é o que diferencia uma redação mediana de uma redação nota alta. Só que decorar dado solto não funciona — na hora da prova, você esquece. Os mapas mentais organizam esse conteúdo de forma visual, conectando ideias, autores e conceitos de um jeito que gruda na memória de verdade, não só decorado.',
+      impacto: {
+        direto: 'seu repertório para de “sumir” na hora da prova. Você já deve ter vivido isso: estudou um monte de referência, mas na hora de escrever, nada vem à cabeça. Isso acontece porque decorar informação solta não gruda — conexão visual gruda.',
+        muda: 'os mapas mentais criam associações que seu cérebro lembra sob pressão, porque conectam ideia com ideia, não fato isolado. Isso significa repertório disponível no momento exato que você precisa, não só quando está relaxado estudando em casa.'
+      }
     },
     {
       img: 'mockup-cronograma.webp',
       alt: 'Cronograma Inteligente de Estudos',
       titulo: '✔️ Cronograma Inteligente de Estudos',
-      desc: 'De nada adianta ter material bom se você não sabe quando e como estudar. O cronograma foi pensado pra quem não tem o dia inteiro livre — organiza sua semana de um jeito realista, focando no que mais importa sem sobrecarregar sua rotina.'
+      desc: 'De nada adianta ter material bom se você não sabe quando e como estudar. O cronograma foi pensado pra quem não tem o dia inteiro livre — organiza sua semana de um jeito realista, focando no que mais importa sem sobrecarregar sua rotina.',
+      impacto: {
+        direto: 'você para de estudar de forma aleatória e sem direção. A maioria das pessoas que trava na redação não trava por falta de estudo — trava porque estuda sem prioridade clara, gastando tempo igual em tudo, inclusive no que já domina.',
+        muda: 'seu tempo de estudo rende muito mais, porque você sabe exatamente o que treinar em cada semana. Isso é especialmente importante se você não tem o dia inteiro livre — o cronograma foi pensado pra rotina real, não pra quem tem tempo ilimitado.'
+      }
     },
     {
       img: 'mockup-bonus-repertorios.webp',
       alt: 'Bônus: Banco de 50 Repertórios Prontos',
       titulo: '✔️ Bônus: Banco de 50 Repertórios Prontos',
       desc: 'Além dos mapas mentais, esse banco te dá 50 repertórios já prontos pra usar: citações, dados, referências socioculturais organizadas por tema. Na hora da prova, você não perde tempo tentando lembrar de um autor — você já treinou com repertório pronto e sabe exatamente onde encaixar.',
+      impacto: {
+        direto: 'você entra na prova com munição pronta, sem depender de lembrar um autor ou dado no calor do momento. Cada repertório já vem organizado por tema, então você sabe exatamente onde encaixar cada um.',
+        muda: 'sua argumentação sai da opinião pura e vira argumentação sustentada — que é exatamente o que separa quem tira 700 de quem tira 900+. A banca não quer saber o que você acha, quer saber por que você acha isso, com base em quê.'
+      },
       bonus: true,
       de: 'de R$39'
     },
@@ -1289,6 +1448,10 @@
       alt: 'Bônus: Conectivos Nota Máxima',
       titulo: '✔️ Bônus: Conectivos Nota Máxima',
       desc: 'Coesão textual é uma das 5 competências avaliadas pela banca, e muita gente perde ponto aqui sem nem perceber. Esse material reúne os conectivos que fazem sua redação fluir naturalmente entre os parágrafos, evitando repetição e deixando o texto com aparência mais madura e articulada.',
+      impacto: {
+        direto: 'seu texto para de parecer “picotado”, com frases soltas sem conexão. Coesão é uma das 5 competências avaliadas, e é também uma das que mais gente perde ponto sem nem perceber — porque não é erro óbvio, é falta de fluidez.',
+        muda: 'sua redação passa a “correr” naturalmente, com transições que fazem sentido entre um parágrafo e outro. Isso não só melhora a nota de coesão diretamente — também deixa a leitura do corretor mais agradável, o que indiretamente favorece a percepção geral do seu texto.'
+      },
       bonus: true,
       de: 'de R$29'
     },
@@ -1297,12 +1460,23 @@
       alt: 'Bônus: Checklist de Revisão Pré-Prova',
       titulo: '✔️ Bônus: Checklist de Revisão Pré-Prova',
       desc: 'Antes de entregar qualquer redação, existe uma lista de verificação que os corretores usam mentalmente pra avaliar. Esse checklist te dá acesso a essa mesma lógica — você revisa seu texto com os mesmos critérios de quem vai te corrigir, evitando perder ponto por deslize bobo que poderia ser evitado.',
+      impacto: {
+        direto: 'você para de perder ponto por deslize bobo — esquecer a proposta de intervenção completa, deixar um erro de concordância passar, não citar todos os elementos exigidos.',
+        muda: 'você revisa com os mesmos critérios que o corretor usa pra avaliar, então antes de entregar, você já sabe se está deixando algo passar. Isso é a diferença entre uma redação “boa” e uma redação que realmente maximiza cada competência avaliada.'
+      },
       bonus: true,
       de: 'de R$27'
     }
   ];
 
-  let materialAtual = 0;
+  /* Passo do tour, de 0 a 13. O material é passo>>1 e a tela de impacto é
+     o passo ímpar — assim a navegação é um contador só, sem estado paralelo. */
+  const TELAS_POR_MATERIAL = 2;
+  const totalPassos = materiais.length * TELAS_POR_MATERIAL;
+  let passoAtual = 0;
+
+  function materialDoPasso(p) { return Math.floor(p / TELAS_POR_MATERIAL); }
+  function ehImpacto(p) { return p % TELAS_POR_MATERIAL === 1; }
 
   /* A abertura não usa imagem nenhuma, então a banda ociosa enquanto o usuário
      lê a tela 1 já busca o primeiro mockup — em 4G isso é a diferença entre o
@@ -1314,12 +1488,18 @@
   }
 
   const elMaterialBloco = document.getElementById('material-bloco');
+  const elBlocoMaterial = document.getElementById('bloco-material');
+  const elBlocoImpacto = document.getElementById('bloco-impacto');
   const elMaterialImg = document.getElementById('material-img');
   const elMaterialCard = document.getElementById('material-card');
   const elMaterialBadge = document.getElementById('material-badge');
   const elMaterialDe = document.getElementById('material-de');
   const elMaterialTitulo = document.getElementById('material-titulo');
   const elMaterialDesc = document.getElementById('material-desc');
+  const elImpactoContexto = document.getElementById('impacto-contexto');
+  const elImpactoDireto = document.getElementById('impacto-direto');
+  const elImpactoMuda = document.getElementById('impacto-muda');
+  const subPassos = document.querySelectorAll('#sub-passos .sub-passo');
   const elTourLabel = document.getElementById('tour-label');
   const btnTourProximo = document.getElementById('btn-tour-proximo');
   const btnTourVoltar = document.getElementById('btn-tour-voltar');
@@ -1506,65 +1686,76 @@
     dots: 'conc-dots', marcador: 'conc-marcador'
   });
 
-  function atualizarTrilha() {
-    trilhaTour.irPara(materialAtual);
-    trilhaNome.textContent = nomesCurtos[materialAtual];
-  }
+  function renderPasso() {
+    const iMat = materialDoPasso(passoAtual);
+    const impacto = ehImpacto(passoAtual);
+    const m = materiais[iMat];
 
-  function renderMaterial() {
-    const m = materiais[materialAtual];
-    const numero = materialAtual + 1;
+    // A trilha continua marcando o MATERIAL: as duas telas dividem o ponto.
+    elTourLabel.textContent = 'Material ' + (iMat + 1) + ' de ' + materiais.length +
+                              (impacto ? ' · Impacto' : '');
+    trilhaTour.irPara(iMat);
+    trilhaNome.textContent = nomesCurtos[iMat];
+    subPassos.forEach(function (s, i) {
+      s.classList.toggle('ativo', impacto ? true : i === 0);
+    });
 
-    elTourLabel.textContent = 'Material ' + numero + ' de ' + materiais.length;
-    atualizarTrilha();
+    elBlocoMaterial.hidden = impacto;
+    elBlocoImpacto.hidden = !impacto;
 
-    elMaterialImg.src = m.img;
-    elMaterialImg.alt = m.alt;
-    elMaterialTitulo.textContent = m.titulo;
-    elMaterialDesc.textContent = m.desc;
-
-    // bônus ganham o card verde com selo e preço riscado
-    elMaterialCard.className = m.bonus ? 'material-card bonus' : 'neon-card material-card';
-    elMaterialBadge.hidden = !m.bonus;
-    if (m.de) {
-      elMaterialDe.textContent = m.de;
-      elMaterialDe.hidden = false;
+    if (impacto) {
+      elImpactoContexto.textContent = m.alt;
+      elImpactoDireto.textContent = m.impacto.direto;
+      elImpactoMuda.textContent = m.impacto.muda;
     } else {
-      elMaterialDe.hidden = true;
+      elMaterialImg.src = m.img;
+      elMaterialImg.alt = m.alt;
+      elMaterialTitulo.textContent = m.titulo;
+      elMaterialDesc.textContent = m.desc;
+
+      // bônus ganham o card verde com selo e preço riscado
+      elMaterialCard.className = m.bonus ? 'material-card bonus' : 'neon-card material-card';
+      elMaterialBadge.hidden = !m.bonus;
+      if (m.de) {
+        elMaterialDe.textContent = m.de;
+        elMaterialDe.hidden = false;
+      } else {
+        elMaterialDe.hidden = true;
+      }
     }
 
-    const ultimo = materialAtual === materiais.length - 1;
-    btnTourProximo.textContent = ultimo ? 'Continuar para o quiz' : 'Próximo';
-    btnTourVoltar.hidden = materialAtual === 0;
+    btnTourProximo.textContent =
+      passoAtual === totalPassos - 1 ? 'Continuar para o quiz' : 'Próximo';
+    btnTourVoltar.hidden = passoAtual === 0;
 
-    // pré-carrega a próxima imagem pra troca não piscar
-    if (!ultimo) {
-      new Image().src = materiais[materialAtual + 1].img;
+    // pré-carrega a imagem do próximo material pra troca não piscar
+    if (iMat + 1 < materiais.length) {
+      new Image().src = materiais[iMat + 1].img;
     }
   }
 
-  function trocarMaterial(novoIndice) {
+  function trocarPasso(novoPasso) {
     elMaterialBloco.classList.add('fading');
     setTimeout(function () {
-      materialAtual = novoIndice;
-      renderMaterial();
+      passoAtual = novoPasso;
+      renderPasso();
       elMaterialBloco.classList.remove('fading');
       window.scrollTo({ top: 0, behavior: 'auto' });
     }, 250);
   }
 
   btnTourProximo.addEventListener('click', function () {
-    if (materialAtual === materiais.length - 1) {
+    if (passoAtual === totalPassos - 1) {
       mostrarTela('tela-quiz');
       renderPergunta();
     } else {
-      trocarMaterial(materialAtual + 1);
+      trocarPasso(passoAtual + 1);
     }
   });
 
   btnTourVoltar.addEventListener('click', function () {
-    if (materialAtual === 0) return;
-    trocarMaterial(materialAtual - 1);
+    if (passoAtual === 0) return;
+    trocarPasso(passoAtual - 1);
   });
 
   /* ============================================================
